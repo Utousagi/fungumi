@@ -1,7 +1,11 @@
-.category {
-  color: #7265ea;
-  font-size: 16px;
-  text-align: left;
-  margin: 0 10px;
-  min-width: 698px;
+.container {
+  margin: 20px 0;
+
+  .category {
+    color: #7265ea;
+    font-size: 16px;
+    text-align: left;
+    margin: 0 10px;
+    min-width: 698px;
+  }
 }
