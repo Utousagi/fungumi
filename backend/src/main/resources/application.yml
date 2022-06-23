@@ -4,6 +4,17 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    username: uto
+    password: 123456
+    url: jdbc:mysql://101.35.146.202:3306/fungumi?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+  data:
+    mongodb:
+      username: fgm
+      password: acg123
+      database: fungumi
+      authentication-database: admin
+      host: 101.35.146.202
+      port: 27017
   jpa:
     show-sql: true
     hibernate:
@@ -12,3 +23,4 @@ spring:
       hibernate:
         enable_lazy_load_no_trans: true
         format_sql: true
+    open-in-view: true
