@@ -9,7 +9,7 @@ class BackendApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("table创建完成");
+
     }
 
 }

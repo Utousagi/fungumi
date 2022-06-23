@@ -9,21 +9,21 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class work {
+public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(name = "title",unique = true)
     private String title;
 
-    @Column
+    @Column(name = "profile")
     private String profile;
 
-    @Column
+    @Column(name = "score")
     private String score;
 
-    @Column
+    @Column(name = "category")
     private String category;
 }
 
