@@ -3,7 +3,12 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
   datasource:
+    username: root
+    password: cy20020208
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/project?useUnicode=true&characterEncoding=UTF-8
+
+
   jpa:
     show-sql: true
     hibernate:
