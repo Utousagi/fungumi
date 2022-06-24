@@ -1,3 +1,4 @@
+import { CommentShow } from "@/components/CommentShow";
 import DisplayBlock from "@/components/DisplayBlock";
 
 type BlockInfo = {
