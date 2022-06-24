@@ -12,8 +12,13 @@ public class DisplayServiceImpl implements DisplayService {
     @Autowired
     WorkDao workDao;
     @Override
-    public List<Work> selectBycategory(String category) {
+    public List<Work> selectByCategory(String category) {
         List<Work> works = workDao.findAllByCategory(category);
+        if(works.size() > 6 ){
+            for(int i=6;i<works.size();i++){
+                works.remove(i);
+            }
+        }
         return works;
     }
 }

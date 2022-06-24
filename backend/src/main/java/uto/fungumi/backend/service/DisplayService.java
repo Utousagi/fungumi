@@ -3,5 +3,5 @@ import uto.fungumi.backend.entity.Work;
 
 import java.util.List;
 public interface DisplayService {
-    List<Work> selectBycategory(String category);
+    List<Work> selectByCategory(String category);
 }
