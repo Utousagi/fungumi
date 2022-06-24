@@ -1,7 +1,7 @@
-import { Card, Divider, Image } from "@arco-design/web-react";
+import { Card, Divider, Image, Spin } from "@arco-design/web-react";
 import { Link } from "react-router-dom";
-import style from "@/style/component/DisplayBlock.module.scss";
 import { IconLoading } from "@arco-design/web-react/icon";
+import style from "@/style/component/DisplayBlock.module.scss";
 
 type DisplayBlockProps = {
   category: string;
@@ -16,8 +16,12 @@ type DisplayBlockProps = {
 
 function DisplayBlock(props: DisplayBlockProps) {
   return (
-    <div>
-      <div className={style.category}>{props.categoryName}</div>
+    <div className={style.container}>
+      <div className={style.category}>
+        <Link to={props.category}>
+          {props.categoryName} <span style={{ fontSize: "small" }}>more</span>
+        </Link>
+      </div>
       <Divider style={{ margin: "2px 0" }} />
       <Card bordered={false}>
         {props.blockInfo &&
@@ -46,12 +50,15 @@ function DisplayBlock(props: DisplayBlockProps) {
                         loader={
                           <div
                             style={{
-                              color: "black",
-                              fontSize: "44",
+                              display: "block",
                               textAlign: "center",
                             }}
                           >
-                            <IconLoading />
+                            <Spin
+                              size={25}
+                              tip={item.title}
+                              style={{ color: "black" }}
+                            />
                           </div>
                         }
                       />
