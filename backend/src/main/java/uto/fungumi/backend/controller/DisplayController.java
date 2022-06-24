@@ -16,7 +16,8 @@ public class DisplayController {
     @Resource
     private DisplayService displayService;
     @PostMapping ("/category")
-    public Map<String,List<Work>> selectByCategory(){
+    public BaseResult<Map<String,List<Work>>>  selectByCategory(){
+        BaseResult<Map<String,List<Work>>> baseResult = new BaseResult<>();
         List<Work> game = displayService.selectByCategory("game");
         List<Work> anime = displayService.selectByCategory("anime");
         List<Work> music = displayService.selectByCategory("music");
@@ -26,8 +27,14 @@ public class DisplayController {
         displaymap.put("anime",anime);
         displaymap.put("music",music);
         displaymap.put("book",book);
-        BaseResult<Map> baseResult = new BaseResult<>();
-        baseResult.construct(true,displaymap);
-        return displaymap;
+        baseResult.setData(displaymap);
+        if(displaymap != null){
+            baseResult.setSuccess(true);
+            baseResult.setMessage("首页数据传输完成");
+        }
+        else{
+            baseResult.setSuccess(false);
+        }
+        return baseResult;
     }
 }

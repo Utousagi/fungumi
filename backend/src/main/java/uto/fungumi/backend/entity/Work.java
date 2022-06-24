@@ -25,5 +25,11 @@ public class Work {
 
     @Column(name = "category")
     private String category;
+
+    @Column(name = "likes")
+    private String likes;
+
+    @Column(name = "picture")
+    private String picture;
 }
 
