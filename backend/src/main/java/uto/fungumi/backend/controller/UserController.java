@@ -1,8 +1,10 @@
 package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import uto.fungumi.backend.aop.login.Login;
 import uto.fungumi.backend.aop.login.Role;
 import uto.fungumi.backend.entity.User;
@@ -10,8 +12,6 @@ import uto.fungumi.backend.model.BaseResult;
 import uto.fungumi.backend.service.UserService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/user")

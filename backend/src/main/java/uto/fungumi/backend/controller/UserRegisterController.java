@@ -7,16 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.model.BaseResult;
-import uto.fungumi.backend.service.serviceImpl.UserServiceImpl;
+import uto.fungumi.backend.service.UserService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/register")
 public class UserRegisterController {
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
 
 
     @GetMapping("/")
