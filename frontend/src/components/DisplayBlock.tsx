@@ -1,6 +1,5 @@
 import { Card, Divider, Image, Spin } from "@arco-design/web-react";
 import { Link } from "react-router-dom";
-import { IconLoading } from "@arco-design/web-react/icon";
 import style from "@/style/component/DisplayBlock.module.scss";
 
 type DisplayBlockProps = {
@@ -18,7 +17,7 @@ function DisplayBlock(props: DisplayBlockProps) {
   return (
     <div className={style.container}>
       <div className={style.category}>
-        <Link to={props.category}>
+        <Link to={`search/${props.category}`}>
           {props.categoryName} <span style={{ fontSize: "small" }}>more</span>
         </Link>
       </div>

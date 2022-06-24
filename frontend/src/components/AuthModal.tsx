@@ -1,14 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Modal,
-  Space,
-} from "@arco-design/web-react";
+import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
 import React, { useEffect, useState } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
-import axios from "axios";
 
 type AuthModalProps = {
   state: {

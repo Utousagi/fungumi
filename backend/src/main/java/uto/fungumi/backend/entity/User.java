@@ -1,10 +1,7 @@
 package uto.fungumi.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -26,7 +23,8 @@ public class User {
     @Column(name = "username", unique = true)
     private String username;
 
-    @JsonIgnore
+    //这么加没法传值
+//    @JsonIgnore
     @Column(name = "password")
     private String password;
 

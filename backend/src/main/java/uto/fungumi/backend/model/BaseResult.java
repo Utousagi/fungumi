@@ -32,9 +32,4 @@ public class BaseResult<T> {
         this.success = success;
         this.message = message;
     }
-
-    public void construct(Boolean success, T data) {
-        this.success = success;
-        this.data = data;
-    }
 }
