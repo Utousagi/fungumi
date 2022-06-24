@@ -1,10 +1,9 @@
 package uto.fungumi.backend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uto.fungumi.backend.entity.Work;
+import uto.fungumi.backend.model.BaseResult;
 import uto.fungumi.backend.service.DisplayService;
 
 import javax.annotation.Resource;
@@ -27,6 +26,8 @@ public class DisplayController {
         displaymap.put("anime",anime);
         displaymap.put("music",music);
         displaymap.put("book",book);
+        BaseResult<Map> baseResult = new BaseResult<>();
+        baseResult.construct(true,displaymap);
         return displaymap;
     }
 }
