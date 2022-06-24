@@ -27,8 +27,8 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/register/addUser")
-    public BaseResult addUser(User user){
-        BaseResult baseResult = new BaseResult<>();
+    public BaseResult<User> addUser(User user){
+        BaseResult<User> baseResult = new BaseResult<>();
         if (userService.findByUsername(user.getUsername()) == null){
             userService.save(user);
             baseResult.setSuccess(true);
@@ -37,7 +37,7 @@ public class UserController {
 
         else {
             baseResult.setSuccess(false);
-            baseResult.setData("failed to save! ");
+            baseResult.setMessage("failed to save! ");
         }
         return baseResult;
     }
@@ -51,8 +51,8 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/login/checkUsernameAndPassword")
-    public BaseResult checkUsernameAndPassword(User user, HttpServletRequest request){
-        BaseResult baseResult = new BaseResult<>();
+    public BaseResult<User> checkUsernameAndPassword(User user, HttpServletRequest request){
+        BaseResult<User> baseResult = new BaseResult<>();
         User byUsernameAndPassword = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (byUsernameAndPassword == null){
             baseResult.setSuccess(false);
