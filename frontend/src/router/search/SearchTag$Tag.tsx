@@ -1,5 +1,5 @@
 import pic from "@/assets/keep.jpg";
-import { Layout, List, Pagination, Space } from "@arco-design/web-react";
+import { Layout, List, Space } from "@arco-design/web-react";
 import ListItem from "@/components/ListItem";
 
 const itemList = [
@@ -45,8 +45,6 @@ function SearchTag$Tag() {
           <ListItem key={item.id} {...item} />
         ))}
       </List>
-      <br />
-      <Pagination total={22} showTotal showJumper />
     </>
   );
 }

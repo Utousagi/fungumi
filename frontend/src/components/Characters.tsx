@@ -1,11 +1,9 @@
-import { Layout, Link, Image, Grid, Divider } from "@arco-design/web-react";
+import { Divider, Grid, Image, Layout, Link } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Footer from "@arco-design/web-react/es/Layout/footer";
 import Header from "@arco-design/web-react/es/Layout/header";
 import Sider from "@arco-design/web-react/es/Layout/sider";
-import { type } from "os";
-import { SubjectMenu, Details } from "./Abstract";
-import { CommentData, CommentShow } from "./CommentShow";
+import { Details, SubjectMenu } from "./Abstract";
 
 export type CharacterDetailsData = {
   id: number;
@@ -102,7 +100,7 @@ export default function Character(props: { type: string }) {
         }}
       >
         <Link href={subjectUrl}>
-          <h1 style={{ marginLeft: '30px' }}>{data.title}</h1>
+          <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
         </Link>
         <SubjectMenu id={data.id} select={select} />
       </Header>

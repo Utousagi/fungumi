@@ -13,7 +13,7 @@ type ActInData = {
 };
 
 type CharacterPageData = {
-  id: number;
+  int: number;
   name: string;
   img: string;
   description: string;
@@ -22,7 +22,7 @@ type CharacterPageData = {
 };
 
 let data: CharacterPageData = {
-  id: 1,
+  int: 1,
   name: "Abigail",
   img: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
   description:
@@ -54,24 +54,6 @@ let data: CharacterPageData = {
   ],
 };
 
-function ActIn(props: { data: ActInData }) {
-  return (
-    <>
-    <Grid.Col span={10} style={{ alignContent: 'start', margin: '3px 25px 8px 5px', border: "2px solid pink" }}>
-      <Grid.Row>
-        <Grid.Col span={6}>
-          <Image src={props.data.image} width={80} height={80} style={{ margin: '5px', display: 'flex'}} />
-        </Grid.Col>
-        <Grid.Col span={18} style={{textAlign:'left',display:'flex', flexDirection:'column'}}>
-          <Link href={"/subject/"+props.data.id}><div style={{fontSize:'18px',margin:'4px'}}>{props.data.name}</div></Link>
-          <Divider style={{marginTop:'2px'}}/>
-        </Grid.Col>
-      </Grid.Row>
-    </Grid.Col>
-    </>
-  )
-}
-
 export default function CharacterPage() {
   const id = useParams().id;
   const charactertUrl = "/character/" + id;
@@ -88,7 +70,7 @@ export default function CharacterPage() {
         }}
       >
         <Link href={charactertUrl}>
-          <h1 style={{ marginLeft: '30px' }}>{data.name}</h1>
+          <h1>{data.name}</h1>
         </Link>
       </Header>
       <Layout>
@@ -110,14 +92,6 @@ export default function CharacterPage() {
             {data.description}
           </div>
           <Divider />
-          <div style={{textAlign:'start',fontSize:'30px',marginBottom:'10px'}}>
-            参与作品
-          </div>
-          <Grid.Row>
-            {data.actIn.map((data: ActInData) => {
-              return (<ActIn data={data} />)
-            })}
-          </Grid.Row>
         </Content>
       </Layout>
     </Layout>

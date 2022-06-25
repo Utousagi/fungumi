@@ -1,5 +1,12 @@
 import { Outlet, Route, Routes, useParams } from "react-router-dom";
-import { Button, Divider, Grid, Layout, Radio } from "@arco-design/web-react";
+import {
+  Button,
+  Divider,
+  Grid,
+  Layout,
+  Pagination,
+  Radio,
+} from "@arco-design/web-react";
 
 function SideSearchBox() {
   return (
@@ -14,42 +21,6 @@ function SideSearchBox() {
             {({ checked }) => {
               return (
                 <Button type={checked ? "dashed" : "secondary"} size="mini">
-                  anime
-                </Button>
-              );
-            }}
-          </Radio>
-          <Radio style={{ margin: "3px 3px" }}>
-            {({ checked }) => {
-              return (
-                <Button type={checked ? "outline" : "secondary"} size="mini">
-                  aaaaaaaaaanime
-                </Button>
-              );
-            }}
-          </Radio>
-          <Radio style={{ margin: "3px 3px" }}>
-            {({ checked }) => {
-              return (
-                <Button type={checked ? "outline" : "secondary"} size="mini">
-                  anime
-                </Button>
-              );
-            }}
-          </Radio>
-          <Radio style={{ margin: "3px 3px" }}>
-            {({ checked }) => {
-              return (
-                <Button type={checked ? "outline" : "secondary"} size="mini">
-                  anime
-                </Button>
-              );
-            }}
-          </Radio>
-          <Radio style={{ margin: "3px 3px" }}>
-            {({ checked }) => {
-              return (
-                <Button type={checked ? "outline" : "secondary"} size="mini">
                   anime
                 </Button>
               );
@@ -104,7 +75,12 @@ function Search(props: { category: string }) {
       </Layout.Header>
       <Layout style={{ width: 952 }}>
         <Layout.Content
-          style={{ overflowY: "hidden", margin: "0 50px", paddingTop: 0 }}
+          style={{
+            overflowY: "hidden",
+            margin: "0 50px",
+            paddingTop: 0,
+            justifyContent: "start",
+          }}
         >
           <Outlet />
         </Layout.Content>
@@ -112,6 +88,17 @@ function Search(props: { category: string }) {
           <SideSearchBox />
         </Layout.Sider>
       </Layout>
+      <Layout.Footer
+        style={{
+          display: "flex",
+          margin: "0 295px 0 45px",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Divider style={{ margin: "10px 0" }} />
+        <Pagination total={22} showTotal showJumper />
+      </Layout.Footer>
     </Layout>
   );
 }

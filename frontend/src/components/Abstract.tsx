@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Comment,
   Descriptions,
   Divider,
@@ -174,7 +173,7 @@ export default function Abstract() {
         }}
       >
         <Link href={subjectUrl}>
-          <h1 style={{marginLeft:'30px'}}>{data.title}</h1>
+          <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
         </Link>
         <SubjectMenu id={data.id} select={select} />
       </Header>
