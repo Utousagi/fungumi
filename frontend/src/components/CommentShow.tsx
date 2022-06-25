@@ -5,11 +5,10 @@ import {
   IconThumbDown,
   IconThumbUpFill,
   IconThumbDownFill,
-  IconStar,
   IconStarFill,
 } from "@arco-design/web-react/icon";
-import { type } from "os";
 import { time } from "console";
+
 
 export type CommentData = {
   userId: string;
@@ -70,6 +69,7 @@ export function CommentShow(props: CommentData) {
             allowHalf
             character={<IconStarFill style={{ fontSize: "13px" }} />}
             style={{ marginLeft: "15px" }}
+
           />
         </div>
       }

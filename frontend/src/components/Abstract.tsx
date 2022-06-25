@@ -181,6 +181,7 @@ export default function Abstract() {
       <Layout>
         <Sider style={{ margin: "20px 15px" }}>
           <Image width={180} src={props.img} style={{ margin: "10px 10px" }} />
+
           <Details data={props.details} />
         </Sider>
         <Content style={{ alignItems: "start" }}>
