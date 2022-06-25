@@ -106,10 +106,10 @@ function Character(props: { data: characterData }) {
   return (
     <Grid.Col span={8}>
       <Comment
-        author={item.name}
-        content={item.abstract}
+        author={<div style={{fontSize:'23px'}}>{item.name}</div>}
+        content={<div>{item.abstract}</div>}
         avatar={
-          <Avatar>
+
             <Image
               alt="avatar"
               src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
@@ -117,10 +117,12 @@ function Character(props: { data: characterData }) {
               onClick={() => {
                 window.location.href = "/character/" + item.id;
               }}
+              width={60}
+              height={60}
             />
-          </Avatar>
         }
-        style={{ alignContent: "left", width: "100%" }}
+        style={{ textAlign: "left", width: "100%", marginTop:'5px' }}
+
       />
     </Grid.Col>
   );
@@ -128,17 +130,19 @@ function Character(props: { data: characterData }) {
 function Labels(props: { title: string; data: labelData[] }) {
   return (
     <div
-      style={{ width: "98%", alignContent: "start", border: "2px solid grey" }}
+      style={{ width: "99%", alignContent: "start", border: "2px solid pink", borderRadius: "5px" }}
     >
-      <div style={{ textAlign: "left" }}>大家将 {props.title} 标注为</div>
-      <Space wrap size={[12, 8]} style={{ width: "100%" }}>
+      <div style={{ textAlign: "left", margin:'5px' }}>大家将 {props.title} 标注为</div>
+      <Space wrap size={[6, 8]} style={{ width: "100%", marginTop:'5px',marginLeft:'8px' }}>
+
         {props.data.map((label: labelData) => {
           return (
             <Link href={"/label/" + label.id}>
               {" "}
               <Tag key={label.id} defaultChecked={true} color="arcoblue">
-                {label.name}
-              </Tag>{" "}
+                <div style={{fontSize:'15px'}}>{label.name}</div>
+              </Tag>
+
             </Link>
           );
         })}
@@ -168,8 +172,8 @@ export default function Abstract() {
         <SubjectMenu id={props.id} select={select} />
       </Header>
       <Layout>
-        <Sider>
-          <Image width={200} src={props.img} />
+        <Sider style={{margin:'20px 15px'}}>
+          <Image width={180} src={props.img}  style={{margin:'10px 10px'}}/>
           <Details data={props.details} />
         </Sider>
         <Content style={{ alignItems: "start" }}>
@@ -193,7 +197,8 @@ export default function Abstract() {
               />
               <Labels title={props.title} data={props.labels} />
             </Content>
-            <Sider>
+            <Sider style={{margin:'10px 10px'}}>
+
               <div>评分人数: {props.votes}</div>
             </Sider>
           </Layout>

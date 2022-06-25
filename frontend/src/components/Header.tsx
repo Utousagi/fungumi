@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Button,
   Dropdown,
@@ -10,6 +10,7 @@ import {
 import "@/style/component/Header.module.scss";
 import { Link } from "react-router-dom";
 import AuthModal from "@/components/AuthModal";
+import { IconCloud } from "@arco-design/web-react/icon";
 
 type DropListProps = {
   name: string;
@@ -29,27 +30,27 @@ function dropList(props: DropListProps[]) {
 }
 
 const animeProps: DropListProps[] = [
-  { name: "浏览全部", href: "/anime/browser" },
+  { name: "浏览全部", href: "/search/anime" },
   { name: "每日放送", href: "/calendar" },
-  { name: "动画标签", href: "/anime/tag" },
+  { name: "动画标签", href: "/tag/anime" },
   { name: "动画日志", href: "/anime/blog" },
 ];
 
 const novelProps: DropListProps[] = [
-  { name: "浏览全部", href: "/novel/browser" },
-  { name: "图书标签", href: "/novel/tag" },
+  { name: "浏览全部", href: "/search/novel" },
+  { name: "图书标签", href: "/tag/novel" },
   { name: "图书日志", href: "/novel/blog" },
 ];
 
 const musicProps: DropListProps[] = [
-  { name: "浏览全部", href: "/music/browser" },
-  { name: "音乐标签", href: "/music/tag" },
+  { name: "浏览全部", href: "/search/music" },
+  { name: "音乐标签", href: "/tag/music" },
   { name: "音乐日志", href: "/music/blog" },
 ];
 
 const gameProps: DropListProps[] = [
-  { name: "浏览全部", href: "/game/browser" },
-  { name: "游戏标签", href: "/game/tag" },
+  { name: "浏览全部", href: "/search/game" },
+  { name: "游戏标签", href: "/tag/game" },
   { name: "游戏日志", href: "/game/blog" },
 ];
 
@@ -63,6 +64,9 @@ function Header() {
     <>
       <header>
         <Space size="large">
+          <Link to="/">
+            <IconCloud fontSize={20} />
+          </Link>
           <Button.Group>
             <Dropdown
               key="anime"

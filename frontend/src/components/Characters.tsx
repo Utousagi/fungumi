@@ -4,10 +4,10 @@ import Footer from "@arco-design/web-react/es/Layout/footer";
 import Header from "@arco-design/web-react/es/Layout/header";
 import Sider from "@arco-design/web-react/es/Layout/sider";
 import { type } from "os";
-import { SubjectMenu, Details } from "./Abstracr";
+import { SubjectMenu, Details } from "./Abstract";
 import { CommentData, CommentShow } from "./CommentShow";
 
-type CharacterDetailsData = {
+export type CharacterDetailsData = {
   id: number;
   name: string;
   img: string;
@@ -15,7 +15,7 @@ type CharacterDetailsData = {
   details: Map<string, string>;
 };
 
-type CharacterPageData = {
+export type CharacterPageData = {
   id: number;
   title: string;
   img: string;
@@ -23,7 +23,7 @@ type CharacterPageData = {
   details: Map<string, string>;
 };
 
-let props: CharacterPageData = {
+let data: CharacterPageData = {
   id: 1,
   title: "测试标题",
   img: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
@@ -61,26 +61,34 @@ let props: CharacterPageData = {
 function CharacterShow(props: { data: CharacterDetailsData }) {
   return (
     <div style={{}}>
-      <Grid.Row style={{ alignSelf: "top" }}>
-        <Grid.Col span={4}>
-          <Image src={props.data.img} width={"80%"} />
+      <Grid.Row
+        style={{
+          alignSelf: "top",
+          margin: "5px",
+          border: "2px solid pink",
+          WebkitBorderRadius: "10px",
+        }}
+      >
+        <Grid.Col span={4} style={{ margin: "15px" }}>
+          <Image src={props.data.img} width={"90%"} />
         </Grid.Col>
-        <Grid.Col span={20} style={{ textAlign: "left" }}>
-          <Link href={"/charater/" + props.data.id}>
-            <h1>{props.data.name}</h1>
+        <Grid.Col span={6} style={{ textAlign: "left" }}>
+          <Link href={"/character/" + props.data.id}>
+            <h1> {props.data.name}</h1>
           </Link>
           <p>{props.data.description}</p>
+        </Grid.Col>
+        <Grid.Col span={12} style={{ textAlign: "left", marginTop: "2%" }}>
           <Details data={props.data.details} />
         </Grid.Col>
       </Grid.Row>
-      <Divider />
     </div>
   );
 }
 
-export default function Character() {
-  const subjectUrl = "/subject/" + props.id;
-  const select = "character";
+export default function Character(props: { type: string }) {
+  const subjectUrl = "/subject/" + data.id;
+  const select = props.type;
 
   return (
     <Layout style={{ width: "95%", height: "400px" }}>
@@ -94,23 +102,23 @@ export default function Character() {
         }}
       >
         <Link href={subjectUrl}>
-          <h1>{props.title}</h1>
+          <h1>{data.title}</h1>
         </Link>
-        <SubjectMenu id={props.id} select={select} />
+        <SubjectMenu id={data.id} select={select} />
       </Header>
       <Layout>
-        <Sider>
-          <Image width={200} src={props.img} />
-          <Details data={props.details} />
+        <Sider style={{ margin: "20px 15px" }}>
+          <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
+          <Details data={data.details} />
         </Sider>
         <Content style={{ alignItems: "start" }}>
           <Layout>
-            <Content style={{ width: "120%" }}>
-              {props.character.map((data: CharacterDetailsData) => {
+            <Content style={{ width: "90%" }}>
+              <Divider />
+              {data.character.map((data: CharacterDetailsData) => {
                 return <CharacterShow data={data} />;
               })}
             </Content>
-            <Sider></Sider>
           </Layout>
         </Content>
       </Layout>
