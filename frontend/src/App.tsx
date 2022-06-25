@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./style/App.scss";
 import Header from "@/components/Header";
-import Index from "@/router";
+import Index from "@/router/Index";
 import Abstract from "./components/Abstract";
 import Reviews from "./components/Reviews";
 import { useState } from "react";

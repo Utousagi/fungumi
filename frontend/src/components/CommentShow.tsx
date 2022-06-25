@@ -1,5 +1,4 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import { Comment, Avatar, Rate } from "@arco-design/web-react";
 import {
   IconThumbUp,
@@ -11,16 +10,6 @@ import {
 } from "@arco-design/web-react/icon";
 import { type } from "os";
 import { time } from "console";
-=======
-import { Avatar, Comment, Rate } from "@arco-design/web-react";
-import {
-  IconStarFill,
-  IconThumbDown,
-  IconThumbDownFill,
-  IconThumbUp,
-  IconThumbUpFill,
-} from "@arco-design/web-react/icon";
->>>>>>> ea5e26de0d6d650ae0d76716d0fd3eb87f281ed4
 
 export type CommentData = {
   userId: string;
@@ -79,12 +68,8 @@ export function CommentShow(props: CommentData) {
             readonly
             defaultValue={score}
             allowHalf
-<<<<<<< HEAD
             character={<IconStarFill style={{ fontSize: "13px" }} />}
             style={{ marginLeft: "15px" }}
-=======
-            character={<IconStarFill style={{ fontSize: "10px" }} />}
->>>>>>> ea5e26de0d6d650ae0d76716d0fd3eb87f281ed4
           />
         </div>
       }
@@ -99,13 +84,8 @@ export function CommentShow(props: CommentData) {
         display: "flex",
         alignSelf: "center",
         textAlign: "left",
-<<<<<<< HEAD
         width: "90%",
         border: "2px solid pink",
-=======
-        width: "80%",
-        border: "1px solid #f0f0f0",
->>>>>>> ea5e26de0d6d650ae0d76716d0fd3eb87f281ed4
         borderRadius: "5px",
         padding: "10px",
       }}
