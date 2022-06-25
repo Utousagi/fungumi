@@ -102,7 +102,7 @@ export default function Character(props: { type: string }) {
         }}
       >
         <Link href={subjectUrl}>
-          <h1>{data.title}</h1>
+          <h1 style={{ marginLeft: '30px' }}>{data.title}</h1>
         </Link>
         <SubjectMenu id={data.id} select={select} />
       </Header>

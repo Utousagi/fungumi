@@ -174,15 +174,15 @@ export default function Abstract() {
         }}
       >
         <Link href={subjectUrl}>
-          <h1>{props.title}</h1>
+          <h1 style={{marginLeft:'30px'}}>{data.title}</h1>
         </Link>
-        <SubjectMenu id={props.id} select={select} />
+        <SubjectMenu id={data.id} select={select} />
       </Header>
       <Layout>
         <Sider style={{ margin: "20px 15px" }}>
-          <Image width={180} src={props.img} style={{ margin: "10px 10px" }} />
+          <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
 
-          <Details data={props.details} />
+          <Details data={data.details} />
         </Sider>
         <Content style={{ alignItems: "start" }}>
           <Layout>
@@ -195,7 +195,7 @@ export default function Abstract() {
                   marginTop: "5px",
                 }}
               >
-                {props.abstract}
+                {data.abstract}
               </div>
               <Divider
                 style={{
@@ -203,10 +203,10 @@ export default function Abstract() {
                   borderBottomStyle: "dotted",
                 }}
               />
-              <Labels title={props.title} data={props.labels} />
+              <Labels title={data.title} data={data.labels} />
             </Content>
             <Sider style={{ margin: "10px 10px" }}>
-              <div>评分人数: {props.votes}</div>
+              <div>评分人数: {data.votes}</div>
             </Sider>
           </Layout>
           <Divider
@@ -217,7 +217,7 @@ export default function Abstract() {
           />
           <h2>角色介绍</h2>
           <Grid.Row className="ji" style={{ alignSelf: "center" }}>
-            {props.characters.map((character: characterData) => {
+            {data.characters.map((character: characterData) => {
               return <Character key={character.id} data={character} />;
             })}
           </Grid.Row>
@@ -236,7 +236,7 @@ export default function Abstract() {
               width: "100%",
             }}
           >
-            {props.comments.map((comment: CommentData) => {
+            {data.comments.map((comment: CommentData) => {
               return <CommentShow {...comment} />;
             })}
           </div>
@@ -246,7 +246,7 @@ export default function Abstract() {
   );
 }
 
-let props: workData = {
+let data: workData = {
   id: 1,
   type: "anime",
   title: "测试标题",
