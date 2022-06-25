@@ -102,7 +102,6 @@ export default function Reviews(props: { page: number } = { page: 1 }) {
   var [reviewList, setReviewList] = useState(data.comments);
   console.log(reviewList);
 
-
   return (
     <Layout style={{ width: "95%", height: "400px" }}>
       <Header

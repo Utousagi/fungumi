@@ -9,7 +9,6 @@ import {
 } from "@arco-design/web-react/icon";
 import { time } from "console";
 
-
 export type CommentData = {
   userId: string;
   avator: string;
@@ -69,7 +68,6 @@ export function CommentShow(props: CommentData) {
             allowHalf
             character={<IconStarFill style={{ fontSize: "13px" }} />}
             style={{ marginLeft: "15px" }}
-
           />
         </div>
       }

@@ -8,6 +8,8 @@ import Search from "@/router/Search";
 import SearchIndex from "@/router/search/SearchIndex";
 import SearchTag from "@/router/search/SearchTag";
 import SearchTag$Tag from "@/router/search/SearchTag$Tag";
+import Character from "./components/Characters";
+import CharacterPage from "./components/CharacterPage";
 
 function App() {
   return (
@@ -28,6 +30,9 @@ function App() {
           <Route path="/subject/:id" element={<Abstract />} />
           <Route path="/subject/:id/Abstract" element={<Abstract />} />
           <Route path="/subject/:id/reviews" element={<Reviews page={1} />} />
+          <Route path="subject/:id/character" element={<Character type={"character"} />} />
+          <Route path="subject/:id/staff" element={<Character type={"staff"} />} />
+          <Route path="character/:id" element={<CharacterPage />} />
         </Routes>
       </main>
     </div>
