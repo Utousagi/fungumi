@@ -70,7 +70,7 @@ function CharacterShow(props: { data: CharacterDetailsData }) {
         }}
       >
         <Grid.Col span={4} style={{ margin: "15px" }}>
-          <Image src={props.data.img} width={"90%"} />
+          <Image src={props.data.img} width={160} />
         </Grid.Col>
         <Grid.Col span={6} style={{ textAlign: "left" }}>
           <Link href={"/character/" + props.data.id}>
@@ -102,7 +102,7 @@ export default function Character(props: { type: string }) {
         }}
       >
         <Link href={subjectUrl}>
-          <h1 style={{ marginLeft: '30px' }}>{data.title}</h1>
+          <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
         </Link>
         <SubjectMenu id={data.id} select={select} />
       </Header>

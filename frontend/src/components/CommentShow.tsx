@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Comment, Avatar, Rate } from "@arco-design/web-react";
+import { Link, Comment, Avatar, Rate } from "@arco-design/web-react";
 import {
   IconThumbUp,
   IconThumbDown,
@@ -73,9 +73,11 @@ export function CommentShow(props: CommentData) {
       }
       content={<div>{props.content}</div>}
       avatar={
-        <Avatar>
-          <img alt="avatar" src={props.avator} />
-        </Avatar>
+        <Link href={`/user/${props.userId}`} hoverable={false}>
+          <Avatar>
+            <img alt="avatar" src={props.avator} />
+          </Avatar>
+        </Link>
       }
       datetime={props.time}
       style={{

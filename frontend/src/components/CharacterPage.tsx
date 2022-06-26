@@ -57,19 +57,43 @@ let data: CharacterPageData = {
 function ActIn(props: { data: ActInData }) {
   return (
     <>
-    <Grid.Col span={10} style={{ alignContent: 'start', margin: '3px 25px 8px 5px', border: "2px solid pink" }}>
-      <Grid.Row>
-        <Grid.Col span={6}>
-          <Image src={props.data.image} width={80} height={80} style={{ margin: '5px', display: 'flex'}} />
-        </Grid.Col>
-        <Grid.Col span={18} style={{textAlign:'left',display:'flex', flexDirection:'column'}}>
-          <Link href={"/subject/"+props.data.id}><div style={{fontSize:'18px',margin:'4px'}}>{props.data.name}</div></Link>
-          <Divider style={{marginTop:'2px'}}/>
-        </Grid.Col>
-      </Grid.Row>
-    </Grid.Col>
+      <Grid.Col
+        span={10}
+        style={{
+          alignContent: "start",
+          margin: "3px 25px 8px 5px",
+          border: "2px solid pink",
+          WebkitBorderRadius: "5px",
+        }}
+      >
+        <Grid.Row>
+          <Grid.Col span={6}>
+            <Image
+              src={props.data.image}
+              width={80}
+              height={80}
+              style={{ margin: "5px", display: "flex" }}
+            />
+          </Grid.Col>
+          <Grid.Col
+            span={18}
+            style={{
+              textAlign: "left",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Link href={"/subject/" + props.data.id}>
+              <div style={{ fontSize: "18px", margin: "4px" }}>
+                {props.data.name}
+              </div>
+            </Link>
+            <Divider style={{ marginTop: "2px" }} />
+          </Grid.Col>
+        </Grid.Row>
+      </Grid.Col>
     </>
-  )
+  );
 }
 
 export default function CharacterPage() {
@@ -77,49 +101,57 @@ export default function CharacterPage() {
   const charactertUrl = "/character/" + id;
 
   return (
-    <Layout style={{ width: "95%" }}>
-      <Header
-        style={{
-          width: "105%",
-          alignSelf: "center",
-          flexDirection: "column",
-          alignItems: "start",
-          height: "100%",
-        }}
-      >
-        <Link href={charactertUrl}>
-          <h1 style={{ marginLeft: '30px' }}>{data.name}</h1>
-        </Link>
-      </Header>
-      <Layout>
-        <Sider style={{ margin: "20px 15px" }}>
-          <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
-          <Details data={data.details} />
-        </Sider>
-        <Content
-          style={{ alignItems: "start", margin: "10px", display: "block" }}
+    <div style={{ display: '' }}>
+      <Layout style={{ width: "95%" }}>
+        <Header
+          style={{
+            width: "105%",
+            alignSelf: "center",
+            flexDirection: "column",
+            alignItems: "start",
+            height: "100%",
+          }}
         >
-          <div
-            style={{
-              textAlign: "left",
-              whiteSpace: "pre-wrap",
-              width: "95%",
-              margin: "12px",
-            }}
+          <Link href={charactertUrl}>
+            <h1 style={{ marginLeft: "30px" }}>{data.name}</h1>
+          </Link>
+        </Header>
+        <Layout>
+          <Sider style={{ margin: "20px 15px" }}>
+            <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
+            <Details data={data.details} />
+          </Sider>
+          <Content
+            style={{ alignItems: "start", margin: "10px", display: "block" }}
           >
-            {data.description}
-          </div>
-          <Divider />
-          <div style={{textAlign:'start',fontSize:'30px',marginBottom:'10px'}}>
-            参与作品
-          </div>
-          <Grid.Row>
-            {data.actIn.map((data: ActInData) => {
-              return (<ActIn data={data} />)
-            })}
-          </Grid.Row>
-        </Content>
+            <div
+              style={{
+                textAlign: "left",
+                whiteSpace: "pre-wrap",
+                width: "95%",
+                margin: "12px",
+              }}
+            >
+              {data.description}
+            </div>
+            <Divider />
+            <div
+              style={{
+                textAlign: "start",
+                fontSize: "30px",
+                marginBottom: "10px",
+              }}
+            >
+              参与作品
+            </div>
+            <Grid.Row>
+              {data.actIn.map((data: ActInData) => {
+                return <ActIn data={data} />;
+              })}
+            </Grid.Row>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 }

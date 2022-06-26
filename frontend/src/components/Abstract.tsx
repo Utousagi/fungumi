@@ -163,86 +163,88 @@ export default function Abstract() {
   var subjectUrl = `/subject/${params.id}/abstract`;
 
   return (
-    <Layout style={{ width: "95%" }}>
-      <Header
-        style={{
-          width: "105%",
-          alignSelf: "center",
-          flexDirection: "column",
-          alignItems: "start",
-          height: "100%",
-        }}
-      >
-        <Link href={subjectUrl}>
-          <h1 style={{marginLeft:'30px'}}>{data.title}</h1>
-        </Link>
-        <SubjectMenu id={data.id} select={select} />
-      </Header>
-      <Layout>
-        <Sider style={{ margin: "20px 15px" }}>
-          <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
+    <div style={{display:''}}>
+      <Layout style={{ width: "95%" }}>
+        <Header
+          style={{
+            width: "105%",
+            alignSelf: "center",
+            flexDirection: "column",
+            alignItems: "start",
+            height: "100%",
+          }}
+        >
+          <Link href={subjectUrl}>
+            <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
+          </Link>
+          <SubjectMenu id={data.id} select={select} />
+        </Header>
+        <Layout>
+          <Sider style={{ margin: "20px 15px" }}>
+            <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
 
-          <Details data={data.details} />
-        </Sider>
-        <Content style={{ alignItems: "start" }}>
-          <Layout>
-            <Content>
-              <div
-                style={{
-                  textAlign: "left",
-                  whiteSpace: "pre-wrap",
-                  width: "95%",
-                  marginTop: "5px",
-                }}
-              >
-                {data.abstract}
-              </div>
-              <Divider
-                style={{
-                  borderBottomWidth: 2,
-                  borderBottomStyle: "dotted",
-                }}
-              />
-              <Labels title={data.title} data={data.labels} />
-            </Content>
-            <Sider style={{ margin: "10px 10px" }}>
-              <div>评分人数: {data.votes}</div>
-            </Sider>
-          </Layout>
-          <Divider
-            style={{
-              borderBottomWidth: 2,
-              borderBottomStyle: "dotted",
-            }}
-          />
-          <h2>角色介绍</h2>
-          <Grid.Row className="ji" style={{ alignSelf: "center" }}>
-            {data.characters.map((character: characterData) => {
-              return <Character key={character.id} data={character} />;
-            })}
-          </Grid.Row>
-          <Divider
-            style={{
-              borderBottomWidth: 2,
-              borderBottomStyle: "dotted",
-            }}
-          />
-          <h2>用户评价</h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "left",
-              width: "100%",
-            }}
-          >
-            {data.comments.map((comment: CommentData) => {
-              return <CommentShow {...comment} />;
-            })}
-          </div>
-        </Content>
+            <Details data={data.details} />
+          </Sider>
+          <Content style={{ alignItems: "start" }}>
+            <Layout>
+              <Content>
+                <div
+                  style={{
+                    textAlign: "left",
+                    whiteSpace: "pre-wrap",
+                    width: "95%",
+                    marginTop: "5px",
+                  }}
+                >
+                  {data.abstract}
+                </div>
+                <Divider
+                  style={{
+                    borderBottomWidth: 2,
+                    borderBottomStyle: "dotted",
+                  }}
+                />
+                <Labels title={data.title} data={data.labels} />
+              </Content>
+              <Sider style={{ margin: "10px 10px" }}>
+                <div>评分人数: {data.votes}</div>
+              </Sider>
+            </Layout>
+            <Divider
+              style={{
+                borderBottomWidth: 2,
+                borderBottomStyle: "dotted",
+              }}
+            />
+            <h2>角色介绍</h2>
+            <Grid.Row className="ji" style={{ alignSelf: "center" }}>
+              {data.characters.map((character: characterData) => {
+                return <Character key={character.id} data={character} />;
+              })}
+            </Grid.Row>
+            <Divider
+              style={{
+                borderBottomWidth: 2,
+                borderBottomStyle: "dotted",
+              }}
+            />
+            <h2>用户评价</h2>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+                width: "100%",
+              }}
+            >
+              {data.comments.map((comment: CommentData) => {
+                return <CommentShow {...comment} />;
+              })}
+            </div>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 }
 
