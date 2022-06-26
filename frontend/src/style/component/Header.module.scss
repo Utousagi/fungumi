@@ -1,4 +1,4 @@
-header {
+.header {
   height: 50px;
   background-color: #faf5f9;
   border-bottom: 1px solid #e6e6e6;
@@ -6,4 +6,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.avatar {
+  &:hover {
+    transform: scale(1.5) translateY(5px);
+    transition-duration: 0.2s;
+    transition-delay: 0.3s;
+  }
 }

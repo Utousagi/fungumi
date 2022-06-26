@@ -43,7 +43,7 @@ function ListItem(props: ListItemProps) {
           </div>
         }
         avatar={
-          <Link to={`/subject/${props.id}`}>
+          <Link to={`/subject/${props.id}/abstract`}>
             <Image src={props.imgUrl} height={100} width={80} preview={false} />
           </Link>
         }

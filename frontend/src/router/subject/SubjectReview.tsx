@@ -1,17 +1,6 @@
-import {
-  Layout,
-  Link,
-  Image,
-  Slider,
-  Pagination,
-} from "@arco-design/web-react";
-import Content from "@arco-design/web-react/es/Layout/content";
-import Footer from "@arco-design/web-react/es/Layout/footer";
-import Header from "@arco-design/web-react/es/Layout/header";
-import Sider from "@arco-design/web-react/es/Layout/sider";
+import { Layout, Pagination } from "@arco-design/web-react";
 import { useState } from "react";
-import { Details, SubjectMenu } from "./Abstract";
-import { CommentData, CommentShow } from "./CommentShow";
+import { CommentData, CommentShow } from "@/components/CommentShow";
 
 type CommentPageData = {
   id: number;
@@ -30,7 +19,7 @@ let data: CommentPageData = {
   comments: [
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -41,7 +30,7 @@ let data: CommentPageData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -53,7 +42,7 @@ let data: CommentPageData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -65,7 +54,7 @@ let data: CommentPageData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -77,7 +66,7 @@ let data: CommentPageData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -95,65 +84,27 @@ let data: CommentPageData = {
   ]),
 };
 
-export default function Reviews(props: { page?: number } = { page: 1 }) {
-
-  const subjectUrl = "/subject/" + data.id;
-  const select = "reviews";
-
-  var [reviewList, setReviewList] = useState(data.comments);
-  console.log(reviewList);
+function SubjectReview(props: { page?: number } = { page: 1 }) {
+  const [reviewList, setReviewList] = useState(data.comments);
 
   return (
-    <Layout style={{ width: "95%", height: "400px" }}>
-      <Header
-        style={{
-          width: "105%",
-          alignSelf: "center",
-          flexDirection: "column",
-          alignItems: "start",
-          height: "100%",
+    <Layout.Content style={{ overflow: "hidden", padding: 0 }}>
+      {reviewList.map((comment: CommentData) => {
+        return <CommentShow {...comment} />;
+      })}
+      <Pagination
+        total={data.total}
+        defaultPageSize={5}
+        defaultCurrent={props.page}
+        onChange={(pageNumber: number) => {
+          setReviewList(
+            data.comments.slice((pageNumber - 1) * 10, pageNumber * 10)
+          );
         }}
-      >
-        <Link href={subjectUrl}>
-          <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
-
-        </Link>
-        <SubjectMenu id={data.id} select={select} />
-      </Header>
-      <Layout style={{}}>
-        <Sider style={{ margin: "20px 15px" }}>
-          <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
-          <Details data={data.details} />
-        </Sider>
-
-        <Content style={{ display: "flex", overflow: "hidden" }}>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "left",
-              width: "100%",
-            }}
-          >
-            {reviewList.map((comment: CommentData) => {
-              return <CommentShow {...comment} />;
-            })}
-          </div>
-          <Pagination
-            total={data.total}
-            defaultPageSize={5}
-            defaultCurrent={props.page}
-            onChange={(pageNumber: number) => {
-              setReviewList(
-                data.comments.slice((pageNumber - 1) * 10, pageNumber * 10)
-              );
-            }}
-            style={{ marginTop: "10px" }}
-          />
-        </Content>
-      </Layout>
-      <Footer></Footer>
-    </Layout>
+        style={{ marginTop: "10px" }}
+      />
+    </Layout.Content>
   );
 }
+
+export default SubjectReview;

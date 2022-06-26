@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Comment, Avatar, Rate } from "@arco-design/web-react";
+import { Avatar, Comment, Link, Rate } from "@arco-design/web-react";
 
 import {
   IconStarFill,
@@ -11,7 +11,7 @@ import {
 
 export type CommentData = {
   userId: string;
-  avator: string;
+  avatar: string;
   score: number;
   time: string;
   content: string;
@@ -75,7 +75,7 @@ export function CommentShow(props: CommentData) {
       avatar={
         <Link href={`/user/${props.userId}`} hoverable={false}>
           <Avatar>
-            <img alt="avatar" src={props.avator} />
+            <img alt="avatar" src={props.avatar} />
           </Avatar>
         </Link>
       }
@@ -84,7 +84,7 @@ export function CommentShow(props: CommentData) {
         display: "flex",
         alignSelf: "center",
         textAlign: "left",
-        width: "90%",
+        width: "95%",
         border: "2px solid pink",
         borderRadius: "5px",
         padding: "10px",

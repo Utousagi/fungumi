@@ -43,13 +43,10 @@ function Search(props: { category: string }) {
   const tag = useParams<{ tag: string }>().tag;
 
   return (
-    <Layout style={{ margin: "30px 10px" }}>
+    <Layout style={{ margin: "30px 10px", width: 955 }}>
       <Layout.Header
         style={{
-          alignItems: "start",
-          flexDirection: "column",
-          background: "none",
-          border: "none",
+          textAlign: "start",
           margin: "0 295px 0 45px",
         }}
       >

@@ -1,10 +1,11 @@
-import { Link, Image, Divider, Grid } from "@arco-design/web-react";
+import { Divider, Grid, Image, Link } from "@arco-design/web-react";
 import Layout from "@arco-design/web-react/es/Layout";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Header from "@arco-design/web-react/es/Layout/header";
 import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useParams } from "react-router-dom";
-import { Details } from "./Abstract";
+import reduxStore from "@/redux/reduxStore";
+import Detail from "@/components/Detail";
 
 type ActInData = {
   id: number;
@@ -98,10 +99,11 @@ function ActIn(props: { data: ActInData }) {
 
 export default function CharacterPage() {
   const id = useParams().id;
-  const charactertUrl = "/character/" + id;
+  const characterUrl = "/character/" + id;
+  const username = reduxStore.getState().user.name;
 
   return (
-    <div style={{ display: '' }}>
+    <div style={{ display: "" }}>
       <Layout style={{ width: "95%" }}>
         <Header
           style={{
@@ -112,14 +114,14 @@ export default function CharacterPage() {
             height: "100%",
           }}
         >
-          <Link href={charactertUrl}>
+          <Link href={characterUrl}>
             <h1 style={{ marginLeft: "30px" }}>{data.name}</h1>
           </Link>
         </Header>
         <Layout>
           <Sider style={{ margin: "20px 15px" }}>
             <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
-            <Details data={data.details} />
+            <Detail data={data.details} />
           </Sider>
           <Content
             style={{ alignItems: "start", margin: "10px", display: "block" }}
