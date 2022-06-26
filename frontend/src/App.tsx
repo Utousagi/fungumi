@@ -10,8 +10,9 @@ import SearchTag from "@/router/search/SearchTag";
 import SearchTag$Tag from "@/router/search/SearchTag$Tag";
 import Character from "./components/Characters";
 import CharacterPage from "./components/CharacterPage";
-import Favourite from "./components/Favourite";
-
+import Favourite from "./components/UserFavourite";
+import Likes from "./components/UserLike";
+import Review from "./components/UserReview";
 
 function App() {
   return (
@@ -46,9 +47,12 @@ function App() {
             element={<Character type={"staff"} />}
           />
           <Route path="character/:id" element={<CharacterPage />} />
-          <Route path="character/:id" element={<CharacterPage />} />
-          <Route path="/user/:id" element={<Favourite />} />
-          <Route path="/user/:id/favourite" element={<Favourite />} />
+          <Route path="/user/:id" >
+            <Route path="" element={<Favourite />} />
+            <Route path="favourite" element={<Favourite />} />
+            <Route path="Like" element={<Likes />} />
+            <Route path="Review/" element={<Review />} />
+          </Route>
         </Routes>
       </main>
     </div>
