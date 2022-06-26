@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uto.fungumi.backend.dao.UserDao;
 import uto.fungumi.backend.entity.User;
+import uto.fungumi.backend.model.LoginCheckResult;
 import uto.fungumi.backend.utils.Md5Util;
 
 @Service
@@ -33,9 +34,6 @@ public class UserService {
         var subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            var user = (User) subject.getPrincipal();
-            subject.getSession().setAttribute("user", user.getUsername());
-            subject.getSession().setAttribute("role", user.getRole());
         } catch (AuthenticationException e) {
             log.warn(e.getMessage());
             return false;
@@ -48,8 +46,22 @@ public class UserService {
         password = Md5Util.getMd5(password);
         user.setUsername(username);
         user.setPassword(password);
-        userDao.save(user);
-        return user;
+        user.setRole(User.Role.USER);
+        return userDao.save(user);
+    }
+
+    public LoginCheckResult checkLogin() {
+        var subject = SecurityUtils.getSubject();
+        if(!subject.isAuthenticated()) {
+            return LoginCheckResult.builder().hasLogin(false).build();
+        }
+        var user = (User) subject.getPrincipal();
+        return LoginCheckResult.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .avatar(user.getAvatar())
+                .hasLogin(true)
+                .build();
     }
 
 }
