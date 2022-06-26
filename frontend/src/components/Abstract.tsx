@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Comment,
   Descriptions,
   Divider,
@@ -182,6 +181,7 @@ export default function Abstract() {
         <Layout>
           <Sider style={{ margin: "20px 15px" }}>
             <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
+
 
             <Details data={data.details} />
           </Sider>

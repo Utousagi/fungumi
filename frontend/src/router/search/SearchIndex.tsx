@@ -1,4 +1,4 @@
-import { Layout, List, Pagination, Space } from "@arco-design/web-react";
+import { Layout, List, Space } from "@arco-design/web-react";
 import pic from "@/assets/keep.jpg";
 import ListItem from "@/components/ListItem";
 
@@ -46,7 +46,6 @@ function SearchIndex() {
         ))}
       </List>
       <br />
-      <Pagination total={22} showTotal showJumper />
     </>
   );
 }

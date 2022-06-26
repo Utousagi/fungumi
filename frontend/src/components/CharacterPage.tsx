@@ -13,7 +13,7 @@ type ActInData = {
 };
 
 type CharacterPageData = {
-  id: number;
+  int: number;
   name: string;
   img: string;
   description: string;
@@ -22,7 +22,7 @@ type CharacterPageData = {
 };
 
 let data: CharacterPageData = {
-  id: 1,
+  int: 1,
   name: "Abigail",
   img: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
   description:

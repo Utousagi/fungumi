@@ -96,6 +96,7 @@ let data: CommentPageData = {
 };
 
 export default function Reviews(props: { page?: number } = { page: 1 }) {
+
   const subjectUrl = "/subject/" + data.id;
   const select = "reviews";
 
@@ -115,6 +116,7 @@ export default function Reviews(props: { page?: number } = { page: 1 }) {
       >
         <Link href={subjectUrl}>
           <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
+
         </Link>
         <SubjectMenu id={data.id} select={select} />
       </Header>
@@ -125,6 +127,7 @@ export default function Reviews(props: { page?: number } = { page: 1 }) {
         </Sider>
 
         <Content style={{ display: "flex", overflow: "hidden" }}>
+
           <div
             style={{
               display: "flex",

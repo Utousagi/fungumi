@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, Comment, Avatar, Rate } from "@arco-design/web-react";
+
 import {
-  IconThumbUp,
-  IconThumbDown,
-  IconThumbUpFill,
-  IconThumbDownFill,
   IconStarFill,
+  IconThumbDown,
+  IconThumbDownFill,
+  IconThumbUp,
+  IconThumbUpFill,
 } from "@arco-design/web-react/icon";
-import { time } from "console";
 
 export type CommentData = {
   userId: string;
