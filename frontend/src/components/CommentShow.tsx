@@ -22,21 +22,27 @@ export type CommentData = {
 
 export function CommentShow(props: CommentData) {
   function pressLike() {
-    setLike(!like);
-    setDislike(false);
-    // TODO：调用喜欢接口
+    if (isSelf) {
+      setLike(!like);
+      setDislike(false);
+      // TODO：调用喜欢接口
+    }
   }
 
   function pressDislike() {
-    setLike(false);
-    setDislike(!dislike);
-    // TODO：调用不喜欢接口
+    if (isSelf) {
+      setLike(false);
+      setDislike(!dislike);
+      // TODO：调用不喜欢接口
+    }
   }
 
   const [like, setLike] = useState(props.like);
   const [dislike, setDislike] = useState(props.dislike);
   const likes: number = props.likes;
   const score: number = props.score / 2.0;
+  //TODO: 是否自己的评论
+  const isSelf = true;
 
   const actions = [
     <span className="custom-comment-action" key="like" onClick={pressLike}>

@@ -13,6 +13,8 @@ import CharacterPage from "./components/CharacterPage";
 import Favourite from "./components/UserFavourite";
 import Likes from "./components/UserLike";
 import Review from "./components/UserReview";
+import User from "./components/User";
+import Info from "./components/UserInfo";
 
 function App() {
   return (
@@ -47,11 +49,12 @@ function App() {
             element={<Character type={"staff"} />}
           />
           <Route path="character/:id" element={<CharacterPage />} />
-          <Route path="/user/:id" >
-            <Route path="" element={<Favourite />} />
+          <Route path="/user/:id" element={<User />}>
+            <Route path="" element={<Info />} />
             <Route path="favourite" element={<Favourite />} />
             <Route path="Like" element={<Likes />} />
-            <Route path="Review/" element={<Review />} />
+            <Route path="review" element={<Review />} />
+            <Route path="info" element={<Info/>} />
           </Route>
         </Routes>
       </main>
