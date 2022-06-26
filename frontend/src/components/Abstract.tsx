@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Comment,
   Descriptions,
   Divider,
@@ -87,11 +86,12 @@ export function Details(props: { data: Map<string, string> }) {
     data.push({
       label: key,
       value: props.data.get(key),
+      span: 2,
     });
   }
   return (
     <Descriptions
-      column={1}
+      column={2}
       data={data}
       border={false}
       tableLayout="fixed"
@@ -105,21 +105,21 @@ function Character(props: { data: characterData }) {
   return (
     <Grid.Col span={8}>
       <Comment
-        author={item.name}
-        content={item.abstract}
+        author={<div style={{ fontSize: "23px" }}>{item.name}</div>}
+        content={<div>{item.abstract}</div>}
         avatar={
-          <Avatar>
-            <Image
-              alt="avatar"
-              src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
-              preview={false}
-              onClick={() => {
-                window.location.href = "/character/" + item.id;
-              }}
-            />
-          </Avatar>
+          <Image
+            alt="avatar"
+            src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
+            preview={false}
+            onClick={() => {
+              window.location.href = "/character/" + item.id;
+            }}
+            width={60}
+            height={60}
+          />
         }
-        style={{ alignContent: "left", width: "100%" }}
+        style={{ textAlign: "left", width: "100%", marginTop: "5px" }}
       />
     </Grid.Col>
   );
@@ -127,17 +127,28 @@ function Character(props: { data: characterData }) {
 function Labels(props: { title: string; data: labelData[] }) {
   return (
     <div
-      style={{ width: "98%", alignContent: "start", border: "2px solid grey" }}
+      style={{
+        width: "99%",
+        alignContent: "start",
+        border: "2px solid pink",
+        borderRadius: "5px",
+      }}
     >
-      <div style={{ textAlign: "left" }}>大家将 {props.title} 标注为</div>
-      <Space wrap size={[12, 8]} style={{ width: "100%" }}>
+      <div style={{ textAlign: "left", margin: "5px" }}>
+        大家将 {props.title} 标注为
+      </div>
+      <Space
+        wrap
+        size={[6, 8]}
+        style={{ width: "100%", marginTop: "5px", marginLeft: "8px" }}
+      >
         {props.data.map((label: labelData) => {
           return (
             <Link href={"/label/" + label.id}>
               {" "}
               <Tag key={label.id} defaultChecked={true} color="arcoblue">
-                {label.name}
-              </Tag>{" "}
+                <div style={{ fontSize: "15px" }}>{label.name}</div>
+              </Tag>
             </Link>
           );
         })}
@@ -151,89 +162,93 @@ export default function Abstract() {
   var subjectUrl = `/subject/${params.id}/abstract`;
 
   return (
-    <Layout style={{ width: "95%" }}>
-      <Header
-        style={{
-          width: "105%",
-          alignSelf: "center",
-          flexDirection: "column",
-          alignItems: "start",
-          height: "100%",
-        }}
-      >
-        <Link href={subjectUrl}>
-          <h1>{props.title}</h1>
-        </Link>
-        <SubjectMenu id={props.id} select={select} />
-      </Header>
-      <Layout>
-        <Sider>
-          <Image width={200} src={props.img} />
-          <Details data={props.details} />
-        </Sider>
-        <Content style={{ alignItems: "start" }}>
-          <Layout>
-            <Content>
-              <div
-                style={{
-                  textAlign: "left",
-                  whiteSpace: "pre-wrap",
-                  width: "95%",
-                  marginTop: "5px",
-                }}
-              >
-                {props.abstract}
-              </div>
-              <Divider
-                style={{
-                  borderBottomWidth: 2,
-                  borderBottomStyle: "dotted",
-                }}
-              />
-              <Labels title={props.title} data={props.labels} />
-            </Content>
-            <Sider>
-              <div>评分人数: {props.votes}</div>
-            </Sider>
-          </Layout>
-          <Divider
-            style={{
-              borderBottomWidth: 2,
-              borderBottomStyle: "dotted",
-            }}
-          />
-          <h2>角色介绍</h2>
-          <Grid.Row className="ji" style={{ alignSelf: "center" }}>
-            {props.characters.map((character: characterData) => {
-              return <Character key={character.id} data={character} />;
-            })}
-          </Grid.Row>
-          <Divider
-            style={{
-              borderBottomWidth: 2,
-              borderBottomStyle: "dotted",
-            }}
-          />
-          <h2>用户评价</h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "left",
-              width: "100%",
-            }}
-          >
-            {props.comments.map((comment: CommentData) => {
-              return <CommentShow {...comment} />;
-            })}
-          </div>
-        </Content>
+    <div style={{display:''}}>
+      <Layout style={{ width: "95%" }}>
+        <Header
+          style={{
+            width: "105%",
+            alignSelf: "center",
+            flexDirection: "column",
+            alignItems: "start",
+            height: "100%",
+          }}
+        >
+          <Link href={subjectUrl}>
+            <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
+          </Link>
+          <SubjectMenu id={data.id} select={select} />
+        </Header>
+        <Layout>
+          <Sider style={{ margin: "20px 15px" }}>
+            <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
+
+
+            <Details data={data.details} />
+          </Sider>
+          <Content style={{ alignItems: "start" }}>
+            <Layout>
+              <Content>
+                <div
+                  style={{
+                    textAlign: "left",
+                    whiteSpace: "pre-wrap",
+                    width: "95%",
+                    marginTop: "5px",
+                  }}
+                >
+                  {data.abstract}
+                </div>
+                <Divider
+                  style={{
+                    borderBottomWidth: 2,
+                    borderBottomStyle: "dotted",
+                  }}
+                />
+                <Labels title={data.title} data={data.labels} />
+              </Content>
+              <Sider style={{ margin: "10px 10px" }}>
+                <div>评分人数: {data.votes}</div>
+              </Sider>
+            </Layout>
+            <Divider
+              style={{
+                borderBottomWidth: 2,
+                borderBottomStyle: "dotted",
+              }}
+            />
+            <h2>角色介绍</h2>
+            <Grid.Row className="ji" style={{ alignSelf: "center" }}>
+              {data.characters.map((character: characterData) => {
+                return <Character key={character.id} data={character} />;
+              })}
+            </Grid.Row>
+            <Divider
+              style={{
+                borderBottomWidth: 2,
+                borderBottomStyle: "dotted",
+              }}
+            />
+            <h2>用户评价</h2>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+                width: "100%",
+              }}
+            >
+              {data.comments.map((comment: CommentData) => {
+                return <CommentShow {...comment} />;
+              })}
+            </div>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 }
 
-let props: workData = {
+let data: workData = {
   id: 1,
   type: "anime",
   title: "测试标题",

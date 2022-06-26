@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Avatar, Comment, Rate } from "@arco-design/web-react";
+import { Link, Comment, Avatar, Rate } from "@arco-design/web-react";
+
 import {
   IconStarFill,
   IconThumbDown,
@@ -65,23 +66,26 @@ export function CommentShow(props: CommentData) {
             readonly
             defaultValue={score}
             allowHalf
-            character={<IconStarFill style={{ fontSize: "10px" }} />}
+            character={<IconStarFill style={{ fontSize: "13px" }} />}
+            style={{ marginLeft: "15px" }}
           />
         </div>
       }
       content={<div>{props.content}</div>}
       avatar={
-        <Avatar>
-          <img alt="avatar" src={props.avator} />
-        </Avatar>
+        <Link href={`/user/${props.userId}`} hoverable={false}>
+          <Avatar>
+            <img alt="avatar" src={props.avator} />
+          </Avatar>
+        </Link>
       }
       datetime={props.time}
       style={{
         display: "flex",
         alignSelf: "center",
         textAlign: "left",
-        width: "80%",
-        border: "1px solid #f0f0f0",
+        width: "90%",
+        border: "2px solid pink",
         borderRadius: "5px",
         padding: "10px",
       }}
