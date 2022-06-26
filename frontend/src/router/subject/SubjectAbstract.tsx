@@ -156,7 +156,7 @@ function SubjectAbstract() {
         }}
       >
         {data.comments.map((comment: CommentData) => {
-          return <CommentShow {...comment} />;
+          return <CommentShow data={comment} />;
         })}
       </div>
     </>

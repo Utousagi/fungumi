@@ -90,7 +90,7 @@ function SubjectReview(props: { page?: number } = { page: 1 }) {
   return (
     <Layout.Content style={{ overflow: "hidden", padding: 0 }}>
       {reviewList.map((comment: CommentData) => {
-        return <CommentShow {...comment} />;
+        return <CommentShow data={comment} />;
       })}
       <Pagination
         total={data.total}

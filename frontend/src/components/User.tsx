@@ -42,7 +42,7 @@ export default function UserHeader(props: { select?: string }) {
 
     return (
         <C.Provider value="">
-            <div style={{ display: 'block', width: '1800px' }}>
+            <div style={{ display: 'block', width: '955px' }}>
                 <Layout style={{ width: "95%" }}>
                     <Header
                         style={{
@@ -54,11 +54,11 @@ export default function UserHeader(props: { select?: string }) {
                     >
                         <Grid.Row style={{ width: '95%' }}>
                             <Grid.Col span={4} style={{ alignContent: 'center' }}>
-                                <Image width={180} height={180} src={data.avater} style={{}} />
+                                <Image width={150} height={150} src={data.avatar} style={{}} />
                             </Grid.Col>
                             <Grid.Col span={16} style={{ textAlign: "left", display: "flex", flexDirection: "column" }}>
-                                <Link to={userUrl} style={{ fontSize: '48px', margin: '4px 10px' }}>{data.UserId}</Link>
-                                <Divider style={{ marginTop: '2px' }} />
+                                <Link to={userUrl} style={{ fontSize: '36px', margin: '4px 20px' }}>{data.UserId}</Link>
+                                <Divider style={{ marginTop: '2px'}}/>
                                 <UserMenu select={select} setSelect={setSelect} />
                             </Grid.Col>
                         </Grid.Row>
@@ -89,5 +89,5 @@ const userMenuItem = [{
 
 const data: UserData = {
     UserId: "ZeesangPie",
-    avater: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
+    avatar: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
 }

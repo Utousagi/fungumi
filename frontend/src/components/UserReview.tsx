@@ -63,7 +63,7 @@ export default function Review(props: { page?: number } = { page: 1 }) {
             <Grid.Row style={{ width: '100%' }}>
                 <Grid.Col offset={3} span={18} style={{ textAlign: "center", display: "flex", flexDirection: "column" }}>
                     {reviewList.map((review: CommentData) => {
-                        return <CommentShow {...review} />
+                        return <CommentShow data={review} />
                     })}
                 </Grid.Col>
             </Grid.Row>

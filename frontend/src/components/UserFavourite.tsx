@@ -1,4 +1,4 @@
-import { Button, Dropdown, Image, Menu, Pagination, Rate } from "@arco-design/web-react";
+import { Button, Dropdown, Image, Menu, Pagination, Rate, Tag } from "@arco-design/web-react";
 import Divider from "@arco-design/web-react/es/Divider";
 import Grid from "@arco-design/web-react/es/Grid";
 import Content from "@arco-design/web-react/es/Layout/content";
@@ -18,9 +18,10 @@ type FavouritePageData = {
   total: number;
 };
 
-type FavouriteData = {
+export type FavouriteData = {
   id: string;
   name: string;
+  workType: string;
   image: string;
   type: string;
   rate: number;
@@ -32,6 +33,7 @@ const data2: FavouriteData[] = [
 	{
 		id: "1",
 		name: "cowboy bebop",
+		workType: "动画",
 		image: "/src/assets/keep.jpg",
 		type: "想看",
 		rate: 3.5,
@@ -40,6 +42,7 @@ const data2: FavouriteData[] = [
 	}, {
 		id: "1",
 		name: "cowboy bebop",
+		workType: "动画",
 		image: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
 		type: "想看",
 		rate: 3.5,
@@ -48,6 +51,7 @@ const data2: FavouriteData[] = [
 	}, {
 		id: "1",
 		name: "cowboy bebop",
+		workType: "音乐",
 		image: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
 		type: "想看",
 		rate: 3.5,
@@ -97,9 +101,9 @@ function FavouriteShow(props: { data: FavouriteData, isSelf: boolean }) {
 	}
 
 	return (
-		<div style={{ width: "100%", marginBottom: "5px", border: "2px solid pink", borderRadius: "5px" }}>
+		<div style={{width: "120%", marginBottom: "5px", border: "2px solid pink", borderRadius: "5px" }}>
 			<Grid.Row>
-				<Grid.Col span={4} style={{ display: '', alignContent: 'center' }}>
+				<Grid.Col span={6} style={{ display: '', alignContent: 'center' }}>
 					<Image
 						src={props.data.image}
 						height={160}
@@ -107,7 +111,7 @@ function FavouriteShow(props: { data: FavouriteData, isSelf: boolean }) {
 					/>
 				</Grid.Col>
 				<Grid.Col
-					span={18}
+					span={15}
 					style={{
 						textAlign: "left",
 						display: "flex",
@@ -115,8 +119,9 @@ function FavouriteShow(props: { data: FavouriteData, isSelf: boolean }) {
 					}}
 				>
 					<Link href={"/subject/" + props.data.id}>
-						<div style={{ fontSize: "24px", margin: "4px" }}>
+						<div style={{ fontSize: "24px", margin: "5px 0px 0px 0px" }}>
 							{props.data.name}
+							<Tag style={{marginLeft:'5px'}}>{props.data.workType}</Tag>
 						</div>
 					</Link>
 					<div style={{ display: 'inline', fontSize: '16px' }}>
@@ -154,7 +159,7 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
 	return (
 		<Content>
 			<Grid.Row style={{ width: '100%' }}>
-				<Grid.Col offset={3} span={18} style={{ textAlign: "center", display: "flex", flexDirection: "column" }}>
+				<Grid.Col offset={0} span={18} style={{ textAlign: "center", display: "flex", flexDirection: "column" }}>
 					{favouriteList.map((data: FavouriteData) => {
 						return <FavouriteShow data={data} isSelf={isSelf} />
 					})}

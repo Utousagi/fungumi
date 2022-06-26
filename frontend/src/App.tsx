@@ -39,6 +39,7 @@ function App() {
             ))}
           </Route>
           <Route path="/subject/:id" element={<Subject />}>
+            <Route path="" element={<SubjectAbstract />} />
             <Route path="abstract" element={<SubjectAbstract />} />
             <Route path="review" element={<SubjectReview />} />
             <Route path="character" element={<SubjectCharacter />} />
