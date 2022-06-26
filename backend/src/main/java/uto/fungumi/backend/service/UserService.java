@@ -44,8 +44,12 @@ public class UserService {
     }
 
     public User register(String username, String password) {
+        User user = new User();
         password = Md5Util.getMd5(password);
-        return null;
+        user.setUsername(username);
+        user.setPassword(password);
+        userDao.save(user);
+        return user;
     }
 
 }
