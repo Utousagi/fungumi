@@ -1,6 +1,8 @@
 import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
 import React, { useEffect, useState } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
+import reduxStore from "@/redux/reduxStore";
+import { userAction } from "@/redux/userSlice";
 
 type AuthModalProps = {
   state: {
@@ -20,6 +22,7 @@ type ModalInfo = {
 async function login(username: string, password: string) {
   // const response = await axios.post("/api/login", {username, password});
   // return response.data;
+  reduxStore.dispatch(userAction.login({ name: username, avatar: "" }));
 }
 
 async function register(username: string, password: string) {
@@ -94,11 +97,7 @@ function AuthModal(props: AuthModalProps) {
           props.setState({ ...props.state, visible: false });
         }}
       >
-        <Form
-          form={form}
-          onSubmit={() => console.log("s")}
-          style={{ height: 200 }}
-        >
+        <Form form={form} style={{ height: 200 }}>
           {modalInfo.formItem}
         </Form>
         <Space
@@ -114,6 +113,7 @@ function AuthModal(props: AuthModalProps) {
                   form.getFieldsValue().username,
                   form.getFieldsValue().password
                 );
+                props.setState({ ...props.state, visible: false });
               } else {
                 setModalInfo(loginState);
                 setSubmit("login");
@@ -131,6 +131,7 @@ function AuthModal(props: AuthModalProps) {
                   form.getFieldsValue().username,
                   form.getFieldsValue().password
                 );
+                props.setState({ ...props.state, visible: false });
               } else {
                 setModalInfo(registerState);
                 setSubmit("register");

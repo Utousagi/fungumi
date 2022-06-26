@@ -1,26 +1,23 @@
-import React, { Dispatch, useEffect } from "react";
+import React from "react";
 import {
   Avatar,
   Button,
   Dropdown,
-  Image,
   Input,
   Menu,
   Select,
   Space,
 } from "@arco-design/web-react";
-import "@/style/component/Header.module.scss";
+import style from "@/style/component/Header.module.scss";
 import { Link } from "react-router-dom";
 import AuthModal from "@/components/AuthModal";
 import {
-  IconBackward,
   IconCloud,
   IconExport,
+  IconSettings,
   IconUser,
 } from "@arco-design/web-react/icon";
-import axios from "axios";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import userSlice, { userAction } from "@/redux/user";
+import { useSelector } from "react-redux";
 import reduxStore, { RootState } from "@/redux/reduxStore";
 import defaultAvatar from "@/assets/akarin.png";
 
@@ -31,7 +28,7 @@ type DropListProps = {
 
 function dropList(props: DropListProps[]) {
   return (
-    <Menu>
+    <Menu style={{ padding: "5px" }}>
       {props.map((item, idx) => (
         <Link to={item.href} key={idx.toString()}>
           <Menu.Item key={idx.toString()}>{item.name}</Menu.Item>
@@ -71,17 +68,28 @@ function UserBlock() {
       <Dropdown
         position="bottom"
         droplist={
-          <Menu style={{ width: 100 }}>
-            <Menu.Item key={"1"}>
-              <IconUser />
-              个人中心
+          <Menu style={{ width: 115, padding: "5px" }}>
+            <Menu.Item key="space">
+              <Space>
+                <IconUser />
+                个人空间
+              </Space>
             </Menu.Item>
-            <Menu.Item key={"2"}>
-              <IconExport />
-              退出登录
+            <Menu.Item key="setting">
+              <Space>
+                <IconSettings />
+                信息设置
+              </Space>
+            </Menu.Item>
+            <Menu.Item key="logout">
+              <Space>
+                <IconExport />
+                退出登录
+              </Space>
             </Menu.Item>
           </Menu>
         }
+        onVisibleChange={(visible) => {}}
       >
         <Avatar style={{ backgroundColor: "white" }}>
           <img
@@ -134,12 +142,15 @@ function GuestBlock() {
 }
 
 function Header() {
+  const isUserLogin = useSelector((state: RootState) => state.user.isLogin);
+
   return (
     <>
-      <header>
+      <header className={style.header}>
         <Space size="large">
           <Link to="/">
             <IconCloud fontSize={20} />
+            {reduxStore.getState().user.name}
           </Link>
           <Button.Group>
             <Dropdown

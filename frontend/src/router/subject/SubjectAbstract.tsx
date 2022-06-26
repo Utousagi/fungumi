@@ -1,20 +1,14 @@
 import {
   Comment,
-  Descriptions,
   Divider,
   Grid,
   Image,
   Layout,
-  Link,
-  Menu,
   Space,
   Tag,
 } from "@arco-design/web-react";
-import Content from "@arco-design/web-react/es/Layout/content";
-import Header from "@arco-design/web-react/es/Layout/header";
-import Sider from "@arco-design/web-react/es/Layout/sider";
-import { useParams } from "react-router-dom";
-import { CommentData, CommentShow } from "./CommentShow";
+import { Link } from "react-router-dom";
+import { CommentData, CommentShow } from "@/components/CommentShow";
 
 export type workData = {
   id: number;
@@ -43,84 +37,34 @@ export type characterData = {
   img: string;
 };
 
-export function SubjectMenu(props: { id: number; select: string }) {
-  var jumpUrl = "/subject/" + props.id;
-
-  function jump(key: string) {
-    switch (key) {
-      case "abstract":
-        jumpUrl += "/abstract";
-        break;
-      case "character":
-        jumpUrl += "/character";
-        break;
-      case "staff":
-        jumpUrl += "/staff";
-        break;
-      case "reviews":
-        jumpUrl += "/reviews";
-        break;
-    }
-    window.location.href = jumpUrl;
-  }
-
-  return (
-    <Menu
-      mode="horizontal"
-      ellipsis={false}
-      defaultSelectedKeys={[props.select]}
-      onClickMenuItem={jump}
-      style={{ width: "100%", alignContent: "start" }}
-    >
-      <Menu.Item key="abstract">概览</Menu.Item>
-      <Menu.Item key="character">角色</Menu.Item>
-      <Menu.Item key="staff">Staff</Menu.Item>
-      <Menu.Item key="reviews">评论</Menu.Item>
-    </Menu>
-  );
-}
-
-export function Details(props: { data: Map<string, string> }) {
-  var data = [];
-  for (let key of props.data.keys()) {
-    data.push({
-      label: key,
-      value: props.data.get(key),
-      span: 2,
-    });
-  }
-  return (
-    <Descriptions
-      column={2}
-      data={data}
-      border={false}
-      tableLayout="fixed"
-      valueStyle={{ wordWrap: "break-word" }}
-    />
-  );
-}
-
 function Character(props: { data: characterData }) {
-  var item = props.data;
+  const item = props.data;
   return (
     <Grid.Col span={8}>
-      <Comment
-        author={<div style={{ fontSize: "23px" }}>{item.name}</div>}
-        content={<div>{item.abstract}</div>}
-        avatar={
-          <Image
-            alt="avatar"
-            src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
-            preview={false}
-            onClick={() => {
-              window.location.href = "/character/" + item.id;
-            }}
-            width={60}
-            height={60}
-          />
-        }
-        style={{ textAlign: "left", width: "100%", marginTop: "5px" }}
-      />
+      <Link to={`/character/${item.id}`}>
+        <Comment
+          author={
+            <div style={{ fontSize: "15px", display: "contents" }}>
+              {item.name}
+            </div>
+          }
+          content={
+            <div style={{ fontSize: "10px", color: "darkgrey" }}>
+              {item.abstract}
+            </div>
+          }
+          avatar={
+            <Image
+              alt="avatar"
+              src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
+              preview={false}
+              width={50}
+              height={50}
+            />
+          }
+          style={{ textAlign: "left", width: "100%", marginTop: "5px" }}
+        />
+      </Link>
     </Grid.Col>
   );
 }
@@ -134,8 +78,8 @@ function Labels(props: { title: string; data: labelData[] }) {
         borderRadius: "5px",
       }}
     >
-      <div style={{ textAlign: "left", margin: "5px" }}>
-        大家将 {props.title} 标注为
+      <div style={{ textAlign: "left", margin: "5px 10px" }}>
+        大家将 <b>{props.title}</b> 标注为
       </div>
       <Space
         wrap
@@ -144,7 +88,7 @@ function Labels(props: { title: string; data: labelData[] }) {
       >
         {props.data.map((label: labelData) => {
           return (
-            <Link href={"/label/" + label.id}>
+            <Link to={`/search/${data.type}/tag/${label.name}`}>
               {" "}
               <Tag key={label.id} defaultChecked={true} color="arcoblue">
                 <div style={{ fontSize: "15px" }}>{label.name}</div>
@@ -156,97 +100,70 @@ function Labels(props: { title: string; data: labelData[] }) {
     </div>
   );
 }
-export default function Abstract() {
-  let params = useParams();
-  const select = "abstract";
-  var subjectUrl = `/subject/${params.id}/abstract`;
 
+function SubjectAbstract() {
   return (
-    <div style={{display:''}}>
-      <Layout style={{ width: "95%" }}>
-        <Header
-          style={{
-            width: "105%",
-            alignSelf: "center",
-            flexDirection: "column",
-            alignItems: "start",
-            height: "100%",
-          }}
-        >
-          <Link href={subjectUrl}>
-            <h1 style={{ marginLeft: "30px" }}>{data.title}</h1>
-          </Link>
-          <SubjectMenu id={data.id} select={select} />
-        </Header>
-        <Layout>
-          <Sider style={{ margin: "20px 15px" }}>
-            <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
-
-
-            <Details data={data.details} />
-          </Sider>
-          <Content style={{ alignItems: "start" }}>
-            <Layout>
-              <Content>
-                <div
-                  style={{
-                    textAlign: "left",
-                    whiteSpace: "pre-wrap",
-                    width: "95%",
-                    marginTop: "5px",
-                  }}
-                >
-                  {data.abstract}
-                </div>
-                <Divider
-                  style={{
-                    borderBottomWidth: 2,
-                    borderBottomStyle: "dotted",
-                  }}
-                />
-                <Labels title={data.title} data={data.labels} />
-              </Content>
-              <Sider style={{ margin: "10px 10px" }}>
-                <div>评分人数: {data.votes}</div>
-              </Sider>
-            </Layout>
-            <Divider
-              style={{
-                borderBottomWidth: 2,
-                borderBottomStyle: "dotted",
-              }}
-            />
-            <h2>角色介绍</h2>
-            <Grid.Row className="ji" style={{ alignSelf: "center" }}>
-              {data.characters.map((character: characterData) => {
-                return <Character key={character.id} data={character} />;
-              })}
-            </Grid.Row>
-            <Divider
-              style={{
-                borderBottomWidth: 2,
-                borderBottomStyle: "dotted",
-              }}
-            />
-            <h2>用户评价</h2>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                width: "100%",
-              }}
-            >
-              {data.comments.map((comment: CommentData) => {
-                return <CommentShow {...comment} />;
-              })}
-            </div>
-          </Content>
-        </Layout>
+    <>
+      <Layout>
+        <Layout.Content style={{ padding: 0 }}>
+          <div
+            style={{
+              textAlign: "left",
+              whiteSpace: "pre-wrap",
+              width: "95%",
+              marginTop: "5px",
+            }}
+          >
+            {data.abstract}
+          </div>
+          <Divider
+            style={{
+              borderBottomWidth: 2,
+              borderBottomStyle: "dotted",
+            }}
+          />
+          <Labels title={data.title} data={data.labels} />
+        </Layout.Content>
+        <Layout.Sider style={{ margin: "10px 10px" }}>
+          <div>评分人数: {data.votes}</div>
+        </Layout.Sider>
       </Layout>
-    </div>
+      <Divider
+        style={{
+          borderBottomWidth: 2,
+          borderBottomStyle: "dotted",
+        }}
+      />
+      <h3 style={{ margin: "0 25px" }}>角色介绍</h3>
+      <Grid.Row style={{ alignSelf: "center", margin: "0 25px" }}>
+        {data.characters.map((character: characterData) => {
+          return <Character key={character.id} data={character} />;
+        })}
+      </Grid.Row>
+      <Divider
+        style={{
+          borderBottomWidth: 2,
+          borderBottomStyle: "dotted",
+        }}
+      />
+      <h3 style={{ margin: "10px 25px" }}>用户评价</h3>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "left",
+          margin: "0 20px",
+        }}
+      >
+        {data.comments.map((comment: CommentData) => {
+          return <CommentShow {...comment} />;
+        })}
+      </div>
+    </>
   );
 }
+
+export default SubjectAbstract;
 
 let data: workData = {
   id: 1,
@@ -276,7 +193,7 @@ let data: workData = {
   comments: [
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -287,7 +204,7 @@ let data: workData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -299,7 +216,7 @@ let data: workData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -311,7 +228,7 @@ let data: workData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",
@@ -323,7 +240,7 @@ let data: workData = {
     },
     {
       userId: "Abigail",
-      avator:
+      avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
       time: "Now",

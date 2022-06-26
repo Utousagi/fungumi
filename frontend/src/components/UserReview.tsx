@@ -1,4 +1,11 @@
-import { Grid, Layout, Image, Link, Divider, Pagination } from "@arco-design/web-react";
+import {
+  Divider,
+  Grid,
+  Image,
+  Layout,
+  Link,
+  Pagination,
+} from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Header from "@arco-design/web-react/es/Layout/header";
 import { useState } from "react";
@@ -14,7 +21,7 @@ type ReviewPageData = {
 
 const data2: CommentData[] = [{
     userId: "Abigail",
-    avator:
+    avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
     score: 7,
     time: "Now",
@@ -25,7 +32,7 @@ const data2: CommentData[] = [{
     likes: 233,
 }, {
     userId: "Abigail",
-    avator:
+    avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
     score: 7,
     time: "Now",
@@ -38,7 +45,7 @@ const data2: CommentData[] = [{
 
 const data: UserData = {
     UserId: "ZeesangPie",
-    avater: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
+    avatar: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
 }
 
 const data3: ReviewPageData = {
@@ -74,3 +81,4 @@ export default function Review(props: { page?: number } = { page: 1 }) {
         </Content>
     );
 }
+

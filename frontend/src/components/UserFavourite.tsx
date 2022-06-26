@@ -5,28 +5,28 @@ import Content from "@arco-design/web-react/es/Layout/content";
 import Link from "@arco-design/web-react/es/Link";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { C } from "./User";
+
 
 export type UserData = {
-	UserId: string;
-	avater: string;
-}
+  UserId: string;
+  avatar: string;
+};
 
 type FavouritePageData = {
-	user: UserData;
-	favourites: FavouriteData[];
-	total: number;
-}
+  user: UserData;
+  favourites: FavouriteData[];
+  total: number;
+};
 
 type FavouriteData = {
-	id: string;
-	name: string;
-	image: string;
-	type: string;
-	rate: number;
-	votes: number;
-	description: string;
-}
+  id: string;
+  name: string;
+  image: string;
+  type: string;
+  rate: number;
+  votes: number;
+  description: string;
+};
 
 const data2: FavouriteData[] = [
 	{
@@ -56,16 +56,18 @@ const data2: FavouriteData[] = [
 	}
 ]
 
+
 const data: UserData = {
-	UserId: "ZeesangPie",
-	avater: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
-}
+  UserId: "ZeesangPie",
+  avatar:
+    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
+};
 
 const data3: FavouritePageData = {
-	user: data,
-	favourites: data2,
-	total: 22
-}
+  user: data,
+  favourites: data2,
+  total: 22,
+};
 
 const favouriteTypeList: string[] = ['想看', '在看', '看过', '搁置', '抛弃', '取消'];
 
@@ -148,8 +150,6 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
 	const id = useParams().id;
 	var [favouriteList, setFavouriteList] = useState(data3.favourites);
 	const isSelf = false;
-	let select = useContext(C) as string;
-	select = "favorite";
 
 	return (
 		<Content>
@@ -175,3 +175,4 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
 		</Content>
 	);
 }
+
