@@ -3,6 +3,7 @@ package uto.fungumi.backend.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.*;
 
 @Entity(name = "work")
 @Getter
@@ -21,7 +22,7 @@ public class Work {
     private String profile;
 
     @Column(name = "score")
-    private String score;
+    private Integer score;
 
     @Column(name = "category")
     private String category;
@@ -31,5 +32,10 @@ public class Work {
 
     @Column(name = "picture")
     private String picture;
+
+    @Column(name = "releasedate")
+    private Date date;
+
+
 }
 
