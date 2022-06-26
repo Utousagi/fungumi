@@ -13,7 +13,7 @@ import uto.fungumi.backend.entity.Work;
 import javax.annotation.Resource;
 
 @RestController
-public class pageController {
+public class PageController {
     @Resource
     private WorkDao workDao;
 

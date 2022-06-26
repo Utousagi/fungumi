@@ -30,6 +30,9 @@ public class LoginAspect {
         log.info("login aspect");
         var signature = (MethodSignature) pjt.getSignature();
         var method = signature.getMethod();
+        log.info(method.getName());
+        log.info("--------");
+        log.info(String.valueOf(method.getAnnotations().length));
         var login = method.getAnnotation(Login.class);
         var subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()) {

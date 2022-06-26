@@ -1,5 +1,6 @@
 package uto.fungumi.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -29,7 +30,8 @@ public class User {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "avatar")
     private String avatar;
@@ -48,5 +50,17 @@ public class User {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Getter
+    public enum Role {
+        @JsonEnumDefaultValue
+        USER("user"),
+        ADMIN("admin");
+
+        private final String roleName;
+        Role(String roleName) {
+            this.roleName = roleName;
+        }
     }
 }
