@@ -28,20 +28,6 @@ public class PageController {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.ASC, "id");
         BaseResult<Page<Tag>> baseResult = new BaseResult<>();
         Page<Tag> pages = tagDao.findAll(pageable);
-        // 当前页数
-        System.out.println("当前页数：" + pages.getNumber());
-        // 总页数
-        System.out.println("总页数：" + pages.getTotalPages());
-        // 查询出来的所有数据
-        System.out.println("查询出来的所有数据：" + pages.getContent());
-        // 是否有上一页
-        System.out.println("是否有上一页：" + pages.hasPrevious());
-        // 是否有下一页
-        System.out.println("是否有下一页：" + pages.hasNext());
-        // 当前页的上一页
-        System.out.println("当前页的上一页：" + (pages.hasPrevious() ? pages.previousPageable().getPageNumber() : pages.getNumber()));
-        // 当前页的下一页
-        System.out.println("当前页的下一页：" + (pages.hasNext() ? pages.nextPageable().getPageNumber() : pages.getNumber()));
         if(pages != null){
             baseResult.setData(pages);
             baseResult.setSuccess(true);

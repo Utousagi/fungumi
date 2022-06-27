@@ -20,7 +20,7 @@ public class WorkService {
         if(byId.isPresent()) {
             Work work = byId.get();     //差Actor、CommentPage、scoreMap、拓展Map字段（info）、tagList
         }
-
+        return null;
 
     }
 

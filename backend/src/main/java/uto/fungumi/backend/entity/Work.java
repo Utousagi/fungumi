@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 @Entity(name = "work")
@@ -16,6 +18,10 @@ public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToMany
+    @JoinTable(name = "work_r_tag",joinColumns = {@JoinColumn(name = "work_id",referencedColumnName = "id")},inverseJoinColumns = @JoinColumn(name = "tag_id",referencedColumnName = "id"))
+    private Set<Tag> tags = new HashSet<>();
 
     @Column(name = "title",unique = true)
     private String title;
