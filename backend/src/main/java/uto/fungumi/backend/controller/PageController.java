@@ -14,7 +14,7 @@ import uto.fungumi.backend.model.BaseResult;
 import javax.annotation.Resource;
 
 @RestController
-public class pageController {
+public class PageController {
     @Resource
     private WorkDao workDao;
 

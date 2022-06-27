@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Comment, Avatar, Rate } from "@arco-design/web-react";
+import { Avatar, Comment, Link, Rate } from "@arco-design/web-react";
 
 import {
   IconStarFill,
@@ -11,7 +11,7 @@ import {
 
 export type CommentData = {
   userId: string;
-  avator: string;
+  avatar: string;
   score: number;
   time: string;
   content: string;
@@ -20,23 +20,29 @@ export type CommentData = {
   likes: number;
 };
 
-export function CommentShow(props: CommentData) {
+export function CommentShow(props: {data: CommentData}) {
   function pressLike() {
-    setLike(!like);
-    setDislike(false);
-    // TODO：调用喜欢接口
+    if (isSelf) {
+      setLike(!like);
+      setDislike(false);
+      // TODO：调用喜欢接口
+    }
   }
 
   function pressDislike() {
-    setLike(false);
-    setDislike(!dislike);
-    // TODO：调用不喜欢接口
+    if (isSelf) {
+      setLike(false);
+      setDislike(!dislike);
+      // TODO：调用不喜欢接口
+    }
   }
 
-  const [like, setLike] = useState(props.like);
-  const [dislike, setDislike] = useState(props.dislike);
-  const likes: number = props.likes;
-  const score: number = props.score / 2.0;
+  const [like, setLike] = useState(props.data.like);
+  const [dislike, setDislike] = useState(props.data.dislike);
+  const likes: number = props.data.likes;
+  const score: number = props.data.score / 2.0;
+  //TODO: 是否自己的评论
+  const isSelf = true;
 
   const actions = [
     <span className="custom-comment-action" key="like" onClick={pressLike}>
@@ -61,7 +67,7 @@ export function CommentShow(props: CommentData) {
       align="right"
       author={
         <div>
-          {props.userId}
+          {props.data.userId}
           <Rate
             readonly
             defaultValue={score}
@@ -71,23 +77,24 @@ export function CommentShow(props: CommentData) {
           />
         </div>
       }
-      content={<div>{props.content}</div>}
+      content={<div>{props.data.content}</div>}
       avatar={
-        <Link href={`/user/${props.userId}`} hoverable={false}>
+        <Link href={`/user/${props.data.userId}`} hoverable={false}>
           <Avatar>
-            <img alt="avatar" src={props.avator} />
+            <img alt="avatar" src={props.data.avatar} />
           </Avatar>
         </Link>
       }
-      datetime={props.time}
+      datetime={props.data.time}
       style={{
+        margin: "5px 3px 5px 5px",
         display: "flex",
         alignSelf: "center",
         textAlign: "left",
-        width: "90%",
+        width: "95%",
         border: "2px solid pink",
         borderRadius: "5px",
-        padding: "10px",
+        padding: "5px",
       }}
     />
   );
