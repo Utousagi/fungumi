@@ -143,6 +143,14 @@ function GuestBlock() {
 
 function Header() {
   const isUserLogin = useSelector((state: RootState) => state.user.isLogin);
+  const dict: Record<string, string> = {
+    all: "全部",
+    anime: "动画",
+    novel: "书籍",
+    music: "音乐",
+    game: "游戏",
+  };
+  const [searchCategory, setSearchCategory] = React.useState<string>("all");
 
   return (
     <>
@@ -194,13 +202,17 @@ function Header() {
                 style={{ width: "80px" }}
                 size="small"
                 className=""
-                defaultValue="全部"
+                defaultValue={searchCategory}
               >
-                <Select.Option value="1">全部</Select.Option>
-                <Select.Option value="2">动画</Select.Option>
-                <Select.Option value="3">书籍</Select.Option>
-                <Select.Option value="4">音乐</Select.Option>
-                <Select.Option value="5">游戏</Select.Option>
+                {["all", "anime", "novel", "music", "game"].map((item) => (
+                  <Select.Option
+                    key={item}
+                    value={item}
+                    onClick={() => setSearchCategory(item)}
+                  >
+                    {dict[item]}
+                  </Select.Option>
+                ))}
               </Select>
             }
             size="small"

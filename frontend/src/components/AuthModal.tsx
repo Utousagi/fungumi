@@ -1,8 +1,9 @@
 import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactNode } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
 import reduxStore from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
+import axios from "axios";
 
 type AuthModalProps = {
   state: {
@@ -16,13 +17,14 @@ type ModalInfo = {
   title: string;
   loginButtonTheme: "primary" | "secondary";
   registerButtonTheme: "primary" | "secondary";
-  formItem: React.ReactNode;
+  formItem: ReactNode;
 };
 
 async function login(username: string, password: string) {
-  // const response = await axios.post("/api/login", {username, password});
+  console.log("login");
+  const response = await axios.post("user/login", { username, password });
   // return response.data;
-  reduxStore.dispatch(userAction.login({ name: username, avatar: "" }));
+  // reduxStore.dispatch(userAction.login({ name: username, avatar: "" }));
 }
 
 async function register(username: string, password: string) {

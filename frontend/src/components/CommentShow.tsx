@@ -20,7 +20,7 @@ export type CommentData = {
   likes: number;
 };
 
-export function CommentShow(props: {data: CommentData}) {
+export function CommentShow(props: { data: CommentData }) {
   function pressLike() {
     if (isSelf) {
       setLike(!like);
