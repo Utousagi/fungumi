@@ -23,11 +23,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public BaseResult<User> register(@RequestBody UserBean userBean) {
-        // TODO: 改一下呗
-        //  需要注册成功的话直接登录
-        // userService.register(user);
-        BaseResult<User> baseResult = new BaseResult<>();
+    public BaseResult<UserInfoResult> register(@RequestBody UserBean userBean) {
+
+        BaseResult<UserInfoResult> baseResult = new BaseResult<>();
         if (userService.findByUsername(userBean.getUsername()) == null) {
             var user = userService.register(userBean.getUsername(),userBean.getPassword());
             var userInfoResult = new UserInfoResult();
@@ -38,8 +36,8 @@ public class UserController {
                     .username(user.getUsername())
                     .build();
             baseResult.setSuccess(true);
-            baseResult.setData(user);
-//            login(new User());
+            baseResult.setData(userResult);
+            login(userBean);
         } else {
             baseResult.setSuccess(false);
             baseResult.setMessage("failed to save! ");
@@ -48,11 +46,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public BaseResult<User> login(@RequestBody User user) {
-        var success = userService.login(user.getUsername(), user.getPassword());
+    public BaseResult<UserInfoResult> login(@RequestBody UserBean userBean) {
+        var success = userService.login(userBean.getUsername(), userBean.getPassword());
         if(success) {
-            BaseResult<User> baseResult = new BaseResult<>(true,"登录成功",user);
-            return baseResult;
+            return new BaseResult<>(true,"登录成功");
         }
         return new BaseResult<>(false, "用户名或密码错误");
     }
