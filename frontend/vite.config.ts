@@ -8,4 +8,13 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@", replacement: resolve(__dirname, "src") }],
   },
+  server: {
+    proxy: {
+      "/fungumi/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/fungumi\/api/, "/fungumi/api"),
+      },
+    },
+  },
 });

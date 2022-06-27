@@ -20,3 +20,15 @@ a {
     text-decoration: none;
   }
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #a0a0a033;
+  &:hover {
+    background-color: #a0a0a088;
+  }
+}

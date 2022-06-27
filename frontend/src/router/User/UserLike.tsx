@@ -19,7 +19,6 @@ type ReviewPageData = {
   reviews: CommentData[];
 };
 
-
 const data2: CommentData[] = [
   {
     userId: 1,
@@ -61,31 +60,37 @@ const data3: ReviewPageData = {
 };
 
 export default function Likes(props: { page?: number } = { page: 1 }) {
-	const id = useParams().id;
-	var [reviewList, setReviewList] = useState(data3.reviews);
+  const id = useParams().id;
+  var [reviewList, setReviewList] = useState(data3.reviews);
 
-	return (
-		<Content style={{}}>
-			<Grid.Row style={{ width: '100%' }}>
-				<Grid.Col offset={3} span={18} style={{ textAlign: "center", display: "flex", flexDirection: "column" }}>
-					{reviewList.map((review: CommentData) => {
-						return <CommentShow data={review} />
-					})}
-				</Grid.Col>
-			</Grid.Row>
-			<Pagination
-				total={data3.total}
-				defaultPageSize={10}
-				defaultCurrent={props.page}
-				onChange={(pageNumber: number) => {
-					setReviewList(
-						data3.reviews.slice((pageNumber - 1) * 10, pageNumber * 10)
-					);
-				}}
-				style={{ marginTop: "10px" }}
-			/>
-		</Content>
-
-	);
+  return (
+    <Content style={{}}>
+      <Grid.Row style={{ width: "100%" }}>
+        <Grid.Col
+          offset={3}
+          span={18}
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {reviewList.map((review: CommentData) => {
+            return <CommentShow data={review} />;
+          })}
+        </Grid.Col>
+      </Grid.Row>
+      <Pagination
+        total={data3.total}
+        defaultPageSize={10}
+        defaultCurrent={props.page}
+        onChange={(pageNumber: number) => {
+          setReviewList(
+            data3.reviews.slice((pageNumber - 1) * 10, pageNumber * 10)
+          );
+        }}
+        style={{ marginTop: "10px" }}
+      />
+    </Content>
+  );
 }
-

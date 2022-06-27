@@ -10,8 +10,6 @@ import {
 } from "@arco-design/web-react/icon";
 import { CommentData } from "@/axios/User";
 
-
-
 export function CommentShow(props: { data: CommentData }) {
   function pressLike() {
     if (isSelf) {

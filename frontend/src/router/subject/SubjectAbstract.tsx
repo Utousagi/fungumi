@@ -4,11 +4,13 @@ import {
   Grid,
   Image,
   Layout,
+  Select,
   Space,
   Tag,
 } from "@arco-design/web-react";
 import { Link } from "react-router-dom";
 import { CommentData, CommentShow } from "@/components/CommentShow";
+import { IconStar } from "@arco-design/web-react/icon";
 
 export type workData = {
   id: number;
@@ -36,6 +38,44 @@ export type characterData = {
   abstract: string;
   img: string;
 };
+
+type ScoreData = {
+  score: number;
+  rank: number;
+  votes: number;
+  eachScores: number[];
+};
+
+function ScoreBox(props: ScoreData) {
+  return (
+    <div>
+      <Space style={{ alignItems: "end" }}>
+        <IconStar fontSize={20} />
+        <div style={{ fontSize: 20 }}>{props.score}</div>
+        <div style={{ fontSize: 12, color: "darkgrey" }}>
+          共{props.votes}人参与评分
+        </div>
+      </Space>
+      <Divider style={{ margin: "5px 0", width: "90%" }} />
+      <Space size="small" style={{ alignItems: "end" }}>
+        {props.eachScores.map((score, index) => {
+          return (
+            <Grid.Col key={index} span={24}>
+              <div
+                style={{
+                  height: score * 10,
+                  width: 10,
+                  backgroundColor: "lightpink",
+                }}
+              />
+              <div style={{ fontSize: 12 }}>{index + 1}</div>
+            </Grid.Col>
+          );
+        })}
+      </Space>
+    </div>
+  );
+}
 
 function Character(props: { data: characterData }) {
   const item = props.data;
@@ -124,8 +164,13 @@ function SubjectAbstract() {
           />
           <Labels title={data.title} data={data.labels} />
         </Layout.Content>
-        <Layout.Sider style={{ margin: "10px 10px" }}>
-          <div>评分人数: {data.votes}</div>
+        <Layout.Sider style={{ margin: "10px 10px", padding: "5px" }}>
+          <ScoreBox
+            score={7.5}
+            rank={100}
+            votes={233}
+            eachScores={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          />
         </Layout.Sider>
       </Layout>
       <Divider

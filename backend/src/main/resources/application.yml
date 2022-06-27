@@ -24,3 +24,7 @@ spring:
         enable_lazy_load_no_trans: true
         format_sql: true
     open-in-view: true
+
+server:
+  servlet:
+    context-path: /fungumi/api

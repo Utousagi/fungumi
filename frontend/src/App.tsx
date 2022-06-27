@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import "@/style/App.scss";
 import Header from "@/components/Header";
 import Index from "@/router/Index";
@@ -17,6 +17,7 @@ import Info from "./router/User/UserInfo";
 import Subject from "./router/Subject";
 import SubjectCharacter from "./router/subject/SubjectCharacter";
 import Test from "./Test";
+
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
             ))}
           </Route>
           <Route path="/subject/:id" element={<Subject />}>
-            <Route path="" element={<SubjectAbstract />} />
+            <Route path="" element={<Navigate to="abstract" />} />
             <Route path="abstract" element={<SubjectAbstract />} />
             <Route path="review" element={<SubjectReview />} />
             <Route path="character" element={<SubjectCharacter />} />
