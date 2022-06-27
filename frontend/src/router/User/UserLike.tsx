@@ -11,7 +11,7 @@ import Header from "@arco-design/web-react/es/Layout/header";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserData } from "./UserFavourite";
-import { CommentData, CommentShow } from "./CommentShow";
+import { CommentData, CommentShow } from "../../components/CommentShow";
 
 type ReviewPageData = {
   user: UserData;

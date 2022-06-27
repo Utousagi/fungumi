@@ -4,7 +4,7 @@ import Content from "@arco-design/web-react/es/Layout/content";
 import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CommentData, CommentShow } from "./CommentShow";
+import { CommentData, CommentShow } from "../../components/CommentShow";
 import { FavouriteData } from "./UserFavourite";
 
 type InfoPageData = {

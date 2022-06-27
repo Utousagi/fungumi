@@ -3,7 +3,7 @@ import Header from "@arco-design/web-react/es/Layout/header";
 import { type } from "os";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
-import { UserData } from "./UserFavourite";
+import { UserData } from "./User/UserFavourite";
 
 type SelectState = {
     select: string,

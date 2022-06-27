@@ -20,7 +20,7 @@ type SubjectData = {
 function Subject() {
   const id = useParams<{ id: string }>().id;
   const select = useMatch("/subject/:id/:location")?.params.location!;
-  const location = select != "" ? select : "abstract";
+  const location = select ? select : "abstract";
   const dict: Record<string, string> = {
     abstract: "概览",
     character: "角色",
