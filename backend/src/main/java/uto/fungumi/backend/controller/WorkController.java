@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.dao.WorkDao;
 import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.BaseResult;
+import uto.fungumi.backend.model.WorkInfoResult;
 import uto.fungumi.backend.service.DisplayService;
 
 import javax.annotation.Resource;
@@ -101,5 +102,10 @@ public class WorkController {
 
         return baseResult;
 
+    }
+
+    @PostMapping("/showWorkInfo")
+    public BaseResult<WorkInfoResult> showWorkInfo(Integer work_id){
+        return null;
     }
 }

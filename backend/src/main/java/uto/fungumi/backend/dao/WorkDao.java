@@ -7,9 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import uto.fungumi.backend.entity.Work;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WorkDao extends JpaRepository<Work,Integer> {
     @Query("select w from work w where w.category = ?1")
     List<Work> findAllByCategory(String category);
     Page<Work> findAll(Pageable pageable);
+
+    //checkWorkInfo相关：
+    Optional<Work> findById(Integer id);
 }

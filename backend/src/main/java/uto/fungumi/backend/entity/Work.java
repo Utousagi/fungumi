@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.*;
+import java.util.List;
 
 @Entity(name = "work")
 @Getter
@@ -23,7 +24,7 @@ public class Work {
     private String profile;
 
     @Column(name = "score")
-    private Integer score;
+    private Double score;
 
     @Column(name = "category")
     private String category;
@@ -38,8 +39,10 @@ public class Work {
     private Date date;
 
     @Column(name = "ratep",columnDefinition = "int default 0")
-    private int rateperson;
+    private Integer rateperson;
 
 
+    @ManyToMany(targetEntity = Actor.class)
+    private List<Actor> actorList;
 }
 

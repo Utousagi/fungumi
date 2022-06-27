@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -63,4 +64,13 @@ public class User {
             this.roleName = roleName;
         }
     }
+
+    @OneToMany(mappedBy = "user")
+    private List<User_r_Favorite> user_r_favoriteList;
+
+    @OneToMany(mappedBy = "user")
+    private List<User_r_ThumbUp> user_r_thumbUpList;
+
+    @OneToMany(mappedBy = "user")
+    private List<User_r_Comment> user_r_commentList;
 }

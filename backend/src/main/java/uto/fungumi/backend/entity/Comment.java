@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Table(name = "comment")
@@ -15,10 +16,10 @@ public class Comment {
     private int id;
 
     @Column(name = "user_id")
-    private int user_id;
+    private int userId;
 
     @Column(name = "work_id")
-    private int work_id;
+    private int workId;
 
     @Column(name = "score")
     private int score;
@@ -31,4 +32,7 @@ public class Comment {
 
     @Column(name = "like")
     private int like;
+
+    @OneToMany(mappedBy = "comment")
+    private List<User_r_Comment> user_r_commentList;
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 import uto.fungumi.backend.entity.Tag;
 
 import javax.persistence.Column;
@@ -15,14 +16,14 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class WorkInfoResult {
-    private Integer work_id;
-    private String work_title;
-    private Map<String,String> work_info;
-    private String work_profile;
+    private Integer workId;
+    private String workTitle;
+    private Map<String,String> workInfo;
+    private String workProfile;
     private List<Tag> tag;
     private ActorBean actor;                    //演员
-    private List<CommentBean> commentItemList;
-    private Double avg_score;                   //平均分
-    private Map<Integer,Integer> scoreMap;      //每个评分段=>人数
+    private Page<CommentBean> commentItemList;
+    private Double avgScore;                   //平均分
+    private Map<Integer,Integer> scoreMap;      //每个评分段=>人数  ？？？
 
 }

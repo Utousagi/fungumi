@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ActorBean {
+    private Integer id;
     private String name;
     private String avatar;
-    private String info;
+    private String occupation;
 }
+
