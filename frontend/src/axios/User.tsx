@@ -10,7 +10,7 @@ export type UserData = {
 };
 
 export type PageResult<T> = {
-	content: T[];
+	content: Array<T>;
 	totalElements: number;
 }
 
