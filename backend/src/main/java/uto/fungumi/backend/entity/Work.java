@@ -1,5 +1,6 @@
 package uto.fungumi.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Work {
 
     @ManyToMany
     @JoinTable(name = "work_r_tag",joinColumns = {@JoinColumn(name = "work_id",referencedColumnName = "id")},inverseJoinColumns = @JoinColumn(name = "tag_id",referencedColumnName = "id"))
+    @JsonIgnoreProperties({"works"})
     private Set<Tag> tags = new HashSet<>();
 
     @Column(name = "title",unique = true)
@@ -49,6 +51,8 @@ public class Work {
 
 
     @ManyToMany(targetEntity = Actor.class)
+    @JoinTable(name = "work_r_actor",joinColumns = {@JoinColumn(name = "work_id")},inverseJoinColumns = @JoinColumn(name = "actor_id",referencedColumnName = "id"))
+    @JsonIgnoreProperties({"workList"})
     private List<Actor> actorList;
 }
 

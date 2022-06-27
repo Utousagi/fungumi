@@ -24,6 +24,6 @@ public class WorkInfoResult {
     private ActorBean actor;                    //演员
     private Page<CommentBean> commentItemList;
     private Double avgScore;                   //平均分
-    private Map<Integer,Integer> scoreMap;      //每个评分段=>人数  ？？？
+    private List<CommentScoreBean> scoreMap;      //每个评分段=>人数  ？？？
 
 }

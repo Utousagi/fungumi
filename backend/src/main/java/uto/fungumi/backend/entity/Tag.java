@@ -1,5 +1,6 @@
 package uto.fungumi.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -21,6 +22,7 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags")
     @ToString.Exclude
+    @JsonIgnoreProperties({"tags"})
     private Set<Work> works = new HashSet<>();
 
     @Column(name = "category")

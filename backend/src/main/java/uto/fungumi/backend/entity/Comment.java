@@ -8,21 +8,21 @@ import java.util.List;
 
 @Data
 @Table(name = "comment")
-@Entity(name = "comment")
+@Entity
 
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
 
     @Column(name = "work_id")
-    private int workId;
+    private Integer workId;
 
     @Column(name = "score")
-    private int score;
+    private Integer score;
 
     @Column(name = "content")
     private String content;
@@ -30,8 +30,8 @@ public class Comment {
     @Column(name = "time")
     private LocalDateTime time;
 
-    @Column(name = "like")
-    private int like;
+    @Column(name = "likes")
+    private Integer likes;
 
     @OneToMany(mappedBy = "comment")
     private List<User_r_Comment> user_r_commentList;

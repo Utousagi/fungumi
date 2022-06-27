@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import uto.fungumi.backend.entity.Tag;
 import uto.fungumi.backend.entity.Work;
 
 import java.util.List;

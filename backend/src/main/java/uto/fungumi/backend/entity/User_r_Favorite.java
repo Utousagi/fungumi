@@ -3,6 +3,7 @@ package uto.fungumi.backend.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 @Table
@@ -18,7 +19,7 @@ public class User_r_Favorite {
     private Integer id;
 
     @Column
-    private LocalDateTime time;
+    private Time time;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")

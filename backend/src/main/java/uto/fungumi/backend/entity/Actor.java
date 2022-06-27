@@ -1,5 +1,6 @@
 package uto.fungumi.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Actor {
 
 
     @ManyToMany(targetEntity = Actor.class, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"actorList"})
     private List<Work> workList;
 
 }
