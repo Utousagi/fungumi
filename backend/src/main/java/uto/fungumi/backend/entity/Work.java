@@ -10,6 +10,7 @@ import java.sql.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(name = "work")
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +36,9 @@ public class Work {
 
     @Column(name = "releasedate")
     private Date date;
+
+    @Column(name = "ratep",columnDefinition = "int default 0")
+    private int rateperson;
 
 
 }

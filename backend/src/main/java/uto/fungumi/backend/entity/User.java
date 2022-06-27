@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @ToString
-@Table(schema = "fgm", name = "user")
+@Table(name = "user")
 public class User {
     @Id
     @Column(name = "id", nullable = false)
