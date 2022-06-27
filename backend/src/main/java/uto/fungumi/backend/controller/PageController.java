@@ -19,7 +19,7 @@ public class PageController {
     private WorkDao workDao;
 
 
-    @GetMapping("/page/rank")
+    @GetMapping("/page/id")
     public BaseResult<Page<Work>> findAllById(@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
                                                 @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");

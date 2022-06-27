@@ -25,4 +25,10 @@ public class Comment {
 
     @Column(name = "time")
     private LocalDateTime time;
+
+    @Column(name = "like")
+    private int like;
+
+    @Column(name = "dislike")
+    private int dislike;
 }
