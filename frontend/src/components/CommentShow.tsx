@@ -8,37 +8,19 @@ import {
   IconThumbUp,
   IconThumbUpFill,
 } from "@arco-design/web-react/icon";
+import { CommentData } from "@/axios/User";
 
-export type CommentData = {
-  userId: string;
-  avatar: string;
-  score: number;
-  time: string;
-  content: string;
-  like: boolean;
-  dislike: boolean;
-  likes: number;
-};
 
-export function CommentShow(props: {data: CommentData}) {
+
+export function CommentShow(props: { data: CommentData }) {
   function pressLike() {
     if (isSelf) {
       setLike(!like);
-      setDislike(false);
       // TODO：调用喜欢接口
     }
   }
 
-  function pressDislike() {
-    if (isSelf) {
-      setLike(false);
-      setDislike(!dislike);
-      // TODO：调用不喜欢接口
-    }
-  }
-
-  const [like, setLike] = useState(props.data.like);
-  const [dislike, setDislike] = useState(props.data.dislike);
+  const [like, setLike] = useState(props.data.islike);
   const likes: number = props.data.likes;
   const score: number = props.data.score / 2.0;
   //TODO: 是否自己的评论
@@ -49,17 +31,6 @@ export function CommentShow(props: {data: CommentData}) {
       {like ? <IconThumbUpFill style={{ color: "f53f3f" }} /> : <IconThumbUp />}{" "}
       {likes + (like ? 1 : 0)}
     </span>,
-    <span
-      className="custom-comment-action"
-      key="dislike"
-      onClick={pressDislike}
-    >
-      {dislike ? (
-        <IconThumbDownFill style={{ color: "f53f3f" }} />
-      ) : (
-        <IconThumbDown />
-      )}
-    </span>,
   ];
   return (
     <Comment
@@ -67,7 +38,7 @@ export function CommentShow(props: {data: CommentData}) {
       align="right"
       author={
         <div>
-          {props.data.userId}
+          {props.data.username}
           <Rate
             readonly
             defaultValue={score}

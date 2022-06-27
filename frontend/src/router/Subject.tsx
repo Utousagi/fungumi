@@ -1,10 +1,16 @@
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
-import { Button, Divider, Dropdown, Image, Layout, Menu, Tag } from "@arco-design/web-react";
-import { CommentData } from "@/components/CommentShow";
+import {
+  Button,
+  Divider,
+  Dropdown,
+  Image,
+  Layout,
+  Menu,
+  Tag,
+} from "@arco-design/web-react";
 import { characterData, labelData } from "@/router/subject/SubjectAbstract";
 import Detail from "@/components/Detail";
 import { useState } from "react";
-import { type } from "os";
 
 type SubjectData = {
   id: number;
@@ -14,8 +20,6 @@ type SubjectData = {
   img: string;
   details: Map<string, string>;
 };
-
-
 
 function Subject() {
   const id = useParams<{ id: string }>().id;
@@ -35,29 +39,33 @@ function Subject() {
   }
 
   function DropList(props: { status: string }) {
-    const typeList: string[] = ['想看', '在看', '看过', '搁置', '抛弃'];
+    const typeList: string[] = ["想看", "在看", "看过", "搁置", "抛弃"];
     return (
       <Menu onClickMenuItem={typeChange}>
         {typeList.map((typeNow: string) => {
-          return (
-            <Menu.Item key={typeNow}>{typeNow}</Menu.Item>
-          )
+          return <Menu.Item key={typeNow}>{typeNow}</Menu.Item>;
         })}
-        {props.status != '未收藏' ? <Menu.Item key={'取消'}>{'取消'}</Menu.Item> : null}
+        {props.status != "未收藏" ? (
+          <Menu.Item key={"取消"}>{"取消"}</Menu.Item>
+        ) : null}
       </Menu>
-    )
+    );
   }
 
   return (
     <Layout style={{ margin: "30px 10px", width: 955 }}>
       <Layout.Header style={{ textAlign: "start", margin: "0 0 0 0" }}>
-        <div style={{ display: 'flex' }}>
-          <h2 style={{ margin: "0 30px",width:'90%' }}>{data.title}<Tag style={{ margin: '2px 2px 2px 2px' }}>{data.type}</Tag></h2>
-          <Dropdown
-            position="bottom"
-            droplist={<DropList status={status} />}
-          >
-            <Button shape="round" size="large" style={{ float:'right', marginBottom:'0px' }}>
+        <div style={{ display: "flex" }}>
+          <h2 style={{ margin: "0 30px", width: "90%" }}>
+            {data.title}
+            <Tag style={{ margin: "2px 2px 2px 2px" }}>{data.type}</Tag>
+          </h2>
+          <Dropdown position="bottom" droplist={<DropList status={status} />}>
+            <Button
+              shape="round"
+              size="large"
+              style={{ float: "right", marginBottom: "0px" }}
+            >
               {status}
             </Button>
           </Dropdown>
@@ -107,5 +115,5 @@ const data: SubjectData = {
     ["类型", "游戏"],
     ["状态", "进行中"],
   ]),
-  status: "未收藏"
+  status: "未收藏",
 };

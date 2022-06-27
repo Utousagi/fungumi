@@ -57,43 +57,42 @@ let data: CharacterPageData = {
 
 function ActIn(props: { data: ActInData }) {
   return (
-    <>
-      <Grid.Col
-        span={10}
-        style={{
-          alignContent: "start",
-          margin: "3px 25px 8px 5px",
-          border: "2px solid pink",
-          WebkitBorderRadius: "5px",
-        }}
-      >
-        <Grid.Row>
-          <Grid.Col span={6}>
-            <Image
-              src={props.data.image}
-              width={80}
-              height={80}
-              style={{ margin: "5px", display: "flex" }}
-            />
-          </Grid.Col>
-          <Grid.Col
-            span={18}
-            style={{
-              textAlign: "left",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Link href={"/subject/" + props.data.id}>
-              <div style={{ fontSize: "18px", margin: "4px" }}>
-                {props.data.name}
-              </div>
-            </Link>
-            <Divider style={{ marginTop: "2px" }} />
-          </Grid.Col>
-        </Grid.Row>
-      </Grid.Col>
-    </>
+    <Grid.Col
+      offset={4}
+      span={16}
+      style={{
+        alignContent: "start",
+        margin: "3px 30px 8px 50px",
+        border: "2px solid pink",
+        WebkitBorderRadius: "5px",
+      }}
+    >
+      <Grid.Row>
+        <Grid.Col span={6} style={{ display: "block", textAlign: "center" }}>
+          <Image
+            src={props.data.image}
+            width={80}
+            height={80}
+            style={{ margin: "5px", display: "flex" }}
+          />
+        </Grid.Col>
+        <Grid.Col
+          span={18}
+          style={{
+            textAlign: "left",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Link href={"/subject/" + props.data.id}>
+            <div style={{ fontSize: "18px", margin: "4px" }}>
+              {props.data.name}
+            </div>
+          </Link>
+          <Divider style={{ marginTop: "2px" }} />
+        </Grid.Col>
+      </Grid.Row>
+    </Grid.Col>
   );
 }
 
@@ -103,34 +102,31 @@ export default function CharacterPage() {
   const username = reduxStore.getState().user.name;
 
   return (
-    <div style={{ display: "" }}>
+    <div style={{ width: "995px" }}>
       <Layout style={{ width: "95%" }}>
         <Header
           style={{
-            width: "105%",
-            alignSelf: "center",
+            width: "100%",
+            textAlign: "left",
             flexDirection: "column",
             alignItems: "start",
             height: "100%",
           }}
         >
-          <Link href={characterUrl}>
-            <h1 style={{ marginLeft: "30px" }}>{data.name}</h1>
-          </Link>
+          {/* <Link href={characterUrl}> */}
+          <h1 style={{ marginLeft: "30px" }}>{data.name}</h1>
+          {/* </Link> */}
         </Header>
         <Layout>
           <Sider style={{ margin: "20px 15px" }}>
             <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
             <Detail data={data.details} />
           </Sider>
-          <Content
-            style={{ alignItems: "start", margin: "10px", display: "block" }}
-          >
+          <Content style={{ alignItems: "start", display: "block" }}>
             <div
               style={{
                 textAlign: "left",
                 whiteSpace: "pre-wrap",
-                width: "95%",
                 margin: "12px",
               }}
             >

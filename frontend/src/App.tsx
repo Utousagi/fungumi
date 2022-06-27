@@ -9,14 +9,14 @@ import SearchIndex from "@/router/search/SearchIndex";
 import SearchTag from "@/router/search/SearchTag";
 import SearchTag$Tag from "@/router/search/SearchTag$Tag";
 import CharacterPage from "./components/CharacterPage";
-import Favourite from "./components/UserFavourite";
-import Likes from "./components/UserLike";
-import Review from "./components/UserReview";
-import User from "./components/User";
-import Info from "./components/UserInfo";
+import Favourite from "./router/User/UserFavourite";
+import Likes from "./router/User/UserLike";
+import Review from "./router/User/UserReview";
+import User from "./router/User";
+import Info from "./router/User/UserInfo";
 import Subject from "./router/Subject";
 import SubjectCharacter from "./router/subject/SubjectCharacter";
-
+import Test from "./Test";
 
 function App() {
   return (
@@ -52,8 +52,9 @@ function App() {
             <Route path="favourite" element={<Favourite />} />
             <Route path="Like" element={<Likes />} />
             <Route path="review" element={<Review />} />
-            <Route path="info" element={<Info/>} />
+            <Route path="info" element={<Info />} />
           </Route>
+          <Route path="/test" element={<Test/>}/>
         </Routes>
       </main>
     </div>

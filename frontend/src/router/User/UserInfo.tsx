@@ -1,69 +1,62 @@
+import { CommentData, InfoPageData } from "@/axios/User";
 import { Button, Layout, Image, Tag, Divider, Modal, Form, Input, Message } from "@arco-design/web-react";
 import FormItem from "@arco-design/web-react/es/Form/form-item";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CommentData, CommentShow } from "../../components/CommentShow";
+import { CommentShow } from "../../components/CommentShow";
 import { FavouriteData } from "./UserFavourite";
 
-type InfoPageData = {
-	id: string;
-	avatar: string;
-	description: string;
-	likes: CommentData[];
-	reviews: CommentData[];
-	favourites: FavouriteData[];
-}
+
 
 const data: InfoPageData = {
-	id: "Abigail",
-	avatar: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
+	id: 1,
 	description: "职阶降临者（Foreigner），在亚种特异点 Ⅳ 禁忌降临庭园 塞勒姆 异端塞勒姆登场。名为阿比盖尔的同名角色为历史上美国塞勒姆审巫案的关键角色，并被多部影视作品改编。本作的阿比盖尔是魔神柱劳姆以史实为基础创造出的架空人格。",
 	likes: [{
-		userId: "Abigail",
+		userId: 1,
+		username: "Abigail",
 		avatar:
 			"https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
 		score: 7,
 		time: "Now",
 		content:
 			"可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-		like: false,
-		dislike: false,
+		islike: false,
 		likes: 233,
 	}, {
-		userId: "Abigail",
+		userId: 1,
+		username: "Abigail",
 		avatar:
 			"https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
 		score: 7,
 		time: "Now",
 		content:
 			"可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-		like: false,
-		dislike: false,
+		islike: false,
 		likes: 233,
 	},],
 	reviews: [{
-		userId: "Abigail",
+		userId: 1,
+		username: "Abigail",
 		avatar:
 			"https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
 		score: 7,
 		time: "Now",
 		content:
 			"可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-		like: false,
-		dislike: false,
+		islike: false,
 		likes: 233,
 	}, {
-		userId: "Abigail",
+		userId: 1,
+		username: "Abigail",
 		avatar:
 			"https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
 		score: 7,
 		time: "Now",
 		content:
 			"可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-		like: false,
-		dislike: false,
+		islike: false,
 		likes: 233,
 	},],
 	favourites: [{

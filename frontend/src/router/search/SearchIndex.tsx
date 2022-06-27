@@ -1,34 +1,41 @@
 import { Layout, List, Space } from "@arco-design/web-react";
 import pic from "@/assets/keep.jpg";
 import ListItem from "@/components/ListItem";
+import { SearchPageData } from "@/axios/Search";
 
-const itemList = [
+const itemList:SearchPageData[] = [
   {
-    id: "1",
+    id: 1,
     title: "suki",
-    description: "daisuki",
-    rate: 5,
+    profile: "daisuki",
+    score: 5,
+    category: "anime",
     rateP: 100,
     rank: 1,
-    imgUrl: pic,
+    picture: "/src/assets/keep.jpg",
+    likes: 100,
   },
   {
-    id: "2",
+    id: 2,
     title: "suki",
-    description: "daisuki",
-    rate: 5,
+    profile: "daisuki",
+    score: 5,
     rateP: 100,
+    category: "anime",
     rank: 1,
-    imgUrl: pic,
+    picture: "/src/assets/keep.jpg",
+    likes: 100,
   },
   {
-    id: "3",
+    id: 3,
     title: "daisuki",
-    description: "daisuki",
-    rate: 5,
+    profile: "daisuki",
+    score: 5,
+    category: "anime",
     rateP: 100,
     rank: 1,
-    imgUrl: pic,
+    likes: 100,
+    picture: "/src/assets/keep.jpg",
   },
 ];
 
