@@ -3,11 +3,22 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
+    loaded: false,
     name: "",
     avatar: "",
     isLogin: false,
   },
   reducers: {
+    init: {
+      prepare() {
+        return {
+          payload: {},
+        };
+      },
+      reducer(state) {
+        state.loaded = true;
+      },
+    },
     login: {
       prepare(props: { name: string; avatar: string }) {
         return {
