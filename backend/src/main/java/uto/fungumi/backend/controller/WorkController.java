@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.BaseResult;
+import uto.fungumi.backend.model.WorkInfoResult;
 import uto.fungumi.backend.service.DisplayService;
 
 import javax.annotation.Resource;
@@ -32,6 +33,11 @@ public class WorkController {
         baseResult.setData(displaymap);
         baseResult.setMessage("首页展示数据传输");
         return baseResult;
+
+    }
+
+    @PostMapping("/showWorkInfo")
+    public BaseResult<WorkInfoResult> showWorkInfo(){
 
     }
 }
