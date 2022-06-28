@@ -11,10 +11,10 @@ export const loadingReviewPage: ReviewPageData = {
 }
 
 export type UserData = {
-	userId: number;
-	username: string;
-	avatar: string;
-	description: string;
+  userId: number;
+  username: string;
+  avatar: string;
+  description: string;
 };
 
 export const loadingUser: UserData = {
@@ -25,17 +25,17 @@ export const loadingUser: UserData = {
 }
 
 export type PageResult<T> = {
-	content: Array<T>;
-	totalElements: number;
-}
+  content: Array<T>;
+  totalElements: number;
+};
 
 export type InfoPageData = {
-	id: number;
-	description: string;
-	likes: CommentData[];
-	reviews: CommentData[];
-	favourites: FavouriteData[];
-}
+  id: number;
+  description: string;
+  likes: CommentData[];
+  reviews: CommentData[];
+  favourites: FavouriteData[];
+};
 
 export type CommentData = {
 	userId: number;
@@ -51,8 +51,8 @@ export type CommentData = {
 };
 
 export type FavouritePageData = {
-	favourites: FavouriteData[];
-	total: number;
+  favourites: FavouriteData[];
+  total: number;
 };
 
 export const loadingFavouritePage: FavouritePageData = {

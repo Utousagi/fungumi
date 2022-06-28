@@ -11,10 +11,7 @@ import uto.fungumi.backend.dao.CommentDao;
 import uto.fungumi.backend.dao.WorkDao;
 import uto.fungumi.backend.entity.Comment;
 import uto.fungumi.backend.entity.Work;
-import uto.fungumi.backend.model.CommentScoreBean;
-import uto.fungumi.backend.model.MainPageResult;
-import uto.fungumi.backend.model.MainPageWorkResult;
-import uto.fungumi.backend.model.WorkInfoResult;
+import uto.fungumi.backend.model.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -50,6 +47,17 @@ public class WorkService {
         mainPageResult.setGame(workDao.limitByCategory("game").stream().map(MainPageWorkResult::new).collect(Collectors.toList()));
         mainPageResult.setMusic(workDao.limitByCategory("music").stream().map(MainPageWorkResult::new).collect(Collectors.toList()));
         return mainPageResult;
+    }
+
+    public Page<WorkSimpleResult> pageByCategory(String category, String tag, String keyword, Pageable pageable) {
+        keyword = keyword == null ? "%" : "%" + keyword + "%";
+        Page<Work> works;
+        if(tag == null) {
+            works = workDao.findByCategoryAndTitleLike(category, keyword, pageable);
+        } else {
+            works = workDao.findByCategoryAndTag(category, tag, keyword, pageable);
+        }
+        return works.map(WorkSimpleResult::new);
     }
 
 }

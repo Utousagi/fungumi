@@ -1,14 +1,24 @@
-import { Outlet, Route, Routes, useParams } from "react-router-dom";
 import {
-  Button,
-  Divider,
-  Grid,
-  Layout,
-  Pagination,
-  Radio,
-} from "@arco-design/web-react";
+  Link,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useParams,
+} from "react-router-dom";
+import { Button, Divider, Grid, Layout, Radio } from "@arco-design/web-react";
 
-function SideSearchBox() {
+const dict: Record<string, string> = {
+  anime: "动画",
+  novel: "书籍",
+  music: "音乐",
+  game: "游戏",
+};
+
+function SideSearchBox(props: { selected: string }) {
+  const location = useLocation().pathname;
+
   return (
     <div style={{ width: 230, margin: "30px 10px" }}>
       <Grid.Row>
@@ -16,16 +26,23 @@ function SideSearchBox() {
       </Grid.Row>
       <Divider style={{ margin: "7px" }} />
       <Grid.Row>
-        <Radio.Group style={{ textAlign: "left" }}>
-          <Radio style={{ margin: "3px 3px" }}>
-            {({ checked }) => {
-              return (
-                <Button type={checked ? "dashed" : "secondary"} size="mini">
-                  anime
-                </Button>
-              );
-            }}
-          </Radio>
+        <Radio.Group style={{ textAlign: "left" }} value={props.selected}>
+          {["anime", "novel", "game", "music"].map((item) => (
+            <Radio style={{ margin: "3px 2px" }} value={item}>
+              {({ checked }) => {
+                return (
+                  <Link to={location.replace(props.selected, item)}>
+                    <Button
+                      type={checked ? "primary" : "secondary"}
+                      size="mini"
+                    >
+                      {dict[item]}
+                    </Button>
+                  </Link>
+                );
+              }}
+            </Radio>
+          ))}
         </Radio.Group>
       </Grid.Row>
     </div>
@@ -33,13 +50,8 @@ function SideSearchBox() {
 }
 
 function Search(props: { category: string }) {
-  const dict: Record<string, string> = {
-    anime: "动画",
-    novel: "书籍",
-    music: "音乐",
-    game: "游戏",
-  };
   const key = dict[props.category];
+  const select = useMatch("/search/:select/*")?.params.select!;
   const tag = useParams<{ tag: string }>().tag;
 
   return (
@@ -76,26 +88,15 @@ function Search(props: { category: string }) {
             overflowY: "hidden",
             margin: "0 50px",
             paddingTop: 0,
-            justifyContent: "start",
+            alignItems: "start",
           }}
         >
           <Outlet />
         </Layout.Content>
         <Layout.Sider width={250} style={{ boxShadow: "0 0 0" }}>
-          <SideSearchBox />
+          <SideSearchBox selected={select} />
         </Layout.Sider>
       </Layout>
-      <Layout.Footer
-        style={{
-          display: "flex",
-          margin: "0 295px 0 45px",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Divider style={{ margin: "10px 0" }} />
-        <Pagination total={22} showTotal showJumper />
-      </Layout.Footer>
     </Layout>
   );
 }

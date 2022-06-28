@@ -40,7 +40,7 @@ export default function UserHeader(props: { select?: string }) {
   const id = Number(useParams().id);
   const userUrl = "/user/" + id;
 
-  const [userData, setUserData] = useState<UserData>(loadingUser); 
+  const [userData, setUserData] = useState<UserData>(loadingUser);
   useEffect(() => {
     getUserDataById(id).then((res) => {
       setUserData(res as unknown as UserData);
@@ -67,6 +67,12 @@ export default function UserHeader(props: { select?: string }) {
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
                 <Image width={150} height={150} src={userData.avatar} style={{}} />
+                <Image
+                  width={150}
+                  height={150}
+                  src={userData.avatar}
+                  style={{}}
+                />
               </Grid.Col>
               <Grid.Col
                 span={16}
@@ -84,6 +90,11 @@ export default function UserHeader(props: { select?: string }) {
                 </Link>
                 <Divider style={{ marginTop: "2px" }} />
                 <UserMenu userId={userData.userId} select={select} setSelect={setSelect} />
+                <UserMenu
+                  userId={userData.userId}
+                  select={select}
+                  setSelect={setSelect}
+                />
               </Grid.Col>
             </Grid.Row>
           </Header>

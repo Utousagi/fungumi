@@ -5,7 +5,7 @@ import {
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CommentShow } from "../../components/CommentShow";
+import { CommentShow } from "@/components/CommentShow";
 
 export default function Review(props: { page?: number } = { page: 1 }) {
   const id = Number(useParams().id);

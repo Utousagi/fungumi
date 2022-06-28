@@ -1,53 +1,22 @@
 import DisplayBlock from "@/components/DisplayBlock";
 import { Layout } from "@arco-design/web-react";
-
-type BlockInfo = {
-  id: string;
-  title: string;
-  imgSrc: string;
-  watching: number;
-};
-
-const blockInfo: BlockInfo[] = [
-  {
-    id: "1",
-    title: "Block 1",
-    imgSrc: "https://picsum.photos/200/300",
-    watching: 0,
-  },
-  {
-    id: "2",
-    title: "Block 2",
-    imgSrc: "https://picsum.photos/200/310",
-    watching: 0,
-  },
-  {
-    id: "3",
-    title: "Block 3",
-    imgSrc: "https://picsum.photos/200/320",
-    watching: 0,
-  },
-  {
-    id: "4",
-    title: "Block 4",
-    imgSrc: "https://picsum.photos/200/330",
-    watching: 0,
-  },
-  {
-    id: "5",
-    title: "Block 5",
-    imgSrc: "https://picsum.photos/200/340",
-    watching: 0,
-  },
-  {
-    id: "6",
-    title: "Block 6",
-    imgSrc: "https://picsum.photos/200/350",
-    watching: 0,
-  },
-];
+import { useEffect, useState } from "react";
+import { IndexData } from "@/axios/types";
+import { getIndexDisplay } from "@/axios/Search";
 
 function Index() {
+  const [displayData, setDisplayData] = useState<IndexData>({
+    anime: [],
+    novel: [],
+    game: [],
+    music: [],
+  });
+  useEffect(() => {
+    getIndexDisplay().then((res) => {
+      setDisplayData(res.data);
+    });
+  }, []);
+
   return (
     <Layout>
       <Layout.Content>
@@ -55,25 +24,25 @@ function Index() {
           key="anime"
           category="anime"
           categoryName="动画"
-          blockInfo={blockInfo}
+          blockInfo={displayData.anime}
         />
         <DisplayBlock
           key="novel"
           category="novel"
           categoryName="书籍"
-          blockInfo={blockInfo}
+          blockInfo={displayData.novel}
         />
         <DisplayBlock
           key="music"
           category="music"
           categoryName="音乐"
-          blockInfo={blockInfo}
+          blockInfo={displayData.music}
         />
         <DisplayBlock
           key="game"
           category="game"
           categoryName="游戏"
-          blockInfo={blockInfo}
+          blockInfo={displayData.game}
         />
       </Layout.Content>
     </Layout>

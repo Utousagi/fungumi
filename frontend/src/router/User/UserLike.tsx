@@ -1,12 +1,9 @@
-import {
-  Grid,
-  Pagination,
-} from "@arco-design/web-react";
+import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CommentData, getUserLikeListByPage, loadingReviewPage, ReviewPageData, UserData } from "@/axios/User";
-import { CommentShow } from "../../components/CommentShow";
+import { CommentShow } from "@/components/CommentShow";
 
 // const data2: CommentData[] = [
 //   {

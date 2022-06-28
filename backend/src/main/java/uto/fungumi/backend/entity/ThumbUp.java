@@ -22,9 +22,6 @@ public class ThumbUp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "type")
-    private String status;
-
     @Column(name = "time")
     private Date time;
 

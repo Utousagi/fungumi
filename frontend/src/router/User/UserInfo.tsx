@@ -17,7 +17,7 @@ import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { CommentShow } from "../../components/CommentShow";
+import { CommentShow } from "@/components/CommentShow";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (

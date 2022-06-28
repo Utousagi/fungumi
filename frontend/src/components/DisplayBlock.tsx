@@ -1,16 +1,12 @@
 import { Card, Divider, Image, Spin } from "@arco-design/web-react";
 import { Link } from "react-router-dom";
 import style from "@/style/component/DisplayBlock.module.scss";
+import { IndexBlockData } from "@/axios/types";
 
 type DisplayBlockProps = {
   category: string;
   categoryName: string;
-  blockInfo?: {
-    id: string;
-    title: string;
-    imgSrc: string;
-    watching: number;
-  }[];
+  blockInfo?: IndexBlockData[];
 };
 
 function DisplayBlock(props: DisplayBlockProps) {
@@ -39,7 +35,7 @@ function DisplayBlock(props: DisplayBlockProps) {
                         width={100}
                         height={90}
                         alt={item.title}
-                        src={item.imgSrc}
+                        src={item.picture}
                         description={item.title}
                         style={{
                           textAlign: "left",
@@ -65,7 +61,7 @@ function DisplayBlock(props: DisplayBlockProps) {
                     bodyStyle={{ padding: "4px", border: "1 1 1 1" }}
                   >
                     <Card.Meta
-                      description="2 watched"
+                      description={`${item.favoritePerson}人收藏`}
                       style={{
                         textAlign: "left",
                         fontSize: "x-small",
