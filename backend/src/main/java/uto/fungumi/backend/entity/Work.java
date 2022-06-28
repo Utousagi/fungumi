@@ -31,7 +31,7 @@ public class Work {
     private String profile;
 
     @Column(name = "score")
-    private Double score;
+    private Integer score;
 
     @Column(name = "category")
     private String category;

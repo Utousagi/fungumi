@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import uto.fungumi.backend.controller.LikeDao;
+import uto.fungumi.backend.dao.ThumbUpDao;
 import uto.fungumi.backend.dao.CommentDao;
 import uto.fungumi.backend.dao.FavoriteDao;
 import uto.fungumi.backend.dao.UserDao;
@@ -29,7 +29,7 @@ public class UserInfoService {
     CommentDao commentDao;
 
     @Resource
-    LikeDao likeDao;
+    ThumbUpDao thumbUpDao;
 
     @Resource
     WorkDao workDao;
@@ -48,7 +48,7 @@ public class UserInfoService {
         Page<Comment> comments = commentDao.findCommentUserLikes(id, pageable);
         CommentPage commentPage = new CommentPage();
         commentPage.setComments(comments.getContent().stream().map( c -> {
-            CommentResult commentResult = new CommentResult( c.getId(), c.getUserId(), c.getWorkId(), c.getScore(), c.getContent(), likeDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
+            CommentResult commentResult = new CommentResult( c.getId(), c.getUserId(), c.getWorkId(), c.getScore(), c.getContent(), thumbUpDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
             return commentResult;
         }).collect(Collectors.toList()));
         commentPage.setElements(comments.getNumberOfElements());
@@ -61,7 +61,7 @@ public class UserInfoService {
         Page<Comment> comments = commentDao.findAllCommentByUserId(id, pageable);
         CommentPage commentPage = new CommentPage();
         commentPage.setComments(comments.getContent().stream().map( c -> {
-            CommentResult commentResult = new CommentResult( c.getId(), c.getUserId(), c.getWorkId(), c.getScore(), c.getContent(), likeDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
+            CommentResult commentResult = new CommentResult( c.getId(), c.getUserId(), c.getWorkId(), c.getScore(), c.getContent(), thumbUpDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
             return commentResult;
         }).collect(Collectors.toList()));
         commentPage.setElements(comments.getNumberOfElements());

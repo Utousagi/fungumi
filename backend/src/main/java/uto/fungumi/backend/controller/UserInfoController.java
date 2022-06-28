@@ -1,26 +1,12 @@
 package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.security.SecurityUtil;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import uto.fungumi.backend.dao.CommentDao;
-import uto.fungumi.backend.dao.FavoriteDao;
-import uto.fungumi.backend.dao.UserDao;
-import uto.fungumi.backend.dao.WorkDao;
-import uto.fungumi.backend.entity.Comment;
-import uto.fungumi.backend.entity.User;
-import uto.fungumi.backend.entity.Work;
+import uto.fungumi.backend.dao.*;
 import uto.fungumi.backend.model.*;
 import uto.fungumi.backend.service.UserInfoService;
 
 import javax.annotation.Resource;
-import java.security.Security;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/userInfo")
@@ -34,7 +20,7 @@ public class UserInfoController {
     CommentDao commentDao;
 
     @Resource
-    LikeDao likeDao;
+    ThumbUpDao thumbUpDao;
 
     @Resource
     WorkDao workDao;

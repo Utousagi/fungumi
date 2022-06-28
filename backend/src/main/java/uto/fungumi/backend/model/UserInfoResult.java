@@ -14,4 +14,5 @@ public class UserInfoResult {
     private String username;
     private String avatar;
     private String description;
+    private Boolean hasLogin;
 }
