@@ -13,7 +13,7 @@ public class WorkInfo {
     String profile;
     String picture;
     String category;
-    Integer score;
+    Double score;
     Integer votes;
     Integer type;
 }

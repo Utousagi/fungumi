@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uto.fungumi.backend.dao.UserDao;
 import uto.fungumi.backend.entity.User;
-import uto.fungumi.backend.model.LoginCheckResult;
-import uto.fungumi.backend.model.UserInfoResult;
+import uto.fungumi.backend.model.UserLoginResult;
 import uto.fungumi.backend.utils.Md5Util;
 
 @Service
@@ -30,13 +29,13 @@ public class UserService {
         return userDao.findByUsernameAndPassword(username, password);
     }
 
-    public UserInfoResult login(String username, String password) {
+    public UserLoginResult login(String username, String password) {
         var token = new UsernamePasswordToken(username, password);
         var subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
             var user = (User) subject.getPrincipal();
-            return UserInfoResult.builder()
+            return UserLoginResult.builder()
                     .hasLogin(true)
                     .id(user.getId())
                     .username(user.getUsername())
@@ -44,7 +43,7 @@ public class UserService {
                     .build();
         } catch (AuthenticationException e) {
             log.warn(e.getMessage());
-            return UserInfoResult.builder().hasLogin(false).build();
+            return UserLoginResult.builder().hasLogin(false).build();
         }
     }
 
@@ -57,13 +56,13 @@ public class UserService {
         return userDao.save(user);
     }
 
-    public UserInfoResult checkLogin() {
+    public UserLoginResult checkLogin() {
         var subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()) {
-            return UserInfoResult.builder().hasLogin(false).build();
+            return UserLoginResult.builder().hasLogin(false).build();
         }
         var user = (User) subject.getPrincipal();
-        return UserInfoResult.builder()
+        return UserLoginResult.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .avatar(user.getAvatar())

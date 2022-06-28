@@ -8,36 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.dao.WorkDao;
 import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.BaseResult;
+import uto.fungumi.backend.model.MainPageResult;
 import uto.fungumi.backend.model.WorkInfoResult;
-import uto.fungumi.backend.service.DisplayService;
+import uto.fungumi.backend.service.WorkService;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/work")
 public class WorkController {
     @Resource
-    private DisplayService displayService;
+    private WorkService workService;
     @Resource
     private WorkDao workDao;
     @PostMapping ("/display")
-    public BaseResult<Map<String,List<Work>>>  selectByCategory() {
-        BaseResult<Map<String,List<Work>>> baseResult = new BaseResult<>();
-        List<Work> game = displayService.selectByCategory("game");
-        List<Work> anime = displayService.selectByCategory("anime");
-        List<Work> music = displayService.selectByCategory("music");
-        List<Work> book = displayService.selectByCategory("book");
-        Map<String, List<Work>> displaymap = new HashMap<>();
-        displaymap.put("game", game);
-        displaymap.put("anime", anime);
-        displaymap.put("music", music);
-        displaymap.put("book", book);
-        baseResult.setData(displaymap);
-        baseResult.setMessage("首页展示数据传输");
-        return baseResult;
+    public BaseResult<MainPageResult>  selectByCategory() {
+        var mainPageResult = workService.displayMainPage();
+        return new BaseResult<>(true, "主页数据获取成功", mainPageResult);
     }
     @GetMapping("/find")
     public BaseResult<Page<Work>> findAllWorkBy(@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,

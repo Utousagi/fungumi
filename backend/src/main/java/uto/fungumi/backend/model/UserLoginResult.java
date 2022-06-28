@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginCheckResult {
+public class UserLoginResult {
     private Boolean hasLogin;
     private Integer id;
     private String username;

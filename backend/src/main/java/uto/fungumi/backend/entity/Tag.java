@@ -1,12 +1,12 @@
 package uto.fungumi.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -17,18 +17,18 @@ import java.util.Set;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToMany(mappedBy = "tags")
-    @ToString.Exclude
-    @JsonIgnoreProperties({"tags"})
-    private Set<Work> works = new HashSet<>();
+    private Integer id;
 
     @Column(name = "category")
     private String category;
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JsonIgnoreProperties({"tags"})
+    @ToString.Exclude
+    private Set<Work> works;
 
     @Override
     public int hashCode() {

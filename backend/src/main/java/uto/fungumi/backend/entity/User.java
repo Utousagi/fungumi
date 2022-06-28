@@ -1,12 +1,13 @@
 package uto.fungumi.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -24,8 +25,6 @@ public class User {
     @Column(name = "username", unique = true)
     private String username;
 
-    //这么加没法传值
-//    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -41,6 +40,18 @@ public class User {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private Set<Favorite> favorites;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private Set<ThumbUp> thumbUps;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private Set<Comment> comments;
 
     @Override
     public boolean equals(Object o) {
@@ -66,13 +77,4 @@ public class User {
             this.roleName = roleName;
         }
     }
-
-    @OneToMany(mappedBy = "user")
-    private List<User_r_Favorite> user_r_favoriteList;
-
-    @OneToMany(mappedBy = "user")
-    private List<User_r_ThumbUp> user_r_thumbUpList;
-
-    @OneToMany(mappedBy = "user")
-    private List<User_r_Comment> user_r_commentList;
 }

@@ -1,13 +1,10 @@
 package uto.fungumi.backend.dao;
 
-import org.hibernate.boot.jaxb.mapping.spi.JaxbAssociationOverride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.model.UserInfoResult;
-
-import java.util.List;
 
 
 @Repository

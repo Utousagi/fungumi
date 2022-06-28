@@ -2,12 +2,10 @@ package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.model.BaseResult;
-import uto.fungumi.backend.model.LoginCheckResult;
 import uto.fungumi.backend.model.UserBean;
-import uto.fungumi.backend.model.UserInfoResult;
+import uto.fungumi.backend.model.UserLoginResult;
 import uto.fungumi.backend.service.UserService;
 
 import javax.annotation.Resource;
@@ -20,12 +18,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public BaseResult<UserInfoResult> register(@RequestBody UserBean userBean) {
+    public BaseResult<UserLoginResult> register(@RequestBody UserBean userBean) {
         if (userService.findByUsername(userBean.getUsername()) == null) {
             var user = userService.register(userBean.getUsername(),userBean.getPassword());
             userService.login(userBean.getUsername(), userBean.getPassword());
             var subject = SecurityUtils.getSubject();
-            var userInfo = UserInfoResult.builder()
+            var userInfo = UserLoginResult.builder()
                     .hasLogin(subject.isAuthenticated())
                     .id(user.getId())
                     .avatar(user.getAvatar())
@@ -37,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public BaseResult<UserInfoResult> login(@RequestBody UserBean userBean) {
+    public BaseResult<UserLoginResult> login(@RequestBody UserBean userBean) {
         var userInfo = userService.login(userBean.getUsername(), userBean.getPassword());
         if(userInfo.getHasLogin()) {
             return new BaseResult<>(true,"登录成功", userInfo);
@@ -46,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/checkLogin")
-    public BaseResult<UserInfoResult> checkLogin() {
+    public BaseResult<UserLoginResult> checkLogin() {
         var userInfo = userService.checkLogin();
         return new BaseResult<>(true, "success", userInfo);
     }

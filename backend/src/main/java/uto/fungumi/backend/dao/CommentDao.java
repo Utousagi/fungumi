@@ -12,16 +12,16 @@ import java.util.List;
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     @Query("SELECT c " +
-            "FROM Comment c, ThumbUp l " +
-            "WHERE c.id = l.commentId AND l.userId = :id ")
+            "FROM Comment c, ThumbUp tu " +
+            "WHERE c.id = tu.comment.id AND tu.user.id = :id ")
     Page<Comment> findCommentUserLikes(Integer id, Pageable pageable);
 
     Page<Comment> findAllCommentByUserId(Integer id, Pageable pageable);
 
-    Page<Comment> findByWorkId(int workId, Pageable pageable);
+    Page<Comment> findByWorkId(Integer workId, Pageable pageable);
 
     @Query(value = "select new uto.fungumi.backend.model.CommentScoreBean(score, count(all score)) from Comment " +
-            "where workId = :workId " +
+            "where work.id = :workId " +
             "group by score")
     List<CommentScoreBean> getCommentByWorkId(Integer workId);
 }
