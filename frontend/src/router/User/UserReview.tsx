@@ -1,7 +1,9 @@
-import { CommentData, getUserCommentListByPage, loadingReviewPage } from "@/axios/User";
 import {
-  Grid, Pagination
-} from "@arco-design/web-react";
+  CommentData,
+  getUserCommentListByPage,
+  loadingReviewPage,
+} from "@/axios/User";
+import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -37,11 +39,14 @@ export default function Review(props: { page?: number } = { page: 1 }) {
         >
           {reviewList.map((review: CommentData) => {
             return (
-              <div style={{textAlign:'left'}}>
-                <div>FROM <Link to={"subject/" + review.workId}>{review.workName}</Link></div>
+              <div style={{ textAlign: "left" }}>
+                <div>
+                  FROM{" "}
+                  <Link to={"subject/" + review.workId}>{review.workName}</Link>
+                </div>
                 <CommentShow data={review} />
               </div>
-            )
+            );
           })}
         </Grid.Col>
       </Grid.Row>
