@@ -4,6 +4,7 @@ import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
 import reduxStore from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
 import axios from "axios";
+import { UserInfo } from "@/types";
 
 type AuthModalProps = {
   state: {
@@ -22,23 +23,53 @@ type ModalInfo = {
 
 async function login(username: string, password: string) {
   console.log("login");
-  const response = await axios.post("user/login", { username, password });
-  // return response.data;
-  // reduxStore.dispatch(userAction.login({ name: username, avatar: "" }));
+  const res = await axios.post("user/login", { username, password });
+  const data: UserInfo = res.data.data;
+  if (data.hasLogin) {
+    reduxStore.dispatch(
+      userAction.login({ name: data.username, avatar: data.avatar })
+    );
+  }
+  return res.data.success;
 }
 
 async function register(username: string, password: string) {
-  // const response = await axios.post("/api/login", {username, password});
-  // return response.data;
+  const res = await axios.post("user/register", { username, password });
+  const data: UserInfo = res.data.data;
+  if (data.hasLogin) {
+    reduxStore.dispatch(
+      userAction.login({ name: data.username, avatar: data.avatar })
+    );
+  }
+  return res.data.success;
 }
 
 function LoginForm() {
   return (
     <>
-      <Form.Item field="username" label="用户名" required>
+      <Form.Item
+        field="username"
+        label="用户名"
+        required
+        requiredSymbol={{ position: "end" }}
+        rules={[{ required: true, maxLength: 12 }]}
+      >
         <Input prefix={<IconUser />} />
       </Form.Item>
-      <Form.Item field="password" label="密码" required>
+      <Form.Item
+        field="password"
+        label="密码"
+        required
+        requiredSymbol={{ position: "end" }}
+        rules={[
+          {
+            required: true,
+            minLength: 6,
+            maxLength: 18,
+            match: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/,
+          },
+        ]}
+      >
         <Input.Password prefix={<IconSafe />} />
       </Form.Item>
     </>
@@ -48,13 +79,38 @@ function LoginForm() {
 function RegisterForm() {
   return (
     <>
-      <Form.Item field="username" label="用户名" required>
+      <Form.Item
+        field="username"
+        label="用户名"
+        required
+        requiredSymbol={{ position: "end" }}
+        rules={[{ required: true, maxLength: 12 }]}
+      >
         <Input prefix={<IconUser />} />
       </Form.Item>
-      <Form.Item field="password" label="密码" required>
+      <Form.Item
+        field="password"
+        label="密码"
+        required
+        requiredSymbol={{ position: "end" }}
+        rules={[
+          {
+            required: true,
+            minLength: 6,
+            maxLength: 18,
+            match: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,18}$/,
+          },
+        ]}
+      >
         <Input.Password prefix={<IconSafe />} />
       </Form.Item>
-      <Form.Item field="confirmPassword" label="确认密码" required>
+      <Form.Item
+        field="confirmPassword"
+        label="确认密码"
+        required
+        requiredSymbol={{ position: "end" }}
+        rules={[{}]}
+      >
         <Input.Password prefix={<IconCheck />} />
       </Form.Item>
     </>
@@ -99,7 +155,37 @@ function AuthModal(props: AuthModalProps) {
           props.setState({ ...props.state, visible: false });
         }}
       >
-        <Form form={form} style={{ height: 200 }}>
+        <Form
+          form={form}
+          style={{ height: 200 }}
+          validateMessages={{
+            required: (_: any, { label }: any) => `${label}不能为空`,
+            string: {
+              match: "密码必须包含字母和数字",
+              minLength: "密码长度不能小于6",
+              maxLength: "密码长度不能大于18",
+            },
+          }}
+          onSubmit={async () => {
+            if (submit === "login") {
+              const success = await login(
+                form.getFieldsValue().username,
+                form.getFieldsValue().password
+              );
+              if (success) {
+                props.setState({ ...props.state, visible: false });
+              }
+            } else {
+              const success = await register(
+                form.getFieldsValue().username,
+                form.getFieldsValue().password
+              );
+              if (success) {
+                props.setState({ ...props.state, visible: false });
+              }
+            }
+          }}
+        >
           {modalInfo.formItem}
         </Form>
         <Space
@@ -111,11 +197,7 @@ function AuthModal(props: AuthModalProps) {
             style={{ width: 100, borderRadius: 5 }}
             onClick={async () => {
               if (submit === "login") {
-                await login(
-                  form.getFieldsValue().username,
-                  form.getFieldsValue().password
-                );
-                props.setState({ ...props.state, visible: false });
+                form.submit();
               } else {
                 setModalInfo(loginState);
                 setSubmit("login");
@@ -129,11 +211,7 @@ function AuthModal(props: AuthModalProps) {
             style={{ width: 100, borderRadius: 5 }}
             onClick={async () => {
               if (submit === "register") {
-                await register(
-                  form.getFieldsValue().username,
-                  form.getFieldsValue().password
-                );
-                props.setState({ ...props.state, visible: false });
+                form.submit();
               } else {
                 setModalInfo(registerState);
                 setSubmit("register");

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import uto.fungumi.backend.dao.UserDao;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.model.LoginCheckResult;
+import uto.fungumi.backend.model.UserInfoResult;
 import uto.fungumi.backend.utils.Md5Util;
 
 @Service
@@ -29,16 +30,22 @@ public class UserService {
         return userDao.findByUsernameAndPassword(username, password);
     }
 
-    public Boolean login(String username, String password) {
+    public UserInfoResult login(String username, String password) {
         var token = new UsernamePasswordToken(username, password);
         var subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
+            var user = (User) subject.getPrincipal();
+            return UserInfoResult.builder()
+                    .hasLogin(true)
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .avatar(user.getAvatar())
+                    .build();
         } catch (AuthenticationException e) {
             log.warn(e.getMessage());
-            return false;
+            return UserInfoResult.builder().hasLogin(false).build();
         }
-        return true;
     }
 
     public User register(String username, String password) {
@@ -50,18 +57,23 @@ public class UserService {
         return userDao.save(user);
     }
 
-    public LoginCheckResult checkLogin() {
+    public UserInfoResult checkLogin() {
         var subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated()) {
-            return LoginCheckResult.builder().hasLogin(false).build();
+            return UserInfoResult.builder().hasLogin(false).build();
         }
         var user = (User) subject.getPrincipal();
-        return LoginCheckResult.builder()
+        return UserInfoResult.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .avatar(user.getAvatar())
                 .hasLogin(true)
                 .build();
+    }
+
+    public void logout() {
+        var subject = SecurityUtils.getSubject();
+        subject.logout();
     }
 
 }

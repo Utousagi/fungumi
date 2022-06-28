@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.model.UserInfoResult;
 
+import java.util.List;
+
 
 @Repository
 public interface UserDao extends JpaRepository<User, Integer> {

@@ -11,7 +11,7 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "user_id")
     private int userId;
@@ -20,7 +20,7 @@ public class Comment {
     private int workId;
 
     @Column(name = "score")
-    private int score;
+    private Integer score;
 
     @Column(name = "content")
     private String content;

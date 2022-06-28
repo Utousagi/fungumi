@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class CommentBean {
-    private Integer comment_id;
-    private Integer user_id;
-    private String user_avatar;
+    private Integer commentId;
+    private Integer userId;
+    private String userAvatar;
     private Integer score;
     private String content;
     private LocalDateTime time;

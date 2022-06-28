@@ -4,11 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
-public class Like {
+@Table
+public class ThumbUp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -18,6 +19,8 @@ public class Like {
 
     @Column(name = "comment_id")
     private int commentId;
+    @Column(name = "work_id")
+    private int workId;
 
     @Column(name = "type")
     private String status;

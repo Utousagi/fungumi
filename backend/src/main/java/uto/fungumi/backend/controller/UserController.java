@@ -1,6 +1,7 @@
 package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.model.BaseResult;
@@ -20,39 +21,39 @@ public class UserController {
 
     @PostMapping("/register")
     public BaseResult<UserInfoResult> register(@RequestBody UserBean userBean) {
-
-        BaseResult<UserInfoResult> baseResult = new BaseResult<>();
         if (userService.findByUsername(userBean.getUsername()) == null) {
             var user = userService.register(userBean.getUsername(),userBean.getPassword());
-            var userInfoResult = new UserInfoResult();
-            BeanUtils.copyProperties(user, userInfoResult);
-            var userResult = UserInfoResult.builder()
+            userService.login(userBean.getUsername(), userBean.getPassword());
+            var subject = SecurityUtils.getSubject();
+            var userInfo = UserInfoResult.builder()
+                    .hasLogin(subject.isAuthenticated())
                     .id(user.getId())
                     .avatar(user.getAvatar())
                     .username(user.getUsername())
                     .build();
-            baseResult.setSuccess(true);
-            baseResult.setData(userResult);
-            login(userBean);
-        } else {
-            baseResult.setSuccess(false);
-            baseResult.setMessage("failed to save! ");
+            return new BaseResult<>(true, "注册成功", userInfo);
         }
-        return baseResult;
+        return new BaseResult<>(false, "用户名已存在");
     }
 
     @PostMapping("/login")
     public BaseResult<UserInfoResult> login(@RequestBody UserBean userBean) {
-        var success = userService.login(userBean.getUsername(), userBean.getPassword());
-        if(success) {
-            return new BaseResult<>(true,"登录成功");
+        var userInfo = userService.login(userBean.getUsername(), userBean.getPassword());
+        if(userInfo.getHasLogin()) {
+            return new BaseResult<>(true,"登录成功", userInfo);
         }
-        return new BaseResult<>(false, "用户名或密码错误");
+        return new BaseResult<>(false, "用户名或密码错误", userInfo);
     }
 
     @GetMapping("/checkLogin")
-    public BaseResult<LoginCheckResult> checkLogin() {
-        var checkResult = userService.checkLogin();
-        return new BaseResult<>(true, "success", checkResult);
+    public BaseResult<UserInfoResult> checkLogin() {
+        var userInfo = userService.checkLogin();
+        return new BaseResult<>(true, "success", userInfo);
+    }
+
+    @PostMapping("/logout")
+    public BaseResult<Void> logout() {
+        userService.logout();
+        return new BaseResult<>(true, "退出成功");
     }
 }
