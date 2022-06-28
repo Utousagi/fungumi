@@ -1,4 +1,5 @@
-import { FavouritePageData, UserData } from "@/axios/User";
+import { FavouriteData, FavouritePageData, getUserFavouriteListByPage, loadingFavouritePage, UserData } from "@/axios/User";
+import { RootState } from "@/redux/reduxStore";
 import {
   Button,
   Dropdown,
@@ -12,64 +13,9 @@ import Divider from "@arco-design/web-react/es/Divider";
 import Grid from "@arco-design/web-react/es/Grid";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Link from "@arco-design/web-react/es/Link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-
-
-export type FavouriteData = {
-  id: string;
-  name: string;
-  workType: string;
-  image: string;
-  type: string;
-  rate: number;
-  votes: number;
-  description: string;
-};
-
-const data2: FavouriteData[] = [
-  {
-    id: "1",
-    name: "cowboy bebop",
-    workType: "动画",
-    image: "/src/assets/keep.jpg",
-    type: "想看",
-    rate: 3.5,
-    votes: 233,
-    description:
-      "本作的主人公。体型消瘦，留着一头类似爆炸头的头发，是Bebop号上的最早成员之一。\n在赏金猎人的工作中，因为懂得类似李小龙截拳道的武术，常担任战斗前线的罪犯逮捕工作，在驾驶经过改装的红色高速战机「剑鱼II」（ソードフィッシュII）时也表现出了过人的水准，喜欢使用的手枪是经过改造的Jericho941。\n以李小龙为偶像的斯派克自己也是截拳道的高手。三年前为了离开黑社会组织「红龙」曾经一度游走在生死边缘。\n现在和杰特一起乘坐着「比博普」号，过着穷困潦倒的日子。对于自己的过去，斯派克不愿意对别人详细提起。虽然已经从黑道引退却仍然过着吊儿郎当的生活。\n以前的经历使得他总是过分自信，老是做一些火中取栗的事情，屡次身陷险境。",
-  },
-  {
-    id: "1",
-    name: "cowboy bebop",
-    workType: "动画",
-    image:
-      "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
-    type: "想看",
-    rate: 3.5,
-    votes: 233,
-    description:
-      "本作的主人公。体型消瘦，留着一头类似爆炸头的头发，是Bebop号上的最早成员之一。\n在赏金猎人的工作中，因为懂得类似李小龙截拳道的武术，常担任战斗前线的罪犯逮捕工作，在驾驶经过改装的红色高速战机「剑鱼II」（ソードフィッシュII）时也表现出了过人的水准，喜欢使用的手枪是经过改造的Jericho941。\n以李小龙为偶像的斯派克自己也是截拳道的高手。三年前为了离开黑社会组织「红龙」曾经一度游走在生死边缘。\n现在和杰特一起乘坐着「比博普」号，过着穷困潦倒的日子。对于自己的过去，斯派克不愿意对别人详细提起。虽然已经从黑道引退却仍然过着吊儿郎当的生活。\n以前的经历使得他总是过分自信，老是做一些火中取栗的事情，屡次身陷险境。",
-  },
-  {
-    id: "1",
-    name: "cowboy bebop",
-    workType: "音乐",
-    image:
-      "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
-    type: "想看",
-    rate: 3.5,
-    votes: 233,
-    description:
-      "本作的主人公。体型消瘦，留着一头类似爆炸头的头发，是Bebop号上的最早成员之一。\n在赏金猎人的工作中，因为懂得类似李小龙截拳道的武术，常担任战斗前线的罪犯逮捕工作，在驾驶经过改装的红色高速战机「剑鱼II」（ソードフィッシュII）时也表现出了过人的水准，喜欢使用的手枪是经过改造的Jericho941。\n以李小龙为偶像的斯派克自己也是截拳道的高手。三年前为了离开黑社会组织「红龙」曾经一度游走在生死边缘。\n现在和杰特一起乘坐着「比博普」号，过着穷困潦倒的日子。对于自己的过去，斯派克不愿意对别人详细提起。虽然已经从黑道引退却仍然过着吊儿郎当的生活。\n以前的经历使得他总是过分自信，老是做一些火中取栗的事情，屡次身陷险境。",
-  },
-];
-
-const data3: FavouritePageData = {
-  favourites: data2,
-  total: 22,
-};
 
 const favouriteTypeList: string[] = [
   "想看",
@@ -81,7 +27,7 @@ const favouriteTypeList: string[] = [
 ];
 
 function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
-  var description = props.data.description;
+  var description = props.data.profile;
   if (description.length > 120) {
     description = description.substring(0, 120) + "...";
   }
@@ -119,7 +65,7 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
       <Grid.Row>
         <Grid.Col span={6} style={{ display: "", alignContent: "center" }}>
           <Image
-            src={props.data.image}
+            src={props.data.picture}
             height={160}
             style={{ margin: "5px 20px" }}
           />
@@ -134,14 +80,14 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
         >
           <Link href={"/subject/" + props.data.id}>
             <div style={{ fontSize: "24px", margin: "5px 0px 0px 0px" }}>
-              {props.data.name}
-              <Tag style={{ marginLeft: "5px" }}>{props.data.workType}</Tag>
+              {props.data.title}
+              <Tag style={{ marginLeft: "5px" }}>{props.data.category}</Tag>
             </div>
           </Link>
           <div style={{ display: "inline", fontSize: "16px" }}>
             <Rate
               readonly
-              defaultValue={props.data.rate}
+              defaultValue={props.data.score}
               allowHalf
               style={{ margin: "0px 10px 0px 3px" }}
             />
@@ -174,9 +120,21 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
 }
 
 export default function Favourite(props: { page?: number } = { page: 1 }) {
-  const id = useParams().id;
-  var [favouriteList, setFavouriteList] = useState(data3.favourites);
-  const isSelf = false;
+  const id = Number(useParams().id);
+
+  const [elements, setElements] = useState(0);
+  const [favoriteList, setFavoriteList] = useState(loadingFavouritePage.favourites);
+
+  useEffect(() => {
+    getUserFavouriteListByPage(id, 1).then((data) => {
+      if (data.works) {
+        setElements(data.total);
+        setFavoriteList(data.works);
+      }
+    });
+  }, []);
+
+  const isSelf = useSelector((state: RootState) => state.user.id)===id;
 
   return (
     <Content>
@@ -190,19 +148,20 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
             flexDirection: "column",
           }}
         >
-          {favouriteList.map((data: FavouriteData) => {
+          {favoriteList.map((data: FavouriteData) => {
+            console.log(data);
             return <FavouriteShow data={data} isSelf={isSelf} />;
           })}
         </Grid.Col>
       </Grid.Row>
       <Pagination
-        total={data3.total}
+        total={elements}
         defaultPageSize={10}
         defaultCurrent={props.page}
         onChange={(pageNumber: number) => {
-          setFavouriteList(
-            data3.favourites.slice((pageNumber - 1) * 10, pageNumber * 10)
-          );
+          getUserFavouriteListByPage(id, 1).then((data) => {
+            setFavoriteList(data.favorites);
+          });
         }}
         style={{ marginTop: "10px" }}
       />

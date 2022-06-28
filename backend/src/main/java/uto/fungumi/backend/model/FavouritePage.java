@@ -11,5 +11,5 @@ import java.util.List;
 @Data
 public class FavouritePage {
     Integer elements;
-    List<WorkInfo> works;
+    List<WorkAbstract> works;
 }

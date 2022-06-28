@@ -17,21 +17,6 @@ import javax.annotation.Resource;
 public class UserInfoController {
 
     @Resource
-    UserDao userDao;
-
-    @Resource
-    CommentDao commentDao;
-
-    @Resource
-    ThumbUpDao thumbUpDao;
-
-    @Resource
-    WorkDao workDao;
-
-    @Resource
-    FavoriteDao favoriteDao;
-
-    @Resource
     UserInfoService userInfoService;
 
     @GetMapping("/info")
@@ -55,7 +40,7 @@ public class UserInfoController {
         return result;
     }
 
-    @GetMapping("/favorite")
+    @GetMapping("/favorites")
     public BaseResult<FavouritePage> getUserFavorite(@RequestParam Integer id, @RequestParam Integer page) {
         BaseResult<FavouritePage> result = new BaseResult<FavouritePage>();
         userInfoService.getUserFavorite(id, page, 10, result);

@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CommentResult {
-    Integer id;
     Integer userId;
-    Integer workId;
+    String username;
+    String avatar;
     Integer score;
+    Integer workId;
+    String workName;
     String content;
+    String time;
     boolean isLike;
     Integer likes;
 }

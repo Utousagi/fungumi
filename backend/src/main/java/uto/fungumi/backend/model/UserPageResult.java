@@ -14,5 +14,5 @@ public class UserPageResult {
     String description;
     List<CommentResult> comments;
     List<CommentResult> likes;
-    List<WorkInfo> favorites;
+    List<WorkAbstract> favorites;
 }

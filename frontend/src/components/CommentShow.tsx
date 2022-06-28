@@ -33,14 +33,16 @@ export function CommentShow(props: { data: CommentData }) {
       actions={actions}
       align="right"
       author={
-        <div>
-          {props.data.username}
+        <div style={{display:'flex'}}>
+          <div style={{margin:'8px 0px 0px 0px'}}>
+            {props.data.username}
+          </div>
           <Rate
             readonly
             defaultValue={score}
             allowHalf
             character={<IconStarFill style={{ fontSize: "13px" }} />}
-            style={{ marginLeft: "15px" }}
+            style={{ marginLeft: "15px", width: "500px" }}
           />
         </div>
       }
@@ -52,7 +54,7 @@ export function CommentShow(props: { data: CommentData }) {
           </Avatar>
         </Link>
       }
-      datetime={props.data.time}
+      // datetime={<div style={{width:'', display:'block'}}>{props.data.time}</div>}
       style={{
         margin: "5px 3px 5px 5px",
         display: "flex",

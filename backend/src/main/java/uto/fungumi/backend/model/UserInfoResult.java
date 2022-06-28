@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserInfoResult {
-    private Integer id;
+    private Integer userId;
     private String username;
     private String avatar;
     private String description;
-    private Boolean hasLogin;
 }

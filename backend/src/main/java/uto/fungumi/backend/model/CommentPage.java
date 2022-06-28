@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class CommentPage {
-    Integer elements;
-    List<CommentResult> comments;
+    Integer total;
+    List<CommentResult> reviews;
 }

@@ -1,6 +1,7 @@
 import { Layout, Pagination } from "@arco-design/web-react";
 import { useState } from "react";
-import { CommentData, CommentShow } from "@/components/CommentShow";
+import { CommentShow } from "@/components/CommentShow";
+import { CommentData } from "@/axios/User";
 
 type CommentPageData = {
   id: number;
@@ -23,6 +24,8 @@ let data: CommentPageData = {
       avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
+      workId: 1,
+      workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
       islike: false,
@@ -34,9 +37,10 @@ let data: CommentPageData = {
       avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
+      workId: 1,
+      workName: "测试标题",
       time: "Now",
-      content:
-        "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
+      content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
       islike: false,
       likes: 233,
     },
@@ -46,9 +50,10 @@ let data: CommentPageData = {
       avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
+      workId: 1,
+      workName: "测试标题",
       time: "Now",
-      content:
-        "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
+      content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
       islike: false,
       likes: 233,
     },
@@ -58,9 +63,10 @@ let data: CommentPageData = {
       avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
+      workId: 1,
+      workName: "测试标题",
       time: "Now",
-      content:
-        "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
+      content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
       islike: false,
       likes: 233,
     },
@@ -70,9 +76,10 @@ let data: CommentPageData = {
       avatar:
         "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
       score: 7,
+      workId: 1,
+      workName: "测试标题",
       time: "Now",
-      content:
-        "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏，可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏，可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
+      content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
       islike: false,
       likes: 233,
     },

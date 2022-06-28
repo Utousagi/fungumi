@@ -1,8 +1,8 @@
 import { Grid, Layout, Image, Divider, Menu } from "@arco-design/web-react";
 import Header from "@arco-design/web-react/es/Layout/header";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
-import { getUserDataById, UserData } from "@/axios/User";
+import { getUserDataById, loadingUser, UserData } from "@/axios/User";
 
 function UserMenu(props: {
   userId: number;
@@ -40,17 +40,13 @@ export default function UserHeader(props: { select?: string }) {
   const id = Number(useParams().id);
   const userUrl = "/user/" + id;
 
-  const [userdata, setUserData] = useState<UserData>({
-    userId: 0,
-    username: "",
-    avatar: "",
-    description: "",
-  });
-  getUserDataById(id).then((res) => {
-    console.log(res);
-    // setUserData(res);
-  });
-  console.log(userdata);
+  const [userData, setUserData] = useState<UserData>(loadingUser); 
+  useEffect(() => {
+    getUserDataById(id).then((res) => {
+      setUserData(res as unknown as UserData);
+      console.log(userData);
+    });
+  }, []);
 
   const [select, setSelect] = useState(
     useMatch("/user/:name/:select")?.params.select || "info"
@@ -70,7 +66,7 @@ export default function UserHeader(props: { select?: string }) {
           >
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
-                <Image width={150} height={150} src={userdata.avatar} style={{}} />
+                <Image width={150} height={150} src={userData.avatar} style={{}} />
               </Grid.Col>
               <Grid.Col
                 span={16}
@@ -84,10 +80,10 @@ export default function UserHeader(props: { select?: string }) {
                   to={userUrl}
                   style={{ fontSize: "36px", margin: "4px 20px" }}
                 >
-                  {userdata.username}
+                  {userData.username}
                 </Link>
                 <Divider style={{ marginTop: "2px" }} />
-                <UserMenu userId={userdata.userId} select={select} setSelect={setSelect} />
+                <UserMenu userId={userData.userId} select={select} setSelect={setSelect} />
               </Grid.Col>
             </Grid.Row>
           </Header>
@@ -118,10 +114,3 @@ const userMenuItem = [
     name: "点赞",
   },
 ];
-
-// const data: UserData = {
-//   userId: 1,
-//   username: "ZeesangPie",
-//   avatar:
-//     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
-// };
