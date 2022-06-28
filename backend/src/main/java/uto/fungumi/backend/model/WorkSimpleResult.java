@@ -15,18 +15,22 @@ import uto.fungumi.backend.entity.Work;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MainPageWorkResult {
+public class WorkSimpleResult {
+
     private Integer id;
     private String title;
-    private Integer favoritePerson;
-    private String picture;
-    private String category;
+    private String description;
+    private String imageUrl;
+    private Double score;
+    private Integer ratePerson;
 
-    public MainPageWorkResult(Work work) {
+    public WorkSimpleResult(Work work) {
         this.id = work.getId();
-        this.category = work.getCategory();
         this.title = work.getTitle();
-        this.picture = work.getPicture();
-        this.favoritePerson = work.getFavoritePerson();
+        this.description = work.getProfile();
+        this.imageUrl = work.getPicture();
+        this.score = work.getScore();
+        this.ratePerson = work.getRatePerson();
     }
+
 }

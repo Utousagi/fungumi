@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "@/style/App.scss";
 import Header from "@/components/Header";
 import Index from "@/router/Index";
@@ -20,7 +20,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import reduxStore from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
-import { UserInfo } from "@/types";
+import { UserInfo } from "@/axios/types";
 
 function App() {
   useEffect(() => {

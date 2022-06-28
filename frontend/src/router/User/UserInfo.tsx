@@ -1,15 +1,15 @@
-import { CommentData, FavouriteData, getUserInfoPage, InfoPageData } from "@/axios/User";
+import { CommentData, FavouriteData, getUserInfoPage } from "@/axios/User";
 import { RootState } from "@/redux/reduxStore";
 import {
   Button,
-  Layout,
-  Image,
-  Tag,
   Divider,
-  Modal,
   Form,
+  Image,
   Input,
+  Layout,
   Message,
+  Modal,
+  Tag,
 } from "@arco-design/web-react";
 import FormItem from "@arco-design/web-react/es/Form/form-item";
 import Content from "@arco-design/web-react/es/Layout/content";
@@ -17,7 +17,7 @@ import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { CommentShow } from "../../components/CommentShow";
+import { CommentShow } from "@/components/CommentShow";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (
@@ -61,7 +61,6 @@ export default function Info() {
       console.log(data);
     });
   }, []);
-
 
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -124,9 +123,7 @@ export default function Info() {
             ) : null}
           </div>
           <div style={{ margin: "8px 15px" }}>
-            {description == ""
-              ? "这个用户什么都没有写哦"
-              : description}
+            {description == "" ? "这个用户什么都没有写哦" : description}
           </div>
         </div>
         <div

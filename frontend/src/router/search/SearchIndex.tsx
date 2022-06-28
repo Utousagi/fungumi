@@ -1,68 +1,68 @@
-import { Layout, List, Space } from "@arco-design/web-react";
-import pic from "@/assets/keep.jpg";
+import {
+  Divider,
+  Layout,
+  List,
+  Pagination,
+  Tabs,
+} from "@arco-design/web-react";
 import ListItem from "@/components/ListItem";
-import { getSubjectListByRank, SearchPageData } from "@/axios/Search";
-import Item from "@arco-design/web-react/es/Breadcrumb/item";
-import { PageResult } from "@/axios/User";
-
-const itemList:SearchPageData[] = [
-  {
-    id: 1,
-    title: "suki",
-    profile: "daisuki",
-    score: 5,
-    category: "anime",
-    rateP: 100,
-    rank: 1,
-    picture: "/src/assets/keep.jpg",
-    likes: 100,
-  },
-  {
-    id: 2,
-    title: "suki",
-    profile: "daisuki",
-    score: 5,
-    rateP: 100,
-    category: "anime",
-    rank: 1,
-    picture: "/src/assets/keep.jpg",
-    likes: 100,
-  },
-  {
-    id: 3,
-    title: "daisuki",
-    profile: "daisuki",
-    score: 5,
-    category: "anime",
-    rateP: 100,
-    rank: 1,
-    likes: 100,
-    picture: "/src/assets/keep.jpg",
-  },
-];
+import { getSubjects } from "@/axios/Search";
+import { useMatch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { SubjectData } from "@/axios/types";
 
 function SearchIndex() {
-  // const result = getSubjectListByRank(10, 1);
-  // var itemList = result.content;
-  // // const totalElements = result.totalElements;
+  const select = useMatch("/search/:select/*")?.params?.select!;
+  const [total, setTotal] = useState(0);
+  const [subjects, setSubjects] = useState<SubjectData[]>([]);
+  const [orderBy, setOrderBy] = useState("score");
+  useEffect(() => {
+    getSubjects({ category: select }).then((res) => {
+      setSubjects(res.data);
+      setTotal(res.totalCount);
+      setOrderBy("score");
+    });
+  }, [select]);
 
-  // // console.log(result);
-  const result = getSubjectListByRank(10, 1);
-  console.log(result);
+  useEffect(() => {
+    getSubjects({ category: select, orderBy: orderBy }).then((res) => {
+      setSubjects(res.data);
+    });
+  }, [orderBy]);
 
   return (
     <>
       <Layout.Content style={{ width: 600, padding: 0, alignItems: "start" }}>
-        <Space size="medium" style={{ margin: "5px" }}>
-          <div>rank</div>·<div>date</div>·<div>name</div>
-        </Space>
+        <Tabs
+          type="text"
+          onChange={(key) => setOrderBy(key)}
+          activeTab={orderBy}
+        >
+          <Tabs.TabPane title="评分" key="score" />
+          <Tabs.TabPane title="时间" key="releaseDate" />
+          <Tabs.TabPane title="标题" key="title" />
+        </Tabs>
       </Layout.Content>
       <List style={{ textAlign: "left" }}>
-        {itemList.map((item:SearchPageData) => (
+        {subjects.map((item: SubjectData) => (
           <ListItem key={item.id} {...item} />
         ))}
       </List>
-      <br />
+      <Divider style={{ margin: "10px 0" }} />
+      <Pagination
+        total={total}
+        showTotal
+        showJumper
+        onChange={(number) => {
+          getSubjects({
+            category: select,
+            pageNo: number - 1,
+            orderBy: orderBy,
+          }).then((res) => {
+            setSubjects(res.data);
+          });
+        }}
+      />
     </>
   );
 }

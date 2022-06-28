@@ -20,6 +20,7 @@ public class PageController {
     @Resource
     private TagDao tagDao;
 
+    @Deprecated
     @GetMapping("/tag")
     public BaseResult<Page<Tag>> findAllTagById(@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
                                                @RequestParam(defaultValue = "100", value = "pageSize") Integer pageSize){

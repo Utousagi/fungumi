@@ -1,4 +1,8 @@
-import { FavouriteData, FavouritePageData, getUserFavouriteListByPage, loadingFavouritePage, UserData } from "@/axios/User";
+import {
+  FavouriteData,
+  getUserFavouriteListByPage,
+  loadingFavouritePage,
+} from "@/axios/User";
 import { RootState } from "@/redux/reduxStore";
 import {
   Button,
@@ -123,7 +127,9 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
   const id = Number(useParams().id);
 
   const [elements, setElements] = useState(0);
-  const [favoriteList, setFavoriteList] = useState(loadingFavouritePage.favourites);
+  const [favoriteList, setFavoriteList] = useState(
+    loadingFavouritePage.favourites
+  );
 
   useEffect(() => {
     getUserFavouriteListByPage(id, 1).then((data) => {
@@ -134,7 +140,7 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
     });
   }, []);
 
-  const isSelf = useSelector((state: RootState) => state.user.id)===id;
+  const isSelf = useSelector((state: RootState) => state.user.id) === id;
 
   return (
     <Content>

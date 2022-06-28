@@ -1,11 +1,4 @@
-
-import {
-  Link,
-  Outlet,
-  useMatch,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Outlet, useMatch, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Divider,
@@ -13,8 +6,6 @@ import {
   Image,
   Layout,
   Menu,
-
-  Select,
   Tabs,
   Tag,
 } from "@arco-design/web-react";
@@ -59,7 +50,6 @@ function Subject() {
     setStatus(key);
     //TODO: 切换状态
   }
-
 
   const DropList = (
     <Menu

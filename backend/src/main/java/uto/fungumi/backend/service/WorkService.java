@@ -88,4 +88,15 @@ public class WorkService {
         return mainPageResult;
     }
 
+    public Page<WorkSimpleResult> pageByCategory(String category, String tag, String keyword, Pageable pageable) {
+        keyword = keyword == null ? "%" : "%" + keyword + "%";
+        Page<Work> works;
+        if(tag == null) {
+            works = workDao.findByCategoryAndTitleLike(category, keyword, pageable);
+        } else {
+            works = workDao.findByCategoryAndTag(category, tag, keyword, pageable);
+        }
+        return works.map(WorkSimpleResult::new);
+    }
+
 }

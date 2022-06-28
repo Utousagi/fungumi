@@ -46,14 +46,17 @@ public class Work {
 
     @OneToMany(mappedBy = "work")
     @JsonIgnoreProperties({"work"})
+    @ToString.Exclude
     private Set<Comment> comments;
 
     @ManyToMany(mappedBy = "works")
     @JsonIgnoreProperties({"works"})
+    @ToString.Exclude
     private Set<Actor> actors;
 
     @ManyToMany(mappedBy = "works")
     @JsonIgnoreProperties({"works"})
+    @ToString.Exclude
     private Set<Tag> tags;
 }
 
