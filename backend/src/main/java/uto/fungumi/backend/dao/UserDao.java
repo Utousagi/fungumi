@@ -15,7 +15,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
     User findByUsername(String username);
     User findByUsernameAndPassword(String username, String password);
 
-    @Query(value = "SELECT new uto.fungumi.backend.model.UserInfoResult(u.id, u.username, u.avatar, u.description) FROM User u WHERE u.id = :userId")
+    @Query(value = "SELECT new uto.fungumi.backend.model.UserInfoResult(u.id, u.username, u.avatar, u.description, false ) FROM User u WHERE u.id = :userId")
     UserInfoResult getUserInfoById(Integer userId);
 
     User getUserById(Integer id);
