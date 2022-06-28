@@ -9,6 +9,7 @@ import uto.fungumi.backend.entity.Tag;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -19,9 +20,9 @@ public class WorkInfoResult {
     private String workTitle;
     private Map<String,String> workInfo;
     private String workProfile;
-    private List<Tag> tag;
-    private ActorBean actor;                    //演员
-    private Page<CommentBean> commentItemList;
+    private Set<Tag> tag;
+    private Set<ActorBean> actor;                    //演员
+    private CommentBeanPage commentBeanPage;
     private Double avgScore;                   //平均分
     private List<CommentScoreBean> scoreMap;      //每个评分段=>人数  ？？？
 
