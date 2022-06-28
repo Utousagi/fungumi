@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uto.fungumi.backend.entity.Tag;
 
-import javax.persistence.Column;
 import java.util.List;
 import java.util.Map;
 

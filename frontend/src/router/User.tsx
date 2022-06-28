@@ -1,7 +1,6 @@
 import { Grid, Layout, Image, Divider, Menu } from "@arco-design/web-react";
 import Header from "@arco-design/web-react/es/Layout/header";
-import { type } from "os";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { createContext, useState } from "react";
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
 import { getUserDataById, UserData } from "@/axios/User";
 
@@ -38,9 +37,21 @@ function UserMenu(props: {
 export const C = createContext("");
 
 export default function UserHeader(props: { select?: string }) {
-  const id = useParams().id;
+  const id = Number(useParams().id);
   const userUrl = "/user/" + id;
-  const data = getUserDataById(Number(id)) as unknown as UserData;
+
+  const [userdata, setUserData] = useState<UserData>({
+    userId: 0,
+    username: "",
+    avatar: "",
+    description: "",
+  });
+  getUserDataById(id).then((res) => {
+    console.log(res);
+    // setUserData(res);
+  });
+  console.log(userdata);
+
   const [select, setSelect] = useState(
     useMatch("/user/:name/:select")?.params.select || "info"
   );
@@ -59,7 +70,7 @@ export default function UserHeader(props: { select?: string }) {
           >
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
-                <Image width={150} height={150} src={data.avatar} style={{}} />
+                <Image width={150} height={150} src={userdata.avatar} style={{}} />
               </Grid.Col>
               <Grid.Col
                 span={16}
@@ -73,10 +84,10 @@ export default function UserHeader(props: { select?: string }) {
                   to={userUrl}
                   style={{ fontSize: "36px", margin: "4px 20px" }}
                 >
-                  {data.username}
+                  {userdata.username}
                 </Link>
                 <Divider style={{ marginTop: "2px" }} />
-                <UserMenu userId={data.userId} select={select} setSelect={setSelect} />
+                <UserMenu userId={userdata.userId} select={select} setSelect={setSelect} />
               </Grid.Col>
             </Grid.Row>
           </Header>

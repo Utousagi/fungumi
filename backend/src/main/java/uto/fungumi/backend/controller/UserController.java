@@ -1,12 +1,8 @@
 package uto.fungumi.backend.controller;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-import uto.fungumi.backend.aop.login.Login;
-import uto.fungumi.backend.aop.login.Role;
-import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.model.BaseResult;
 import uto.fungumi.backend.model.LoginCheckResult;
 import uto.fungumi.backend.model.UserBean;

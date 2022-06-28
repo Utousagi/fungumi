@@ -14,7 +14,6 @@ import java.util.Objects;
 @Setter
 @Entity
 @ToString
-@Table(name = "user")
 public class User {
     @Id
     @Column(name = "id", nullable = false)
@@ -38,6 +37,9 @@ public class User {
 
     @Column(name = "del")
     private Boolean del;
+
+    @Column(name = "description")
+    private String description;
 
     @Override
     public boolean equals(Object o) {

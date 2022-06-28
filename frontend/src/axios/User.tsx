@@ -1,6 +1,5 @@
 import { FavouriteData } from "@/router/User/UserFavourite";
-import axios, { Axios, AxiosResponse } from "axios";
-import { type } from "os";
+import axios from "axios";
 
 export type UserData = {
 	userId: number;
@@ -23,89 +22,86 @@ export type InfoPageData = {
 }
 
 export type CommentData = {
-  userId: number;
-  username: string;
-  avatar: string;
-  score: number;
-  time: string;
-  content: string;
-  islike: boolean;
-  likes: number;
+	userId: number;
+	username: string;
+	avatar: string;
+	score: number;
+	time: string;
+	content: string;
+	islike: boolean;
+	likes: number;
 };
 
 export type FavouritePageData = {
-  favourites: FavouriteData[];
-  total: number;
+	favourites: FavouriteData[];
+	total: number;
 };
 
-export function getUserDataById(userId: number): UserData {
-	axios.get("/api/getUserDataById?userId=" + userId)
-		.then((response: AxiosResponse) => { return response.data})
-		.catch((error) => { console.log(error) });
-	return {} as UserData;
-}
-
-function getUserLikeListByPage(userId: number, pageSize:number, pageNum:number) : PageResult<CommentData> {
-	axios({
+export async function getUserDataById(userId: number) {
+	let data;
+	await axios({
 		method: "get",
-		url: "/api/getUserLikeListByPage",
-		data:{
-			userId: userId,
-			pageSize: pageSize,
-			pageNum: pageNum
-		}
+		url: "/userInfo/info?id=" + userId,
+	}).then( res => {
+		data = res.data.data;
 	})
-		.then((response: AxiosResponse) => { return response.data})
-		.catch((error) => { console.log(error) })
-	return null as unknown as PageResult<CommentData>;
+	return data;
 }
 
-function getUserCommentListByPage(userId: number, pageSize:number, pageNum:number) : PageResult<CommentData> {
-	axios({
+export async function getUserLikeListByPage(userId: number, pageSize: number, pageNum: number) {
+	const res = await axios({
 		method: "get",
-		url: "/api/getUserCommentListByPage",
-		data:{
-			userId: userId,
-			pageSize: pageSize,
-			pageNum: pageNum
-		}
+		url: "/userInfo/like?id=" + userId + "&pageSize=" + pageSize + "&pageNum=" + pageNum,
 	})
-		.then((response: AxiosResponse) => { return response.data})
-		.catch((error) => { console.log(error) })
-	return null as unknown as PageResult<CommentData>;
+	return res.data.data;
 }
 
-function getUserFavouriteListByPage(userId: number, pageSize:number, pageNum:number) : PageResult<FavouriteData> {
-	axios({
-		method: "get",
-		url: "/api/getUserFavouriteListByPage",
-		data:{
-			userId: userId,
-			pageSize: pageSize,
-			pageNum: pageNum
-		}
-	})
-		.then((response: AxiosResponse) => { return response.data})
-		.catch((error) => { console.log(error) })
-	return null as unknown as PageResult<FavouriteData>;
-}
+// function getUserCommentListByPage(userId: number, pageSize:number, pageNum:number) : PageResult<CommentData> {
+// 	axios({
+// 		method: "get",
+// 		url: "/api/getUserCommentListByPage",
+// 		data:{
+// 			userId: userId,
+// 			pageSize: pageSize,
+// 			pageNum: pageNum
+// 		}
+// 	})
+// 		.then((response: AxiosResponse) => { return response.data})
+// 		.catch((error) => { console.log(error) })
+// 	return null as unknown as PageResult<CommentData>;
+// }
 
-export function getUserInfoPage(userId: number) {
-	const result:InfoPageData = {
-		id: userId,
-		description: getUserDataById(userId).description,
-		likes: getUserLikeListByPage(userId,1,5).content,
-		reviews: getUserCommentListByPage(userId,1,5).content,
-		favourites: getUserFavouriteListByPage(userId,1,5).content
-	}
-	return result;
-}
+// function getUserFavouriteListByPage(userId: number, pageSize:number, pageNum:number) : PageResult<FavouriteData> {
+// 	axios({
+// 		method: "get",
+// 		url: "/api/getUserFavouriteListByPage",
+// 		data:{
+// 			userId: userId,
+// 			pageSize: pageSize,
+// 			pageNum: pageNum
+// 		}
+// 	})
+// 		.then((response: AxiosResponse) => { return response.data})
+// 		.catch((error) => { console.log(error) })
+// 	return null as unknown as PageResult<FavouriteData>;
+// }
 
-export function getFavouritePageInfo(userId: number, pageNumber:number) {
-	const page = getUserFavouriteListByPage(userId,10,pageNumber);
-	const result:FavouritePageData = {
-		favourites: page.content,
-		total: page.totalElements
-	}
-	return result;
-}
+// export function getUserInfoPage(userId: number) {
+// 	const result:InfoPageData = {
+// 		id: userId,
+// 		// description: getUserDataById(userId).description,
+// 		likes: getUserLikeListByPage(userId,1,5).content,
+// 		reviews: getUserCommentListByPage(userId,1,5).content,
+// 		favourites: getUserFavouriteListByPage(userId,1,5).content
+// 	}
+// 	return result;
+// }
+
+// export function getFavouritePageInfo(userId: number, pageNumber:number) {
+// 	const page = getUserFavouriteListByPage(userId,10,pageNumber);
+// 	const result:FavouritePageData = {
+// 		favourites: page.content,
+// 		total: page.totalElements
+// 	}
+// 	return result;
+// }

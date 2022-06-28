@@ -3,8 +3,6 @@ import { Avatar, Comment, Link, Rate } from "@arco-design/web-react";
 
 import {
   IconStarFill,
-  IconThumbDown,
-  IconThumbDownFill,
   IconThumbUp,
   IconThumbUpFill,
 } from "@arco-design/web-react/icon";

@@ -13,4 +13,5 @@ public class UserInfoResult {
     private Integer id;
     private String username;
     private String avatar;
+    private String description;
 }

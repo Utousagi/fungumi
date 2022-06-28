@@ -1,16 +1,18 @@
 package uto.fungumi.backend.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.sql.*;
+import java.sql.Date;
 
-@Entity(name = "work")
+@Entity
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "work")
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +36,10 @@ public class Work {
     @Column(name = "picture")
     private String picture;
 
-    @Column(name = "releasedate")
-    private Date date;
+    @Column(name = "release_date")
+    private Date releaseDate;
 
-    @Column(name = "ratep",columnDefinition = "int default 0")
-    private int rateperson;
-
-
+    @Column(name = "rate_person",columnDefinition = "int default 0")
+    private Integer ratePerson;
 }
 

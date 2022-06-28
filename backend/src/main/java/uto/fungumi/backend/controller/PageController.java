@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uto.fungumi.backend.dao.TagDao;
-import uto.fungumi.backend.dao.WorkDao;
 import uto.fungumi.backend.entity.Tag;
-import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.BaseResult;
 
 import javax.annotation.Resource;

@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import reduxStore from "@/redux/reduxStore";
 import axios from "axios";
 
-axios.defaults.baseURL = "/fungumi/api";
+axios.defaults.baseURL="http://localhost:3000/fungumi/api/"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={reduxStore}>

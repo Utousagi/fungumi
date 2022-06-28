@@ -1,17 +1,12 @@
 import {
-  Divider,
   Grid,
-  Image,
-  Layout,
-  Link,
   Pagination,
 } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
-import Header from "@arco-design/web-react/es/Layout/header";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserData } from "@/axios/User";
-import { CommentData, CommentShow } from "../../components/CommentShow";
+import { CommentData, UserData } from "@/axios/User";
+import { CommentShow } from "../../components/CommentShow";
 
 type ReviewPageData = {
   user: UserData;
@@ -49,8 +44,8 @@ const data2: CommentData[] = [
 const data: UserData = {
   userId: 1,
   username: "ZeesangPie",
-  avatar:
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
+  avatar: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
+  description: ""
 };
 
 const data3: ReviewPageData = {

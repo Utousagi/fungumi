@@ -4,21 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
-@Table(name = "comment")
-@Entity(name = "comment")
-
+@Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "user_id")
-    private int user_id;
+    private int userId;
 
     @Column(name = "work_id")
-    private int work_id;
+    private int workId;
 
     @Column(name = "score")
     private int score;
@@ -27,8 +26,8 @@ public class Comment {
     private String content;
 
     @Column(name = "time")
-    private LocalDateTime time;
+    private Date time;
 
     @Column(name = "like")
-    private int like;
+    private int likes;
 }
