@@ -237,6 +237,7 @@ let data: workData = {
   ]),
   comments: [
     {
+      id:1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -250,6 +251,7 @@ let data: workData = {
       likes: 233,
     },
     {
+      id:1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -263,6 +265,7 @@ let data: workData = {
       likes: 233,
     },
     {
+      id:1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -276,6 +279,7 @@ let data: workData = {
       likes: 233,
     },
     {
+      id:1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -289,6 +293,7 @@ let data: workData = {
       likes: 233,
     },
     {
+      id:1,
       userId: 1,
       username: "Abigail",
       avatar:

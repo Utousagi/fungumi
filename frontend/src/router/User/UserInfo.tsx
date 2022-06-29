@@ -1,4 +1,5 @@
 import { CommentData, FavouriteData, getUserInfoPage } from "@/axios/User";
+import { CommentShow } from "@/components/CommentShow";
 import { RootState } from "@/redux/reduxStore";
 import {
   Button,
@@ -10,18 +11,15 @@ import {
   Layout,
   Message,
   Modal,
-  Tag,
+  Tag
 } from "@arco-design/web-react";
 import FormItem from "@arco-design/web-react/es/Form/form-item";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Sider from "@arco-design/web-react/es/Layout/sider";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { CommentShow } from "@/components/CommentShow";
-import { Value } from "sass";
-import axios from "axios";
-import { type } from "os";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (
@@ -47,27 +45,27 @@ function InfoFavourite(props: { favourite: FavouriteData }) {
 }
 
 type ModalData = {
-  description : string;
-  setDescription : Function;
-  visible : boolean;
-  setVisible : Function;
-  confirmLoading : boolean;
-  setConfirmLoading : Function;
-  form : FormInstance<any, any, string | number | symbol>;
+  description: string;
+  setDescription: Function;
+  visible: boolean;
+  setVisible: Function;
+  confirmLoading: boolean;
+  setConfirmLoading: Function;
+  form: FormInstance<any, any, string | number | symbol>;
 }
 
-function DescriptionModal({description, setDescription, visible ,setVisible, confirmLoading, setConfirmLoading, form}:ModalData) {
+function DescriptionModal({ description, setDescription, visible, setVisible, confirmLoading, setConfirmLoading, form }: ModalData) {
 
   function onOK() {
     form.validate().then(async (values) => {
       setConfirmLoading(true);
-      await axios.post("/userInfo/description",{
+      await axios.post("/userInfo/description", {
         description: values.description,
-      }).then(()=>{
+      }).then(() => {
         setDescription(values.description);
       }).catch((err) => {
         Message.info(err.message);
-      }).finally(()=>{
+      }).finally(() => {
         setConfirmLoading(false);
         setVisible(false);
       });
@@ -154,7 +152,8 @@ export default function Info() {
               </Button>
             ) : null}
           </div>
-          <div style={{ margin: "8px 15px" }}>
+          <div style={{
+            margin: "8px 15px", whiteSpace: "pre-wrap"}}>
             {description == "" ? "这个用户什么都没有写哦" : description}
           </div>
         </div>

@@ -3,6 +3,9 @@ import Header from "@arco-design/web-react/es/Layout/header";
 import { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
 import { getUserDataById, loadingUser, UserData } from "@/axios/User";
+import AvatarUpload from "@/components/AvatarUpload";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/reduxStore";
 
 function UserMenu(props: {
   userId: number;
@@ -16,7 +19,7 @@ function UserMenu(props: {
       mode="horizontal"
       ellipsis={false}
       defaultSelectedKeys={[props.select]}
-      style={{ width: "100%", alignContent: "start", marginBottom: "0px" }}
+      style={{ width: "100%", alignContent: "start", marginLeft: "2px" }}
     >
       {userMenuItem.map((item) => {
         return (
@@ -39,6 +42,7 @@ export const C = createContext("");
 export default function UserHeader(props: { select?: string }) {
   const id = Number(useParams().id);
   const userUrl = "/user/" + id;
+  const isSelf = useSelector((state: RootState) => state.user.id) === id;
 
   const [userData, setUserData] = useState<UserData>(loadingUser);
   useEffect(() => {
@@ -66,12 +70,12 @@ export default function UserHeader(props: { select?: string }) {
           >
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
-                <Image
+                {isSelf?(<AvatarUpload avatar={userData.avatar} id={userData.userId}/>):(<Image
                   width={150}
                   height={150}
                   src={userData.avatar}
                   style={{}}
-                />
+                />)}
               </Grid.Col>
               <Grid.Col
                 span={16}

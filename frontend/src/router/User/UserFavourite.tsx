@@ -140,7 +140,7 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
         defaultPageSize={10}
         defaultCurrent={props.page}
         onChange={(pageNumber: number) => {
-          getUserFavouriteListByPage(id, 1).then((data) => {
+          getUserFavouriteListByPage(id, pageNumber).then((data) => {
             setFavoriteList(data.favorites);
           });
         }}
