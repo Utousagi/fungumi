@@ -72,12 +72,6 @@ export default function UserHeader(props: { select?: string }) {
                   src={userData.avatar}
                   style={{}}
                 />
-                <Image
-                  width={150}
-                  height={150}
-                  src={userData.avatar}
-                  style={{}}
-                />
               </Grid.Col>
               <Grid.Col
                 span={16}
@@ -94,11 +88,6 @@ export default function UserHeader(props: { select?: string }) {
                   {userData.username}
                 </Link>
                 <Divider style={{ marginTop: "2px" }} />
-                <UserMenu
-                  userId={userData.userId}
-                  select={select}
-                  setSelect={setSelect}
-                />
                 <UserMenu
                   userId={userData.userId}
                   select={select}

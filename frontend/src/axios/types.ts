@@ -19,7 +19,7 @@ export type PageType<T> = {
 };
 
 export type UserInfo = {
-  id: string;
+  id: number;
   username: string;
   avatar: string;
   hasLogin: boolean;

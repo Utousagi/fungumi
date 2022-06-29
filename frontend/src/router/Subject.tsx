@@ -11,6 +11,7 @@ import {
 } from "@arco-design/web-react";
 import Detail from "@/components/Detail";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 type SubjectData = {
   id: number;
@@ -21,41 +22,29 @@ type SubjectData = {
   details: Map<string, string>;
 };
 
-function Subject() {
-  const id = useParams<{ id: string }>().id;
+export const favorDict: Record<number, string> = {
+  0: "未收藏",
+  1: "想看",
+  2: "在看",
+  3: "看过",
+  4: "搁置",
+  5: "抛弃",
+  6: "取消",
+};
 
-  const select = useMatch("/subject/:id/:select")?.params.select!;
-  const selectDict: Record<string, string> = {
-    abstract: "概览",
-    character: "角色",
-    staff: "制作人员",
-    review: "评论",
-  };
-  const favorDict: Record<number, string> = {
-    0: "未收藏",
-    1: "想看",
-    2: "在看",
-    3: "看过",
-    4: "搁置",
-    5: "抛弃",
-  };
-
-  const [status, setStatus] = useState(data.status);
-  const nav = useNavigate();
-  useEffect(() => {
-    console.log(select);
-  }, [select]);
+export function DropList({ id, status, setStatus }: { id: number, status: number, setStatus: (key: number) => void }) {
 
   function typeChange(key: number) {
     setStatus(key);
-    //TODO: 切换状态
+    if (key == 6) key = 0;
+    axios.post("/favorite/update?workId=" + id + "&type=" + key);
   }
 
-  const DropList = (
+  return (
     <Menu
       onClickMenuItem={(key) => typeChange(Number(key))}
       style={{ padding: 5 }}
-      selectedKeys={[status.toString()]}
+      selectedKeys={[''+status]}
       levelIndent={0}
     >
       {[1, 2, 3, 4, 5].map((key) => {
@@ -74,7 +63,22 @@ function Subject() {
         </Menu.Item>
       ) : null}
     </Menu>
-  );
+  )
+}
+
+function Subject() {
+  const id = Number(useParams<{ id: string }>().id);
+
+  const select = useMatch("/subject/:id/:select")?.params.select!;
+  const selectDict: Record<string, string> = {
+    abstract: "概览",
+    character: "角色",
+    staff: "制作人员",
+    review: "评论",
+  };
+
+  const [status, setStatus] = useState(data.status);
+  const nav = useNavigate();
 
   return (
     <Layout style={{ margin: "30px 10px", width: 955 }}>
@@ -85,7 +89,7 @@ function Subject() {
             <Tag style={{ margin: "2px 2px 2px 2px" }}>{data.type}</Tag>
           </h2>
 
-          <Dropdown position="bottom" droplist={DropList} trigger="click">
+          <Dropdown position="bottom" droplist={DropList({id, status, setStatus})} trigger="click">
             <Button
               shape="round"
               size="large"

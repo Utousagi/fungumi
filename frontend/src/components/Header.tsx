@@ -42,6 +42,7 @@ function dropList(props: DropListProps[]) {
 
 function UserBlock() {
   const nav = useNavigate();
+  const userId = useSelector((state: RootState) => state.user.id);
 
   async function logout() {
     await axios.post("user/logout");
@@ -55,13 +56,13 @@ function UserBlock() {
         position="bottom"
         droplist={
           <Menu style={{ width: 115, padding: "5px" }}>
-            <Menu.Item key="space">
+            <Menu.Item key="space" onClick={() => {nav('/user/'+userId)}}>
               <Space>
                 <IconUser />
                 个人空间
               </Space>
             </Menu.Item>
-            <Menu.Item key="setting">
+            <Menu.Item key="setting" >
               <Space>
                 <IconSettings />
                 信息设置

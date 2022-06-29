@@ -1,10 +1,7 @@
 package uto.fungumi.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -13,10 +10,9 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @Entity
 @Table
+@RequiredArgsConstructor
 public class ThumbUp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +21,15 @@ public class ThumbUp {
     @Column(name = "time")
     private Date time;
 
+    @Column
+    private Integer type;
+
     @ManyToOne
     @JsonIgnoreProperties({"thumbUps"})
     private User user;
 
     @ManyToOne
+    @JsonIgnoreProperties({"thumbUps"})
     private Comment comment;
 
     @Override

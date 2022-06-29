@@ -1,15 +1,13 @@
 package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.dao.*;
 import uto.fungumi.backend.model.*;
 import uto.fungumi.backend.service.UserInfoService;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/userInfo")
@@ -51,6 +49,13 @@ public class UserInfoController {
     public BaseResult<UserPageResult> getMainPage(@RequestParam Integer id) {
         BaseResult<UserPageResult> result = new BaseResult<UserPageResult>();
         userInfoService.getMainPage(id, result);
+        return result;
+    }
+
+    @PostMapping("/description")
+    public BaseResult<String> updateDescription(@RequestBody Map<String,String> descriptionBean) {
+        BaseResult<String> result = new BaseResult<String>();
+        userInfoService.updateDescription(descriptionBean.get("description"), result);
         return result;
     }
 }
