@@ -20,7 +20,7 @@ function SideSearchBox(props: { selected: string }) {
   const location = useLocation().pathname;
 
   return (
-    <div style={{ width: 230, margin: "30px 10px" }}>
+    <div style={{ width: 230, margin: "5px 10px" }}>
       <Grid.Row>
         <h3 style={{ margin: "0 5px" }}>分类</h3>
       </Grid.Row>
@@ -44,6 +44,20 @@ function SideSearchBox(props: { selected: string }) {
             </Radio>
           ))}
         </Radio.Group>
+      </Grid.Row>
+      <br />
+      <Grid.Row>
+        <h3 style={{ margin: "0 5px" }}>查找方式</h3>
+      </Grid.Row>
+      <Grid.Row>
+        <Link to={`/search/${props.selected}`}>
+          <div style={{margin: "1px 5px", color: "coral"}}>查找全部</div>
+        </Link>
+      </Grid.Row>
+      <Grid.Row>
+        <Link to={`/search/${props.selected}/tag`}>
+          <div style={{margin: "1px 5px", color: "coral"}}>按标签查找</div>
+        </Link>
       </Grid.Row>
     </div>
   );
@@ -89,6 +103,7 @@ function Search(props: { category: string }) {
             margin: "0 50px",
             paddingTop: 0,
             alignItems: "start",
+            justifyContent: "start"
           }}
         >
           <Outlet />

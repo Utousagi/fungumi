@@ -91,7 +91,7 @@ function DescriptionModal({ description, setDescription, visible, setVisible, co
 
 export default function Info() {
 
-  const id = Number(useParams().id);
+  const id = Number(useParams<"id">().id);
 
   var state = useSelector((state: RootState) => state.user);
   console.log(state);

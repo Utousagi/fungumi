@@ -1,6 +1,8 @@
 package uto.fungumi.backend.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -8,14 +10,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uto.fungumi.backend.dao.CommentDao;
+import uto.fungumi.backend.dao.ThumbUpDao;
 import uto.fungumi.backend.dao.WorkDao;
-import uto.fungumi.backend.entity.Comment;
-import uto.fungumi.backend.entity.Work;
+import uto.fungumi.backend.dao.WorkExtendsDao;
+import uto.fungumi.backend.entity.*;
 import uto.fungumi.backend.model.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,19 +27,75 @@ public class WorkService {
     private WorkDao workDao;
     @Resource
     private CommentDao commentDao;
+    @Resource
+    private ThumbUpDao thumbUpDao;
+    @Resource
+    private WorkExtendsDao workExtendsDao;
 
-    public WorkInfoResult checkWorkInfo(Integer work_id){
+    public void getWorkInfo(Integer work_id, BaseResult<WorkInfoResult> result) {
+
         Optional<Work> byId = workDao.findById(work_id);
-        if(byId.isPresent()) {
-            Work work = byId.get();     //差(Actor、CommentPage、scoreBeanList) √ 、拓展Map字段（info）、tagList √
+        Work work = new Work();
+        if (byId.isPresent()) {
+            work = byId.get();     //差(Actor、CommentPage、scoreBeanList) √ 、拓展Map字段（info）、tagList √
         }
-        Pageable pageable = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC, "time"));
+        else {
+            result.construct(false,"作品id查找失败！");
+            return;
+        }
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "time"));
         Page<Comment> commentPage = commentDao.findByWorkId(work_id, pageable);
+        CommentBeanPage commentBeanPage = new CommentBeanPage();
+        commentBeanPage.setCommentBeanList(commentPage.getContent().stream().map(comment -> {
+            Boolean hasLike = false;
+            if (SecurityUtils.getSubject().getPrincipal() != null){
+                int userId = ((User) (SecurityUtils.getSubject().getPrincipal())).getId();
+                hasLike = thumbUpDao.existsByCommentIdAndUserId(comment.getId(), userId);
+            }
+            return new CommentBean(comment.getId(), comment.getUser().getId(), comment.getUser().getAvatar(), comment.getScore(), comment.getContent(), comment.getTime(), comment.getLikes(), hasLike);
+        }).collect(Collectors.toList()));
+        commentBeanPage.setElement(commentPage.getNumberOfElements());
+
         List<CommentScoreBean> scoreBeans = commentDao.getCommentByWorkId(work_id);
 
+        //TODO：拓展Map字段（info）=> mongodb
+        WorkExtends byWorkId = workExtendsDao.findByWorkId(work_id);
+        Map<String, String> params = new HashMap<>();
+        if (byWorkId != null){
+            log.info(byWorkId.toString());
+            params = byWorkId    .getParams();
+        }
+        else log.info("获取作品param信息失败！");
 
-        return null;
+        Set<ActorBean> actorBeanSet = new HashSet<>();
+        for (Actor actor : work.getActors()) {
+            ActorBean actorBean = new ActorBean();
+            BeanUtils.copyProperties(actor, actorBean);
+            actorBeanSet.add(actorBean);
+        }
+
+        Set<TagResult> tagResultSet = new HashSet<>();
+        for (Tag tag : work.getTags()) {
+            TagResult tagResult = new TagResult();
+            BeanUtils.copyProperties(tag, tagResult);
+            tagResultSet.add(tagResult);
+        }
+
+        WorkInfoResult workInfoResult = WorkInfoResult.builder()
+                .actor(actorBeanSet)
+                .avgScore(work.getScore())
+                .workParams(params)
+                .workId(work_id)
+                .workTitle(work.getTitle())
+                .workProfile(work.getProfile())
+                .commentBeanPage(commentBeanPage)
+                .scoreMap(scoreBeans)
+                .tagResults(tagResultSet)
+                .build();
+        result.construct(true, "获取作品详情信息成功", workInfoResult);
     }
+
 
     @Transactional
     public MainPageResult displayMainPage() {
@@ -58,6 +116,10 @@ public class WorkService {
             works = workDao.findByCategoryAndTag(category, tag, keyword, pageable);
         }
         return works.map(WorkSimpleResult::new);
+    }
+
+    public Page<CommentBean> pageRelatedComments(Integer work_id, Pageable pageable) {
+        return null;
     }
 
 }

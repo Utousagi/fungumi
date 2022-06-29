@@ -4,11 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import uto.fungumi.backend.entity.Comment;
+import uto.fungumi.backend.model.CommentBean;
 import uto.fungumi.backend.model.CommentScoreBean;
 
 import java.util.List;
 
+@Repository
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     @Query("SELECT c " +

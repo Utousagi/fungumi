@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class CommentBean {
     private String userAvatar;
     private Integer score;
     private String content;
-    private LocalDateTime time;
-    private Integer like;
+    private Date time;
+    private Integer likes;
     private Boolean hasLike;
 }
