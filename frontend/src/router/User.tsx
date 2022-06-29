@@ -70,7 +70,7 @@ export default function UserHeader(props: { select?: string }) {
           >
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
-                {isSelf?(<AvatarUpload avatar={userData.avatar} id={userData.userId}/>):(<Image
+                {isSelf?(<AvatarUpload userData={userData} />):(<Image
                   width={150}
                   height={150}
                   src={userData.avatar}

@@ -130,4 +130,15 @@ public class UserInfoService {
         userDao.save(user);
         result.construct(true, "更新用户描述成功");
     }
+
+    public void updateAvatar(String avatar, BaseResult<String> result) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user == null) {
+            result.construct(false, "请先登录");
+            return;
+        }
+        user.setAvatar(avatar);
+        userDao.save(user);
+        result.construct(true, "更新用户头像成功");
+    }
 }

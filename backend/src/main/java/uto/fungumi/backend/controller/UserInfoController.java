@@ -58,4 +58,11 @@ public class UserInfoController {
         userInfoService.updateDescription(descriptionBean.get("description"), result);
         return result;
     }
+
+    @PostMapping("/avatar")
+    public BaseResult<String> updateAvatar(@RequestBody Map<String,String> imgBean) {
+        BaseResult<String> result = new BaseResult<String>();
+        userInfoService.updateAvatar(imgBean.get("url"), result);
+        return result;
+    }
 }

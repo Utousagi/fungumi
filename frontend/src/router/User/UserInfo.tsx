@@ -1,6 +1,7 @@
 import { CommentData, FavouriteData, getUserInfoPage } from "@/axios/User";
 import { CommentShow } from "@/components/CommentShow";
 import { RootState } from "@/redux/reduxStore";
+import upload from "@/service/OssUtil";
 import {
   Button,
   Divider,
@@ -90,12 +91,7 @@ function DescriptionModal({ description, setDescription, visible, setVisible, co
 }
 
 export default function Info() {
-
   const id = Number(useParams<"id">().id);
-
-  var state = useSelector((state: RootState) => state.user);
-  console.log(state);
-
   const isSelf = useSelector((state: RootState) => state.user.id) === id;
 
   const identity: string = isSelf ? "我的" : "个人";
