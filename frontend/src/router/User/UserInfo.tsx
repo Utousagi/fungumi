@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   Form,
+  FormInstance,
   Image,
   Input,
   Layout,
@@ -20,6 +21,7 @@ import { Link, useParams } from "react-router-dom";
 import { CommentShow } from "@/components/CommentShow";
 import { Value } from "sass";
 import axios from "axios";
+import { type } from "os";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (
@@ -42,6 +44,51 @@ function InfoFavourite(props: { favourite: FavouriteData }) {
       <Divider />
     </>
   );
+}
+
+type ModalData = {
+  description : string;
+  setDescription : Function;
+  visible : boolean;
+  setVisible : Function;
+  confirmLoading : boolean;
+  setConfirmLoading : Function;
+  form : FormInstance<any, any, string | number | symbol>;
+}
+
+function DescriptionModal({description, setDescription, visible ,setVisible, confirmLoading, setConfirmLoading, form}:ModalData) {
+
+  function onOK() {
+    form.validate().then(async (values) => {
+      setConfirmLoading(true);
+      await axios.post("/userInfo/description",{
+        description: values.description,
+      }).then(()=>{
+        setDescription(values.description);
+      }).catch((err) => {
+        Message.info(err.message);
+      }).finally(()=>{
+        setConfirmLoading(false);
+        setVisible(false);
+      });
+    });
+  }
+
+  return (
+    <Modal
+      title="修改简介"
+      visible={visible}
+      onOk={onOK}
+      confirmLoading={confirmLoading}
+      onCancel={() => setVisible(false)}
+    >
+      <Form form={form} wrapperCol={{ span: 24 }}>
+        <FormItem field={"description"} rules={[{ required: false }]} initialValue={description}>
+          <Input.TextArea rows={3} />
+        </FormItem>
+      </Form>
+    </Modal>
+  )
 }
 
 export default function Info() {
@@ -74,44 +121,9 @@ export default function Info() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
 
-  function onOK() {
-    form.validate().then(async (values) => {
-      setConfirmLoading(true);
-      await axios.post("/userInfo/description",{
-        description: values.description,
-      }).then(()=>{
-        setDescription(description);
-      }).catch((err) => {
-        Message.info(err.message);
-      }).finally(()=>{
-        setConfirmLoading(false);
-        setVisible(false);
-      });
-    });
-    setDescription(description);
-  }
-
-  function DescriptionModal() {
-    return (
-      <Modal
-        title="修改简介"
-        visible={visible}
-        onOk={onOK}
-        confirmLoading={confirmLoading}
-        onCancel={() => setVisible(false)}
-      >
-        <Form form={form} wrapperCol={{ span: 24 }}>
-          <FormItem field={"description"} rules={[{ required: false }]}>
-            <Input.TextArea rows={3} />
-          </FormItem>
-        </Form>
-      </Modal>
-    )
-  }
-
   return (
     <Layout>
-      {DescriptionModal()}
+      <DescriptionModal description={description} setDescription={setDescription} visible={visible} setVisible={setVisible} confirmLoading={confirmLoading} setConfirmLoading={setConfirmLoading} form={form} />
       <Content style={{ display: "flex", textAlign: "left" }}>
         <div
           style={{

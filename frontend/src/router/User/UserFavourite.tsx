@@ -21,16 +21,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-const favouriteTypeList: string[] = [
-  "未收藏",
-  "想 看",
-  "在 看",
-  "看 过",
-  "搁 置",
-  "抛 弃",
-  "取 消",
-];
+import { DropList, favorDict } from "../Subject";
 
 function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
   var description = props.data.profile;
@@ -39,30 +30,7 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
   }
 
   var [type, setType] = useState(props.data.type);
-
-  function typeChange(key: string) {
-    setType(favouriteTypeList.indexOf(key));
-    var type: number = favouriteTypeList.indexOf(key);
-    if (type <=0 ) return;
-    if (type == 6) type = 0;
-    console.log(axios.post("/favorite/update?workId=" + props.data.id + "&type=" + type));
-  } 
-
-  function DropList() {
-    return (
-      <Menu onClickMenuItem={typeChange}>
-        {favouriteTypeList.map((typeNow: string) => {
-          if (typeNow == favouriteTypeList[0]) return ;
-          if (type == 0 && typeNow == favouriteTypeList[6]) return ;
-          return (
-            <Menu.Item key={typeNow} disabled={!props.isSelf}>
-              {typeNow}
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
-  }
+  const id = props.data.id;
 
   return (
     <div
@@ -115,13 +83,13 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
           </div>
         </Grid.Col>
         <Grid.Col span={2}>
-          <Dropdown position="bottom" droplist={<DropList />}>
+          <Dropdown position="bottom" droplist={DropList({id:id, status:type, setStatus:setType})}>
             <Button
               shape="round"
               size="large"
               style={{ margin: "2px", marginLeft: "20%", marginTop: "30%" }}
             >
-              {favouriteTypeList[Number(type)]}
+              {favorDict[type]}
             </Button>
           </Dropdown>
         </Grid.Col>
@@ -181,3 +149,5 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
     </Content>
   );
 }
+
+

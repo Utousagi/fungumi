@@ -4,7 +4,7 @@ import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
 import reduxStore, { RootState } from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
 import axios from "axios";
-import { UserInfo } from "@/types";
+import { UserInfo } from "@/axios/types";
 
 type AuthModalProps = {
   state: {

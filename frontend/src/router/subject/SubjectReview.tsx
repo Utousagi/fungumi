@@ -19,6 +19,7 @@ let data: CommentPageData = {
   total: 5,
   comments: [
     {
+      id: 1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -32,6 +33,7 @@ let data: CommentPageData = {
       likes: 233,
     },
     {
+      id: 1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -45,6 +47,7 @@ let data: CommentPageData = {
       likes: 233,
     },
     {
+      id: 1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -58,6 +61,7 @@ let data: CommentPageData = {
       likes: 233,
     },
     {
+      id: 1,
       userId: 1,
       username: "Abigail",
       avatar:
@@ -71,6 +75,7 @@ let data: CommentPageData = {
       likes: 233,
     },
     {
+      id: 1,
       userId: 1,
       username: "Abigail",
       avatar:

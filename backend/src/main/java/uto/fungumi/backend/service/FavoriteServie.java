@@ -33,7 +33,7 @@ public class FavoriteServie {
             result.construct(false, "作品不存在");
             return;
         }
-        int add=0;
+        int add = 0;
         Favorite favorite = favoriteDao.findByWorkIdAndUserId(workId, user.getId());
         if (favorite == null) {
             favorite = new Favorite();
@@ -41,15 +41,27 @@ public class FavoriteServie {
             favorite.setWork(work);
             favorite.setUser(user);
             favorite.setType(type);
-            add = type!=0 ? 1 :0;
+            add = type != 0 ? 1 : 0;
         } else {
-            add -= favorite.getType()!=0 ? 1 : 0;
-            add += type!=0 ? 1 : 0;
+            add -= favorite.getType() != 0 ? 1 : 0;
+            add += type != 0 ? 1 : 0;
             favorite.setType(type);
         }
         favoriteDao.save(favorite);
-        work.setFavoritePerson(work.getFavoritePerson()+add);
+        work.setFavoritePerson(work.getFavoritePerson() + add);
         workDao.save(work);
         result.construct(true, "操作成功");
+    }
+
+    public int getFavoriteType(Integer workId) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user == null) {
+            return 0;
+        }
+        Favorite favorite = favoriteDao.findByWorkIdAndUserId(workId, user.getId());
+        if (favorite == null) {
+            return 0;
+        }
+        return favorite.getType();
     }
 }

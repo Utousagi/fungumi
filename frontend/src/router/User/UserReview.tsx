@@ -42,7 +42,7 @@ export default function Review(props: { page?: number } = { page: 1 }) {
               <div style={{ textAlign: "left" }}>
                 <div>
                   FROM{" "}
-                  <Link to={"subject/" + review.workId}>{review.workName}</Link>
+                  <Link to={"/subject/" + review.workId}>{review.workName}</Link>
                 </div>
                 <CommentShow data={review} />
               </div>
