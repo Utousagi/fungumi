@@ -1,53 +1,9 @@
 import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  CommentData,
-  getUserLikeListByPage,
-  loadingReviewPage,
-} from "@/axios/User";
-import { CommentShow } from "@/components/CommentShow";
-
-// const data2: CommentData[] = [
-//   {
-//     userId: 1,
-//     username: "Abigail",
-//     avatar:
-//       "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
-//     score: 7,
-//     time: "Now",
-//     content:
-//       "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-//     islike: false,
-//     likes: 233,
-//   },
-//   {
-//     userId: 1,
-//     username: "Abigail",
-//     avatar:
-//       "https://library.galgame.pw/api/v3/file/source/15362/%E3%82%A2%E3%83%93%E3%82%B2%E3%82%A4%E3%83%AB_66234423.jpg?sign=5SUh66iyzyZSCQO-NeesfNUYop9eGbazYGCjvjrXRQo%3D%3A0",
-//     score: 7,
-//     time: "Now",
-//     content:
-//       "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-//     islike: false,
-//     likes: 233,
-//   },
-// ];
-
-// const data: UserData = {
-//   userId: 1,
-//   username: "ZeesangPie",
-//   avatar: "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp",
-//   description: ""
-// };
-
-// const data3: ReviewPageData = {
-//   user: data,
-//   total: 22,
-//   reviews: data2,
-// };
+import { Link, useParams } from "react-router-dom";
+import { CommentData, getUserLikeListByPage, loadingReviewPage, ReviewPageData, UserData } from "@/axios/User";
+import { CommentShow } from "../../components/CommentShow";
 
 export default function Likes(props: { page?: number } = { page: 1 }) {
   const id = Number(useParams().id);
@@ -78,7 +34,10 @@ export default function Likes(props: { page?: number } = { page: 1 }) {
           }}
         >
           {reviewList.map((review: CommentData) => {
-            return <CommentShow data={review} />;
+            return <div style={{ textAlign: 'left' }}>
+              <div>FROM <Link to={"/subject/" + review.workId}>{review.workName}</Link></div>
+              <CommentShow data={review} />
+            </div>;
           })}
         </Grid.Col>
       </Grid.Row>

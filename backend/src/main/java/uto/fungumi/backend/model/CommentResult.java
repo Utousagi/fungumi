@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CommentResult {
+    Integer id;
     Integer userId;
     String username;
     String avatar;
@@ -16,6 +17,6 @@ public class CommentResult {
     String workName;
     String content;
     String time;
-    boolean isLike;
+    Boolean hasLike;
     Integer likes;
 }

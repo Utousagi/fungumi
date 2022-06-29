@@ -60,4 +60,8 @@ public class WorkService {
         return works.map(WorkSimpleResult::new);
     }
 
+    public Page<CommentBean> pageRelatedComments(Integer work_id, Pageable pageable) {
+        return null;
+    }
+
 }

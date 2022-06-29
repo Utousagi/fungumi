@@ -19,7 +19,7 @@ public interface WorkDao extends JpaRepository<Work,Integer> {
 
     @Query("SELECT w " +
             "FROM Work w, Favorite f " +
-            "WHERE w.id = f.work.id AND f.user.id = :id ")
+            "WHERE w.id = f.work.id AND f.user.id = :id AND f.type <> 0 ")
     Page<Work> findWorkUserFavorites(Integer id, Pageable pageable);
 
     Page<Work> findByCategoryAndTitleLike(String category, String keyword, Pageable pageable);

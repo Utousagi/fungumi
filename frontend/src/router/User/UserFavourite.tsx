@@ -17,18 +17,11 @@ import Divider from "@arco-design/web-react/es/Divider";
 import Grid from "@arco-design/web-react/es/Grid";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Link from "@arco-design/web-react/es/Link";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-const favouriteTypeList: string[] = [
-  "想看",
-  "在看",
-  "看过",
-  "搁置",
-  "抛弃",
-  "取消",
-];
+import { DropList, favorDict } from "../Subject";
 
 function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
   var description = props.data.profile;
@@ -37,25 +30,7 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
   }
 
   var [type, setType] = useState(props.data.type);
-
-  function typeChange(key: string) {
-    setType(key);
-    //TODO:调用收藏接口
-  }
-
-  function DropList() {
-    return (
-      <Menu onClickMenuItem={typeChange}>
-        {favouriteTypeList.map((typeNow: string) => {
-          return (
-            <Menu.Item key={typeNow} disabled={!props.isSelf}>
-              {typeNow}
-            </Menu.Item>
-          );
-        })}
-      </Menu>
-    );
-  }
+  const id = props.data.id;
 
   return (
     <div
@@ -108,13 +83,13 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
           </div>
         </Grid.Col>
         <Grid.Col span={2}>
-          <Dropdown position="bottom" droplist={<DropList />}>
+          <Dropdown position="bottom" droplist={DropList({id:id, status:type, setStatus:setType})}>
             <Button
               shape="round"
               size="large"
               style={{ margin: "2px", marginLeft: "20%", marginTop: "30%" }}
             >
-              {type}
+              {favorDict[type]}
             </Button>
           </Dropdown>
         </Grid.Col>
@@ -174,3 +149,5 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
     </Content>
   );
 }
+
+

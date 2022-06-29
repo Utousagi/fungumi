@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   Form,
+  FormInstance,
   Image,
   Input,
   Layout,
@@ -18,6 +19,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { CommentShow } from "@/components/CommentShow";
+import { Value } from "sass";
+import axios from "axios";
+import { type } from "os";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (
@@ -42,12 +46,63 @@ function InfoFavourite(props: { favourite: FavouriteData }) {
   );
 }
 
+type ModalData = {
+  description : string;
+  setDescription : Function;
+  visible : boolean;
+  setVisible : Function;
+  confirmLoading : boolean;
+  setConfirmLoading : Function;
+  form : FormInstance<any, any, string | number | symbol>;
+}
+
+function DescriptionModal({description, setDescription, visible ,setVisible, confirmLoading, setConfirmLoading, form}:ModalData) {
+
+  function onOK() {
+    form.validate().then(async (values) => {
+      setConfirmLoading(true);
+      await axios.post("/userInfo/description",{
+        description: values.description,
+      }).then(()=>{
+        setDescription(values.description);
+      }).catch((err) => {
+        Message.info(err.message);
+      }).finally(()=>{
+        setConfirmLoading(false);
+        setVisible(false);
+      });
+    });
+  }
+
+  return (
+    <Modal
+      title="修改简介"
+      visible={visible}
+      onOk={onOK}
+      confirmLoading={confirmLoading}
+      onCancel={() => setVisible(false)}
+    >
+      <Form form={form} wrapperCol={{ span: 24 }}>
+        <FormItem field={"description"} rules={[{ required: false }]} initialValue={description}>
+          <Input.TextArea rows={3} />
+        </FormItem>
+      </Form>
+    </Modal>
+  )
+}
+
 export default function Info() {
-  const id = Number(useParams().id);
+
+  const id = Number(useParams<"id">().id);
+
+  var state = useSelector((state: RootState) => state.user);
+  console.log(state);
+
   const isSelf = useSelector((state: RootState) => state.user.id) === id;
+
   const identity: string = isSelf ? "我的" : "个人";
 
-  const [description, setDescription] = useState(" ");
+  const [description, setDescription] = useState("");
   const [favoriteList, setFavoriteList] = useState<FavouriteData[]>([]);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [likeList, setLikeList] = useState<CommentData[]>([]);
@@ -66,32 +121,9 @@ export default function Info() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
 
-  function onOK() {
-    form.validate().then((values) => {
-      setConfirmLoading(true);
-      setTimeout(() => {
-        Message.success("提交成功");
-        setConfirmLoading(false);
-        setVisible(false);
-      }, 1500);
-    });
-  }
-
   return (
     <Layout>
-      <Modal
-        title="修改简介"
-        visible={visible}
-        onOk={onOK}
-        confirmLoading={confirmLoading}
-        onCancel={() => setVisible(false)}
-      >
-        <Form form={form} wrapperCol={{ span: 24 }}>
-          <FormItem field={"description"} rules={[{ required: false }]}>
-            <Input.TextArea rows={3} />
-          </FormItem>
-        </Form>
-      </Modal>
+      <DescriptionModal description={description} setDescription={setDescription} visible={visible} setVisible={setVisible} confirmLoading={confirmLoading} setConfirmLoading={setConfirmLoading} form={form} />
       <Content style={{ display: "flex", textAlign: "left" }}>
         <div
           style={{

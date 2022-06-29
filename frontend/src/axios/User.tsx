@@ -39,16 +39,17 @@ export type InfoPageData = {
 };
 
 export type CommentData = {
-  userId: number;
-  username: string;
-  avatar: string;
-  score: number;
-  workId: number;
-  workName: string;
-  content: string;
-  time: string;
-  islike: boolean;
-  likes: number;
+	id: number;
+	userId: number;
+	username: string;
+	avatar: string;
+	score: number;
+	workId: number;
+	workName: string;
+	content: string;
+	time: string;
+	hasLike: boolean;
+	likes: number;
 };
 
 export type FavouritePageData = {
@@ -69,7 +70,7 @@ export type FavouriteData = {
   category: string;
   score: number;
   votes: number;
-  type: string;
+  type: number;
 };
 
 export async function getUserDataById(userId: number) {

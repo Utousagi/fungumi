@@ -7,7 +7,7 @@ import {
 } from "@arco-design/web-react";
 import ListItem from "@/components/ListItem";
 import { getSubjects } from "@/axios/Search";
-import { useMatch } from "react-router-dom";
+import {useMatch, useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SubjectData } from "@/axios/types";
 
@@ -32,7 +32,7 @@ function SearchIndex() {
 
   return (
     <>
-      <Layout.Content style={{ width: 600, padding: 0, alignItems: "start" }}>
+      <Layout.Content style={{ width: 600, padding: 0, alignItems: "start", justifyItems: "start"}}>
         <Tabs
           type="text"
           onChange={(key) => setOrderBy(key)}
