@@ -4,12 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import uto.fungumi.backend.entity.Comment;
 import uto.fungumi.backend.model.CommentBean;
 import uto.fungumi.backend.model.CommentScoreBean;
 
 import java.util.List;
 
+@Repository
 public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     @Query("SELECT c " +
@@ -25,9 +27,4 @@ public interface CommentDao extends JpaRepository<Comment, Integer> {
             "where work.id = :workId " +
             "group by score")
     List<CommentScoreBean> getCommentByWorkId(Integer workId);
-
-//    @Query("select new uto.fungumi.backend.model.CommentBean(c.id, c.user.id, c.user.avatar, c.score, c.content, c.time, c.likes, tu.) from Comment c " +
-//            "left join c.thumbUps tu where tu.user.id = :userId " +
-//            "and c.work.id = :workId")
-    Page<CommentBean> pageByWorkId(Integer workId, Integer userId, Pageable pageable);
 }
