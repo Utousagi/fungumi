@@ -29,7 +29,7 @@ function App() {
       reduxStore.dispatch(userAction.init());
       if (data.hasLogin) {
         reduxStore.dispatch(
-          userAction.login({ id:data.id, name: data.username, avatar: data.avatar })
+          userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
         );
       }
     });

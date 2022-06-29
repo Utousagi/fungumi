@@ -17,6 +17,6 @@ public class CommentResult {
     String workName;
     String content;
     String time;
-    boolean hasLike;
+    Boolean hasLike;
     Integer likes;
 }
