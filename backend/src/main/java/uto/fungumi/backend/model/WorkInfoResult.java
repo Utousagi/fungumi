@@ -18,9 +18,9 @@ import java.util.Set;
 public class WorkInfoResult {
     private Integer workId;
     private String workTitle;
-    private Map<String,String> workInfo;
+    private Map<String,String> workParams;
     private String workProfile;
-    private Set<Tag> tag;
+    private Set<TagResult> tagResults;
     private Set<ActorBean> actor;                    //演员
     private CommentBeanPage commentBeanPage;
     private Double avgScore;                   //平均分
