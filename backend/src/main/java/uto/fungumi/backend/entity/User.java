@@ -10,12 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Entity
-@ToString
 public class User {
     @Id
     @Column(name = "id", nullable = false)

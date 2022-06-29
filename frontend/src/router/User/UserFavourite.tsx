@@ -110,7 +110,7 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
               size="large"
               style={{ margin: "2px", marginLeft: "20%", marginTop: "30%" }}
             >
-              {type}
+              {favouriteTypeList[Number(type)]}
             </Button>
           </Dropdown>
         </Grid.Col>

@@ -38,7 +38,7 @@ export default function Review(props: { page?: number } = { page: 1 }) {
           {reviewList.map((review: CommentData) => {
             return (
               <div style={{textAlign:'left'}}>
-                <div>FROM <Link to={"subject/" + review.workId}>{review.workName}</Link></div>
+                <div>FROM <Link to={"/subject/" + review.workId}>{review.workName}</Link></div>
                 <CommentShow data={review} />
               </div>
             )

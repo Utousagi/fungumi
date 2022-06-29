@@ -4,7 +4,7 @@ import {
 } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CommentData, getUserLikeListByPage, loadingReviewPage, ReviewPageData, UserData } from "@/axios/User";
 import { CommentShow } from "../../components/CommentShow";
 
@@ -37,7 +37,10 @@ export default function Likes(props: { page?: number } = { page: 1 }) {
           }}
         >
           {reviewList.map((review: CommentData) => {
-            return <CommentShow data={review} />;
+            return <div style={{ textAlign: 'left' }}>
+              <div>FROM <Link to={"/subject/" + review.workId}>{review.workName}</Link></div>
+              <CommentShow data={review} />
+            </div>;
           })}
         </Grid.Col>
       </Grid.Row>

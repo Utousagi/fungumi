@@ -7,20 +7,21 @@ import {
   IconThumbUpFill,
 } from "@arco-design/web-react/icon";
 import { CommentData } from "@/axios/User";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/reduxStore";
+import axios from "axios";
 
 export function CommentShow(props: { data: CommentData }) {
   function pressLike() {
-    if (isSelf) {
       setLike(!like);
-      // TODO：调用喜欢接口
-    }
+      axios.post("/comment/thumbUp?commentId="+props.data.id);
   }
 
-  const [like, setLike] = useState(props.data.islike);
+  const [like, setLike] = useState(props.data.hasLike);
   const likes: number = props.data.likes;
   const score: number = props.data.score / 2.0;
   //TODO: 是否自己的评论
-  const isSelf = true;
+  const isSelf = useSelector((state: RootState) => state.user.id) === props.data.userId;
 
   const actions = [
     <span className="custom-comment-action" key="like" onClick={pressLike}>

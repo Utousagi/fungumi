@@ -38,6 +38,7 @@ export type InfoPageData = {
 }
 
 export type CommentData = {
+	id: number;
 	userId: number;
 	username: string;
 	avatar: string;
@@ -46,7 +47,7 @@ export type CommentData = {
 	workName: string;
 	content: string;
 	time: string;
-	islike: boolean;
+	hasLike: boolean;
 	likes: number;
 };
 

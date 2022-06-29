@@ -247,7 +247,7 @@ let data: workData = {
       workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-      islike: false,
+      hasLike: false,
       likes: 233,
     },
     {
@@ -260,7 +260,7 @@ let data: workData = {
       workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-      islike: false,
+      hasLike: false,
       likes: 233,
     },
     {
@@ -273,7 +273,7 @@ let data: workData = {
       workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-      islike: false,
+      hasLike: false,
       likes: 233,
     },
     {
@@ -286,7 +286,7 @@ let data: workData = {
       workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-      islike: false,
+      hasLike: false,
       likes: 233,
     },
     {
@@ -299,7 +299,7 @@ let data: workData = {
       workName: "测试标题",
       time: "Now",
       content: "可爱滴捏,可爱滴捏,可爱滴捏,可爱滴捏",
-      islike: false,
+      hasLike: false,
       likes: 233,
     },
   ],

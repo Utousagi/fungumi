@@ -44,7 +44,12 @@ function InfoFavourite(props: { favourite: FavouriteData }) {
 
 export default function Info() {
   const id = Number(useParams().id);
+
+  var state = useSelector((state: RootState) => state.user);
+  console.log(state);
+
   const isSelf = useSelector((state: RootState) => state.user.id) === id;
+
   const identity: string = isSelf ? "我的" : "个人";
 
   const [description, setDescription] = useState(" ");

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import uto.fungumi.backend.dao.*;
 import uto.fungumi.backend.entity.Comment;
+import uto.fungumi.backend.entity.ThumbUp;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.*;
@@ -36,6 +37,10 @@ public class UserInfoService {
 
     public void getUserInfo(Integer id, BaseResult result) {
         UserInfoResult info = userDao.getUserInfoById(id);
+        if (info== null) {
+            result.construct(false, "用户不存在");
+            return;
+        }
         result.construct(true, "获取用户信息成功", info);
     }
 
@@ -49,8 +54,10 @@ public class UserInfoService {
         commentPage.setReviews(comments.getContent().stream().map(c -> {
             User user = userDao.findById(c.getUser().getId()).get();
             Work work = workDao.findById(c.getWork().getId()).get();
-            DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            CommentResult commentResult = new CommentResult(user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), thumbUpDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
+            DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            ThumbUp thumbUp = thumbUpDao.findByCommentIdAndUserId(c.getId(), userId);
+            boolean hasLike = thumbUp != null && thumbUp.getStatus().equals("1");
+            CommentResult commentResult = new CommentResult(c.getId(), user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), hasLike, c.getLikes());
             return commentResult;
         }).collect(Collectors.toList()));
         commentPage.setTotal(comments.getNumberOfElements());
@@ -68,7 +75,9 @@ public class UserInfoService {
             User user = userDao.findById(c.getUser().getId()).get();
             Work work = workDao.findById(c.getWork().getId()).get();
             DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
-            CommentResult commentResult = new CommentResult(user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), thumbUpDao.existsByCommentIdAndUserId(c.getId(),userId), c.getLikes());
+            ThumbUp thumbUp = thumbUpDao.findByCommentIdAndUserId(c.getId(), userId);
+            boolean hasLike = thumbUp != null && thumbUp.getStatus().equals("1");
+            CommentResult commentResult = new CommentResult(c.getId(), user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), hasLike, c.getLikes());
             return commentResult;
         }).collect(Collectors.toList()));
         commentPage.setTotal(comments.getNumberOfElements());

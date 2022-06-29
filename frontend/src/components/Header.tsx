@@ -146,6 +146,7 @@ function Header() {
           <Link to="/">
             <IconCloud fontSize={20} />
           </Link>
+          {reduxStore.getState().user.id}
           <Button.Group>
             <Dropdown
               key="anime"

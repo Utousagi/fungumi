@@ -1,10 +1,11 @@
 import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
 import React, { useEffect, useState, ReactNode } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
-import reduxStore from "@/redux/reduxStore";
+import reduxStore, { RootState } from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
 import axios from "axios";
 import { UserInfo } from "@/types";
+import { useSelector } from "react-redux";
 
 type AuthModalProps = {
   state: {
@@ -27,7 +28,7 @@ async function login(username: string, password: string) {
   const data: UserInfo = res.data.data;
   if (data.hasLogin) {
     reduxStore.dispatch(
-      userAction.login({ name: data.username, avatar: data.avatar })
+      userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
     );
   }
   return res.data.success;
@@ -38,7 +39,7 @@ async function register(username: string, password: string) {
   const data: UserInfo = res.data.data;
   if (data.hasLogin) {
     reduxStore.dispatch(
-      userAction.login({ name: data.username, avatar: data.avatar })
+      userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
     );
   }
   return res.data.success;
