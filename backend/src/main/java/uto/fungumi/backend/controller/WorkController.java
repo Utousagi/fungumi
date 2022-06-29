@@ -7,9 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import uto.fungumi.backend.dao.WorkDao;
 import uto.fungumi.backend.entity.Work;
-import uto.fungumi.backend.model.BaseResult;
-import uto.fungumi.backend.model.MainPageResult;
-import uto.fungumi.backend.model.WorkInfoResult;
+import uto.fungumi.backend.model.*;
 import uto.fungumi.backend.service.WorkService;
 
 import javax.annotation.Resource;
@@ -21,14 +19,16 @@ public class WorkController {
     private WorkService workService;
     @Resource
     private WorkDao workDao;
-    @PostMapping ("/display")
-    public BaseResult<MainPageResult>  selectByCategory() {
+
+    @GetMapping ("/display")
+    public BaseResult<MainPageResult> selectByCategory() {
         var mainPageResult = workService.displayMainPage();
         return new BaseResult<>(true, "主页数据获取成功", mainPageResult);
     }
+
     @GetMapping("/find")
     public BaseResult<Page<Work>> findAllWorkBy(@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
-                                                  @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                 @RequestParam(defaultValue = "id",value = "attribute") String attribute){
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, attribute);
         BaseResult<Page<Work>> baseResult = new BaseResult<>();
@@ -61,5 +61,17 @@ public class WorkController {
     @PostMapping("/showWorkInfo")
     public BaseResult<WorkInfoResult> showWorkInfo(Integer work_id){
         return null;
+    }
+
+    @GetMapping("/page")
+    public PageResult<WorkSimpleResult> pageByCategory(@RequestParam String category,
+                                                       @RequestParam(required = false) String tag,
+                                                       @RequestParam(required = false) String keyword,
+                                                       @RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
+                                                       @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                       @RequestParam(defaultValue = "score") String orderBy) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, orderBy);
+        var page = workService.pageByCategory(category, tag, keyword, pageable);
+        return new PageResult<>(true, "查询成功", page);
     }
 }

@@ -34,10 +34,8 @@ export function CommentShow(props: { data: CommentData }) {
       actions={actions}
       align="right"
       author={
-        <div style={{display:'flex'}}>
-          <div style={{margin:'8px 0px 0px 0px'}}>
-            {props.data.username}
-          </div>
+        <div style={{ display: "flex" }}>
+          <div style={{ margin: "8px 0px 0px 0px" }}>{props.data.username}</div>
           <Rate
             readonly
             defaultValue={score}

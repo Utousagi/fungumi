@@ -1,7 +1,4 @@
-import {
-  Grid,
-  Pagination,
-} from "@arco-design/web-react";
+import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";

@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import uto.fungumi.backend.model.BaseResult;
 
 /**
  * @author uto
@@ -27,13 +26,13 @@ public class LogAspect {
     public Object log(ProceedingJoinPoint pjt) throws Throwable {
         var signature = (MethodSignature) pjt.getSignature();
         var method = signature.getMethod();
-        var res = (BaseResult) pjt.proceed();
+        var res = pjt.proceed();
         log.info("-------------------------");
         log.info("method: {}", method.getName());
         log.info("-------------------------");
         log.info("args: {}", pjt.getArgs());
         log.info("-------------------------");
-        log.info("result: {}", res.getData());
+        log.info("result: {}", res);
         log.info("-------------------------");
         return res;
     }

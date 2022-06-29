@@ -41,14 +41,17 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties({"user"})
+    @ToString.Exclude
     private Set<Favorite> favorites;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties({"user"})
+    @ToString.Exclude
     private Set<ThumbUp> thumbUps;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties({"user"})
+    @ToString.Exclude
     private Set<Comment> comments;
 
     @Override

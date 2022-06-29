@@ -26,9 +26,24 @@ public class Actor {
     @Column(name = "avatar")
     private String avatar;
 
+    private String chineseName;
+
+    @Enumerated(EnumType.STRING)
+    private ActorRole role;
 
     @ManyToMany
     @JsonIgnoreProperties({"actors"})
     private Set<Work> works;
 
+    @Getter
+    public enum ActorRole {
+        STAFF("staff"),
+        CHARACTER("character");
+
+        private final String roleName;
+
+        ActorRole(String roleName) {
+            this.roleName = roleName;
+        }
+    }
 }

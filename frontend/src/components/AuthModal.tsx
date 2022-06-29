@@ -1,11 +1,10 @@
 import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
-import React, { useEffect, useState, ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
 import reduxStore, { RootState } from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
 import axios from "axios";
 import { UserInfo } from "@/types";
-import { useSelector } from "react-redux";
 
 type AuthModalProps = {
   state: {
