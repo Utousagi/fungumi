@@ -56,9 +56,8 @@ public class UserInfoService {
             Work work = workDao.findById(c.getWork().getId()).get();
             DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
             ThumbUp thumbUp = thumbUpDao.findByCommentIdAndUserId(c.getId(), userId);
-            boolean hasLike = thumbUp != null && thumbUp.getStatus().equals("1");
-            CommentResult commentResult = new CommentResult(c.getId(), user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), hasLike, c.getLikes());
-            return commentResult;
+            boolean hasLike = thumbUp != null && thumbUp.getType() == 1;
+            return new CommentResult(c.getId(), user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), hasLike, c.getLikes());
         }).collect(Collectors.toList()));
         commentPage.setTotal(comments.getNumberOfElements());
         result.construct(true, "获取用户点赞信息成功", commentPage);
@@ -76,7 +75,7 @@ public class UserInfoService {
             Work work = workDao.findById(c.getWork().getId()).get();
             DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
             ThumbUp thumbUp = thumbUpDao.findByCommentIdAndUserId(c.getId(), userId);
-            boolean hasLike = thumbUp != null && thumbUp.getStatus().equals("1");
+            boolean hasLike = thumbUp != null && thumbUp.getType() == 1;
             CommentResult commentResult = new CommentResult(c.getId(), user.getId(), user.getUsername(), user.getAvatar(), c.getScore(), work.getId(), work.getTitle(), c.getContent(), format.format(c.getTime()), hasLike, c.getLikes());
             return commentResult;
         }).collect(Collectors.toList()));
@@ -124,5 +123,16 @@ public class UserInfoService {
         page.setFavorites(favouriteResult.getData().getWorks());
 
         result.construct(true, "获取用户主页信息成功", page);
+    }
+
+    public void updateDescription(String description, BaseResult<String> result) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user == null) {
+            result.construct(false, "请先登录");
+            return;
+        }
+        user.setDescription(description);
+        userDao.save(user);
+        result.construct(true, "更新用户描述成功");
     }
 }

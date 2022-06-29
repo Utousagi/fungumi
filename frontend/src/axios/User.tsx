@@ -70,7 +70,7 @@ export type FavouriteData = {
   category: string;
   score: number;
   votes: number;
-  type: string;
+  type: number;
 };
 
 export async function getUserDataById(userId: number) {

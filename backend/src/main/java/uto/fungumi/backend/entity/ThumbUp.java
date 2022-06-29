@@ -21,6 +21,9 @@ public class ThumbUp {
     @Column(name = "time")
     private Date time;
 
+    @Column
+    private Integer type;
+
     @ManyToOne
     @JsonIgnoreProperties({"thumbUps"})
     private User user;

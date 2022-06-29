@@ -2,6 +2,7 @@ package uto.fungumi.backend.service;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
+import uto.fungumi.backend.dao.CommentDao;
 import uto.fungumi.backend.dao.ThumbUpDao;
 import uto.fungumi.backend.entity.Comment;
 import uto.fungumi.backend.entity.ThumbUp;
@@ -16,6 +17,9 @@ public class CommentService {
     @Resource
     ThumbUpDao thumbUpDao;
 
+    @Resource
+    CommentDao commentDao;
+
     public void changeThumbStatus(Integer commentId, BaseResult<String> result) {
         User userNow = ((User) SecurityUtils.getSubject().getPrincipal());
         if (userNow == null) {
@@ -23,6 +27,7 @@ public class CommentService {
             return;
         }
         int userId = userNow.getId();
+        int type ;
         ThumbUp thumbUp = thumbUpDao.findByCommentIdAndUserId(commentId, userId);
         if (thumbUp == null) {
             User u = new User();
@@ -32,10 +37,15 @@ public class CommentService {
             thumbUp = new ThumbUp();
             thumbUp.setUser(u);
             thumbUp.setComment(c);
-            thumbUp.setStatus("1");
+            thumbUp.setType(1);
+            type=1;
         } else {
-            thumbUp.setStatus(thumbUp.getStatus().equals("1") ? "0" : "1");
+            type = thumbUp.getType() == 1 ? 0 : 1;
+            thumbUp.setType(type);
         }
+        Comment comment = commentDao.findById(commentId).get();
+        comment.setLikes(comment.getLikes() + (type == 1 ? 1 : -1));
+        commentDao.save(comment);
         thumbUpDao.save(thumbUp);
 
         result.construct(true, "点赞成功");

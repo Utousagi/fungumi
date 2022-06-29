@@ -13,7 +13,7 @@ public interface CommentDao extends JpaRepository<Comment, Integer> {
 
     @Query("SELECT c " +
             "FROM Comment c, ThumbUp tu " +
-            "WHERE c.id = tu.comment.id AND tu.user.id = :id ")
+            "WHERE c.id = tu.comment.id AND tu.user.id = :id AND tu.type = 1 ")
     Page<Comment> findCommentUserLikes(Integer id, Pageable pageable);
 
     Page<Comment> findAllCommentByUserId(Integer id, Pageable pageable);

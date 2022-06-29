@@ -13,20 +13,22 @@ import axios from "axios";
 
 export function CommentShow(props: { data: CommentData }) {
   function pressLike() {
+      if (!isLogin) return;
+      setLikes(likes + (like ? -1 : 1));
       setLike(!like);
       axios.post("/comment/thumbUp?commentId="+props.data.id);
   }
 
   const [like, setLike] = useState(props.data.hasLike);
-  const likes: number = props.data.likes;
+  const [likes, setLikes] = useState(props.data.likes);
   const score: number = props.data.score / 2.0;
   //TODO: 是否自己的评论
-  const isSelf = useSelector((state: RootState) => state.user.id) === props.data.userId;
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
 
   const actions = [
     <span className="custom-comment-action" key="like" onClick={pressLike}>
       {like ? <IconThumbUpFill style={{ color: "f53f3f" }} /> : <IconThumbUp />}{" "}
-      {likes + (like ? 1 : 0)}
+      {likes }
     </span>,
   ];
   return (

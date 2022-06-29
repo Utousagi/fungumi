@@ -17,17 +17,19 @@ import Divider from "@arco-design/web-react/es/Divider";
 import Grid from "@arco-design/web-react/es/Grid";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Link from "@arco-design/web-react/es/Link";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const favouriteTypeList: string[] = [
-  "想看",
-  "在看",
-  "看过",
-  "搁置",
-  "抛弃",
-  "取消",
+  "未收藏",
+  "想 看",
+  "在 看",
+  "看 过",
+  "搁 置",
+  "抛 弃",
+  "取 消",
 ];
 
 function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
@@ -39,14 +41,19 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
   var [type, setType] = useState(props.data.type);
 
   function typeChange(key: string) {
-    setType(key);
-    //TODO:调用收藏接口
-  }
+    setType(favouriteTypeList.indexOf(key));
+    var type: number = favouriteTypeList.indexOf(key);
+    if (type <=0 ) return;
+    if (type == 6) type = 0;
+    console.log(axios.post("/favorite/update?workId=" + props.data.id + "&type=" + type));
+  } 
 
   function DropList() {
     return (
       <Menu onClickMenuItem={typeChange}>
         {favouriteTypeList.map((typeNow: string) => {
+          if (typeNow == favouriteTypeList[0]) return ;
+          if (type == 0 && typeNow == favouriteTypeList[6]) return ;
           return (
             <Menu.Item key={typeNow} disabled={!props.isSelf}>
               {typeNow}

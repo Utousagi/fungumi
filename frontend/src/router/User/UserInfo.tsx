@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { CommentShow } from "@/components/CommentShow";
+import { Value } from "sass";
+import axios from "axios";
 
 function InfoFavourite(props: { favourite: FavouriteData }) {
   return (
@@ -43,6 +45,7 @@ function InfoFavourite(props: { favourite: FavouriteData }) {
 }
 
 export default function Info() {
+
   const id = Number(useParams().id);
 
   var state = useSelector((state: RootState) => state.user);
@@ -52,7 +55,7 @@ export default function Info() {
 
   const identity: string = isSelf ? "我的" : "个人";
 
-  const [description, setDescription] = useState(" ");
+  const [description, setDescription] = useState("");
   const [favoriteList, setFavoriteList] = useState<FavouriteData[]>([]);
   const [commentList, setCommentList] = useState<CommentData[]>([]);
   const [likeList, setLikeList] = useState<CommentData[]>([]);
@@ -72,18 +75,24 @@ export default function Info() {
   const [form] = Form.useForm();
 
   function onOK() {
-    form.validate().then((values) => {
+    form.validate().then(async (values) => {
       setConfirmLoading(true);
-      setTimeout(() => {
-        Message.success("提交成功");
+      await axios.post("/userInfo/description",{
+        description: values.description,
+      }).then(()=>{
+        setDescription(description);
+      }).catch((err) => {
+        Message.info(err.message);
+      }).finally(()=>{
         setConfirmLoading(false);
         setVisible(false);
-      }, 1500);
+      });
     });
+    setDescription(description);
   }
 
-  return (
-    <Layout>
+  function DescriptionModal() {
+    return (
       <Modal
         title="修改简介"
         visible={visible}
@@ -97,6 +106,12 @@ export default function Info() {
           </FormItem>
         </Form>
       </Modal>
+    )
+  }
+
+  return (
+    <Layout>
+      {DescriptionModal()}
       <Content style={{ display: "flex", textAlign: "left" }}>
         <div
           style={{
