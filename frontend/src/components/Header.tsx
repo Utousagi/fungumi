@@ -4,7 +4,7 @@ import {
   Button,
   Dropdown,
   Input,
-  Menu,
+  Menu, Message,
   Select,
   Space,
 } from "@arco-design/web-react";
@@ -56,19 +56,27 @@ function UserBlock() {
         position="bottom"
         droplist={
           <Menu style={{ width: 115, padding: "5px" }}>
-            <Menu.Item key="space" onClick={() => {nav('/user/'+userId)}}>
+            <Menu.Item
+              key="space"
+              onClick={() => {
+                nav("/user/" + userId);
+              }}
+            >
               <Space>
                 <IconUser />
                 个人空间
               </Space>
             </Menu.Item>
-            <Menu.Item key="setting" >
+            <Menu.Item key="setting">
               <Space>
                 <IconSettings />
                 信息设置
               </Space>
             </Menu.Item>
-            <Menu.Item key="logout" onClick={logout}>
+            <Menu.Item key="logout" onClick={() => {
+              logout().then(() => Message.info("退出成功"));
+
+            }}>
               <Space>
                 <IconExport />
                 退出登录

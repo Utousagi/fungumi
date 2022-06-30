@@ -6,6 +6,7 @@ import { getUserDataById, loadingUser, UserData } from "@/axios/User";
 import AvatarUpload from "@/components/AvatarUpload";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/reduxStore";
+import defaultAvatar from "@/assets/akarin.png";
 
 function UserMenu(props: {
   userId: number;
@@ -70,12 +71,16 @@ export default function UserHeader(props: { select?: string }) {
           >
             <Grid.Row style={{ width: "95%" }}>
               <Grid.Col span={4} style={{ alignContent: "center" }}>
-                {isSelf?(<AvatarUpload userData={userData} />):(<Image
-                  width={150}
-                  height={150}
-                  src={userData.avatar}
-                  style={{}}
-                />)}
+                {isSelf ? (
+                  <AvatarUpload userData={userData} />
+                ) : (
+                  <Image
+                    width={150}
+                    height={150}
+                    src={userData.avatar ? userData.avatar : defaultAvatar}
+                    style={{}}
+                  />
+                )}
               </Grid.Col>
               <Grid.Col
                 span={16}

@@ -3,6 +3,7 @@ package uto.fungumi.backend.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import uto.fungumi.backend.entity.Work;
 
@@ -29,4 +30,10 @@ public interface WorkDao extends JpaRepository<Work,Integer> {
             "where w.category = :category and t.name = :tag " +
             "and w.title like :keyword")
     Page<Work> findByCategoryAndTag(String category, String tag, String keyword, Pageable pageable);
+
+    @Query("update Work w " +
+            "set w.score = (w.score*w.ratePerson + :score)/(w.ratePerson+1), w.ratePerson = w.ratePerson+1 " +
+            "where w.id = :id")
+    @Modifying
+    Integer updateScore(Integer id, Double score);
 }

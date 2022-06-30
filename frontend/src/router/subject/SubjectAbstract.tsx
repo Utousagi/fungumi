@@ -10,12 +10,14 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { CommentShow } from "@/components/CommentShow";
 import { IconStar } from "@arco-design/web-react/icon";
-import { CommentData } from "@/axios/User";
+import {
+  actorInfo,
+  CommentData,
+  loadingWorkInfo,
+  workInfo,
+} from "@/axios/types";
 import { useEffect, useState } from "react";
-import { actorInfo, loadingWorkInfo, workInfo } from "@/axios/types";
 import { getWorkInfo } from "@/axios/Work";
-
-
 
 export type labelData = {
   name: string;
@@ -47,13 +49,13 @@ function ScoreBox(props: ScoreData) {
         </div>
       </Space>
       <Divider style={{ margin: "5px 0", width: "90%" }} />
-      <Space size="small" style={{ alignItems: "end", height:'150px' }}>
+      <Space size="small" style={{ alignItems: "end", height: "150px" }}>
         {props.eachScores.map((score, index) => {
           return (
             <Grid.Col key={index} span={24}>
               <div
                 style={{
-                  height: (score/props.votes) * 130,
+                  height: (score / props.votes) * 130,
                   width: 10,
                   backgroundColor: "lightpink",
                 }}
@@ -70,11 +72,11 @@ function ScoreBox(props: ScoreData) {
 function Character(props: { data: actorInfo }) {
   const item = props.data;
   return (
-    <Grid.Col span={8}>
+    <Grid.Col span={10}>
       <Link to={`/character/${item.id}`}>
         <Comment
           author={
-            <div style={{ fontSize: "15px", display: "contents" }}>
+            <div style={{ fontSize: "12px", display: "contents" }}>
               {item.name}
             </div>
           }
@@ -85,8 +87,7 @@ function Character(props: { data: actorInfo }) {
           }
           avatar={
             <Image
-              alt="avatar"
-              src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/e278888093bef8910e829486fb45dd69.png~tplv-uwbnlip3yd-webp.webp"
+              src={props.data.avatar}
               preview={false}
               width={50}
               height={50}
@@ -98,7 +99,7 @@ function Character(props: { data: actorInfo }) {
     </Grid.Col>
   );
 }
-function Labels(props: { category : string; title: string; data: labelData[] }) {
+function Labels(props: { category: string; title: string; data: labelData[] }) {
   return (
     <div
       style={{
@@ -120,7 +121,7 @@ function Labels(props: { category : string; title: string; data: labelData[] }) 
           return (
             <Link to={`/search/${props.category}/tag/${label.name}`}>
               {" "}
-              <Tag key={label.id} defaultChecked={true} color="arcoblue">
+              <Tag key={label.id} defaultChecked={true} color="#facfe0">
                 <div style={{ fontSize: "15px" }}>{label.name}</div>
               </Tag>
             </Link>
@@ -139,16 +140,16 @@ function SubjectAbstract() {
     getWorkInfo(id).then((res) => {
       setData(res as unknown as workInfo);
       console.log(data);
-    })
+    });
   }, []);
 
   var scoreData: ScoreData = {
     score: data.avgScore,
     rank: 0,
     votes: 0,
-    eachScores: [0,0,0,0,0,0,0,0,0,0],
-  }
-  data.scoreMap.forEach(e => {
+    eachScores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  };
+  data.scoreMap.forEach((e) => {
     scoreData.votes += e.number;
     scoreData.eachScores[e.score - 1] += e.number;
   });
@@ -173,10 +174,14 @@ function SubjectAbstract() {
               borderBottomStyle: "dotted",
             }}
           />
-          <Labels title={data.workTitle} data={data.tagResults} category={data.category} />
+          <Labels
+            title={data.workTitle}
+            data={data.tagResults}
+            category={data.category}
+          />
         </Layout.Content>
         <Layout.Sider style={{ margin: "10px 10px", padding: "5px" }}>
-          <ScoreBox {...scoreData}/>
+          <ScoreBox {...scoreData} />
         </Layout.Sider>
       </Layout>
       <Divider
@@ -186,7 +191,7 @@ function SubjectAbstract() {
         }}
       />
       <h3 style={{ margin: "0 25px" }}>角色介绍</h3>
-      <Grid.Row style={{ alignSelf: "center", margin: "0 25px" }}>
+      <Grid.Row style={{ alignSelf: "start", margin: "0 25px" }}>
         {data.actor.map((character: actorInfo) => {
           return <Character key={character.id} data={character} />;
         })}
@@ -206,7 +211,7 @@ function SubjectAbstract() {
           margin: "0 20px",
         }}
       >
-        {data.commentBeanPage.commentBeanList.map((comment: CommentData) => {
+        {data.commentBeanPage.comments.map((comment: CommentData) => {
           return <CommentShow data={comment} />;
         })}
       </div>
@@ -215,4 +220,3 @@ function SubjectAbstract() {
 }
 
 export default SubjectAbstract;
-

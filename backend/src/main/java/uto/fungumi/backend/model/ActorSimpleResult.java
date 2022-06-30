@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
 /**
  * @author uto
  * @date 2022/6/29
@@ -20,6 +18,7 @@ public class ActorSimpleResult {
     private Integer id;
     private String name;
     private String chineseName;
+    private String description;
     private String avatar;
-    private Map<String, String> actorExtends;
+
 }

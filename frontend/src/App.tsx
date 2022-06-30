@@ -8,7 +8,7 @@ import Search from "@/router/Search";
 import SearchIndex from "@/router/search/SearchIndex";
 import SearchTag from "@/router/search/SearchTag";
 import SearchTag$Tag from "@/router/search/SearchTag$Tag";
-import CharacterPage from "./components/CharacterPage";
+import Character from "./router/Character";
 import Favourite from "./router/User/UserFavourite";
 import Likes from "./router/User/UserLike";
 import Review from "./router/User/UserReview";
@@ -29,7 +29,11 @@ function App() {
       reduxStore.dispatch(userAction.init());
       if (data.hasLogin) {
         reduxStore.dispatch(
-          userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
+          userAction.login({
+            id: data.id,
+            name: data.username,
+            avatar: data.avatar,
+          })
         );
       }
     });
@@ -64,7 +68,7 @@ function App() {
             <Route path="character" element={<SubjectCharacter />} />
             <Route path="staff" element={<SubjectCharacter />} />
           </Route>
-          <Route path="character/:id" element={<CharacterPage />} />
+          <Route path="character/:id" element={<Character />} />
           <Route path="/user/:id" element={<User />}>
             <Route path="" element={<Info />} />
 

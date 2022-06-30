@@ -28,6 +28,8 @@ public class Actor {
 
     private String chineseName;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private ActorRole role;
 

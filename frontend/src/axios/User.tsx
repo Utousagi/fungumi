@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CommentData } from "@/axios/types";
 
 export type ReviewPageData = {
   total: number;
@@ -36,20 +37,6 @@ export type InfoPageData = {
   likes: CommentData[];
   reviews: CommentData[];
   favourites: FavouriteData[];
-};
-
-export type CommentData = {
-	id: number;
-	userId: number;
-	username: string;
-	avatar: string;
-	score: number;
-	workId: number;
-	workName: string;
-	content: string;
-	time: string;
-	hasLike: boolean;
-	likes: number;
 };
 
 export type FavouritePageData = {

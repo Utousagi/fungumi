@@ -2,7 +2,6 @@ package uto.fungumi.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import uto.fungumi.backend.dao.*;
 import uto.fungumi.backend.model.*;
 import uto.fungumi.backend.service.UserInfoService;
 

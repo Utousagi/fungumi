@@ -1,8 +1,5 @@
-import {
-  CommentData,
-  getUserCommentListByPage,
-  loadingReviewPage,
-} from "@/axios/User";
+import { getUserCommentListByPage, loadingReviewPage } from "@/axios/User";
+import { CommentData } from "@/axios/types";
 import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
@@ -42,7 +39,9 @@ export default function Review(props: { page?: number } = { page: 1 }) {
               <div style={{ textAlign: "left" }}>
                 <div>
                   FROM{" "}
-                  <Link to={"/subject/" + review.workId}>{review.workName}</Link>
+                  <Link to={"/subject/" + review.workId}>
+                    {review.workName}
+                  </Link>
                 </div>
                 <CommentShow data={review} />
               </div>

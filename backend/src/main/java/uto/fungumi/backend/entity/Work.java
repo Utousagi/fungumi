@@ -1,10 +1,7 @@
 package uto.fungumi.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,6 +12,8 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

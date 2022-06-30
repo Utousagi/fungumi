@@ -26,7 +26,10 @@ const userSlice = createSlice({
           payload: { id: props.id, name: props.name, avatar: props.avatar },
         };
       },
-      reducer(state, action: PayloadAction<{ id: number; name: string; avatar: string }>) {
+      reducer(
+        state,
+        action: PayloadAction<{ id: number; name: string; avatar: string }>
+      ) {
         state.id = action.payload.id;
         state.name = action.payload.name;
         state.avatar = action.payload.avatar;

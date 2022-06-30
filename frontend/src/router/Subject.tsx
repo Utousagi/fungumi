@@ -6,6 +6,7 @@ import {
   Image,
   Layout,
   Menu,
+  Message,
   Tabs,
   Tag,
 } from "@arco-design/web-react";
@@ -14,6 +15,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { categoryList, loadingWorkInfo, workInfo } from "@/axios/types";
 import { getWorkInfo } from "@/axios/Work";
+import reduxStore from "@/redux/reduxStore";
 
 export const favorDict: Record<number, string> = {
   0: "未收藏",
@@ -25,19 +27,32 @@ export const favorDict: Record<number, string> = {
   6: "取消",
 };
 
-export function DropList({ id, status, setStatus }: { id: number, status: number, setStatus: (key: number) => void }) {
-
+export function DropList({
+  id,
+  status,
+  setStatus,
+}: {
+  id: number;
+  status: number;
+  setStatus: (key: number) => void;
+}) {
   function typeChange(key: number) {
     setStatus(key);
-    if (key == 6) key = 0;
     axios.post("/favorite/update?workId=" + id + "&type=" + key);
   }
 
   return (
     <Menu
-      onClickMenuItem={(key) => typeChange(Number(key))}
+      onClickMenuItem={(key) => {
+        if (reduxStore.getState().user.isLogin) {
+          typeChange(Number(key));
+          Message.success(key == "0" ? "取消成功" : "收藏成功");
+        } else {
+          Message.warning("请先登录");
+        }
+      }}
       style={{ padding: 5 }}
-      selectedKeys={[''+status]}
+      selectedKeys={["" + status]}
       levelIndent={0}
     >
       {[1, 2, 3, 4, 5].map((key) => {
@@ -56,7 +71,7 @@ export function DropList({ id, status, setStatus }: { id: number, status: number
         </Menu.Item>
       ) : null}
     </Menu>
-  )
+  );
 }
 
 function Subject() {
@@ -78,7 +93,7 @@ function Subject() {
       setData(res as unknown as workInfo);
       setStatus((res as unknown as workInfo).favoriteStatus);
       console.log(data);
-    })
+    });
   }, []);
 
   const [status, setStatus] = useState(0);
@@ -90,10 +105,16 @@ function Subject() {
         <div style={{ display: "flex" }}>
           <h2 style={{ margin: "0 30px", width: "90%" }}>
             {data.workTitle}
-            <Tag style={{ margin: "2px 2px 2px 2px" }}>{categoryList.get(data.category)}</Tag>
+            <Tag style={{ margin: "2px 2px 2px 2px" }}>
+              {categoryList.get(data.category)}
+            </Tag>
           </h2>
 
-          <Dropdown position="bottom" droplist={DropList({id, status, setStatus})} trigger="click">
+          <Dropdown
+            position="bottom"
+            droplist={DropList({ id, status, setStatus })}
+            trigger="click"
+          >
             <Button
               shape="round"
               size="large"
@@ -137,4 +158,3 @@ function Subject() {
 }
 
 export default Subject;
-

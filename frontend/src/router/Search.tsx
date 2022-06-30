@@ -51,12 +51,12 @@ function SideSearchBox(props: { selected: string }) {
       </Grid.Row>
       <Grid.Row>
         <Link to={`/search/${props.selected}`}>
-          <div style={{margin: "1px 5px", color: "coral"}}>查找全部</div>
+          <div style={{ margin: "1px 5px", color: "coral" }}>查找全部</div>
         </Link>
       </Grid.Row>
       <Grid.Row>
         <Link to={`/search/${props.selected}/tag`}>
-          <div style={{margin: "1px 5px", color: "coral"}}>按标签查找</div>
+          <div style={{ margin: "1px 5px", color: "coral" }}>按标签查找</div>
         </Link>
       </Grid.Row>
     </div>
@@ -103,7 +103,7 @@ function Search(props: { category: string }) {
             margin: "0 50px",
             paddingTop: 0,
             alignItems: "start",
-            justifyContent: "start"
+            justifyContent: "start",
           }}
         >
           <Outlet />

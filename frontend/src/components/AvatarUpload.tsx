@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { IconEdit } from '@arco-design/web-react/icon';
-import { RootState } from '@/redux/reduxStore';
-import { useSelector } from 'react-redux';
-import { Progress } from '@arco-design/web-react';
-import Upload, { UploadItem } from '@arco-design/web-react/es/Upload';
-import upload from '@/service/OssUtil';
-import axios from 'axios';
-import { UserData } from '@/axios/User';
+import React, { useEffect, useState } from "react";
+import { IconEdit } from "@arco-design/web-react/icon";
+import { Progress } from "@arco-design/web-react";
+import Upload, { UploadItem } from "@arco-design/web-react/es/Upload";
+import axios from "axios";
+import { UserData } from "@/axios/User";
+import defaultAvatar from "@/assets/akarin.png";
 
 export function AvatarUpload({ userData }: { userData: UserData }) {
-  const id = userData.userId;  
-  const [file, setFile] = useState({uid:'1', url: userData.avatar} as UploadItem);
+  const id = userData.userId;
+  const [file, setFile] = useState({
+    uid: "1",
+    url: userData.avatar ? userData.avatar : defaultAvatar,
+  } as UploadItem);
 
   useEffect(() => {
-    setFile( {uid:'1', url: userData.avatar} as UploadItem);
+    setFile({ uid: "1", url: userData.avatar ? userData.avatar : defaultAvatar } as UploadItem);
   }, [userData]);
 
-  const cs = `arco-upload-list-item${file && file.status === 'error' ? ' is-error' : ''}`;
+  const cs = `arco-upload-list-item${
+    file && file.status === "error" ? " is-error" : ""
+  }`;
   return (
-    <div style={{ width: '150px', height: '150px' }}>
+    <div style={{ width: "150px", height: "150px" }}>
       <Upload
         customRequest={async (option) => {
           const { onProgress, onError, onSuccess, file } = option;
@@ -45,20 +48,30 @@ export function AvatarUpload({ userData }: { userData: UserData }) {
               return onError(xhr.responseText as Object);
             }
             axios.post("userInfo/avatar", {
-              url: '//fungumi.oss-cn-qingdao.aliyuncs.com/avatar/avatar' + id + '.jpg'
+              url:
+                "//fungumi.oss-cn-qingdao.aliyuncs.com/avatar/avatar" +
+                id +
+                ".jpg",
             });
             onSuccess(xhr);
           };
 
-          xhr.open('put', 'http://fungumi.oss-cn-qingdao.aliyuncs.com/avatar/avatar' + id + '.jpg' + '?OSSAccessKeyId=LTAI5tLExRGvvAwM1NXnSSaC&Signature=V3TkOipZ2YwJ5pCDm7NrOuquzh1X3m', true);
+          xhr.open(
+            "put",
+            "http://fungumi.oss-cn-qingdao.aliyuncs.com/avatar/avatar" +
+              id +
+              ".jpg" +
+              "?OSSAccessKeyId=LTAI5tLExRGvvAwM1NXnSSaC&Signature=V3TkOipZ2YwJ5pCDm7NrOuquzh1X3m",
+            true
+          );
           const loadFileBob = (file: Blob) => {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
               let reader = new FileReader();
               reader.readAsArrayBuffer(file);
               let blob = null;
-              reader.onload = e => {
-                var target = e.target || {} as any;
-                if (typeof target.result === 'object') {
+              reader.onload = (e) => {
+                var target = e.target || ({} as any);
+                if (typeof target.result === "object") {
                   blob = new Blob([target.result]);
                 } else {
                   blob = target.result;
@@ -89,22 +102,28 @@ export function AvatarUpload({ userData }: { userData: UserData }) {
           setFile(currentFile);
         }}
       >
-        <div className={cs} style={{ width: '150px', height: '150px' }}>
-          <div className='arco-upload-list-item-picture custom-upload-avatar' style={{ width: '150px', height: '150px' }}>
-            <img src={file.url} />
-            <div className='arco-upload-list-item-picture-mask' style={{ width: '150px', height: '150px' }}>
-              <IconEdit style={{ fontSize: '32', marginTop: '60px' }} />
+        <div className={cs} style={{ width: "150px", height: "150px" }}>
+          <div
+            className="arco-upload-list-item-picture custom-upload-avatar"
+            style={{ width: "150px", height: "150px" }}
+          >
+            <img src={file.url} style={{backgroundColor: "white"}} />
+            <div
+              className="arco-upload-list-item-picture-mask"
+              style={{ width: "150px", height: "150px" }}
+            >
+              <IconEdit style={{ fontSize: "32", marginTop: "60px" }} />
             </div>
-            {file.status === 'uploading' && (file.percent || 0) < 100 && (
+            {file.status === "uploading" && (file.percent || 0) < 100 && (
               <Progress
                 percent={file.percent || 0}
-                type='circle'
-                size='mini'
+                type="circle"
+                size="mini"
                 style={{
-                  position: 'absolute',
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translateX(-50%) translateY(-50%)',
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translateX(-50%) translateY(-50%)",
                 }}
               />
             )}

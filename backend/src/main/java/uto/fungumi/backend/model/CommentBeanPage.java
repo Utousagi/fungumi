@@ -12,5 +12,5 @@ import java.util.List;
 @Data
 public class CommentBeanPage {
     private Integer element;
-    private List<CommentBean> commentBeanList;
+    private List<CommentResult> comments;
 }

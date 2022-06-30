@@ -4,13 +4,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import uto.fungumi.backend.dao.WorkDao;
+import uto.fungumi.backend.entity.Actor;
 import uto.fungumi.backend.entity.Work;
 import uto.fungumi.backend.model.*;
 import uto.fungumi.backend.service.WorkService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/work")
@@ -77,4 +82,17 @@ public class WorkController {
         return new PageResult<>(true, "查询成功", page);
     }
 
+    @GetMapping("/comment")
+    public PageResult<CommentResult> pageRelatedComments(@RequestParam Integer workId,
+                                                      @RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
+                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "time");
+        var page = workService.pageRelatedComments(workId, pageable);
+        return new PageResult<>(true, "查询成功", page);
+    }
+
+    @GetMapping("/actor")
+    public BaseResult<List<ActorSimpleResult>> listRelatedActors(@RequestParam Integer workId, @RequestParam Actor.ActorRole role) {
+        return new BaseResult<>(true, "查询成功", workService.listRelatedActors(workId, role));
+    }
 }

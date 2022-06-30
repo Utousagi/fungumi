@@ -1,10 +1,11 @@
-import { Button, Form, Input, Modal, Space } from "@arco-design/web-react";
+import {Button, Form, Input, Message, Modal, Space} from "@arco-design/web-react";
 import React, { ReactNode, useEffect, useState } from "react";
 import { IconCheck, IconSafe, IconUser } from "@arco-design/web-react/icon";
-import reduxStore, { RootState } from "@/redux/reduxStore";
+import reduxStore from "@/redux/reduxStore";
 import { userAction } from "@/redux/userSlice";
 import axios from "axios";
 import { UserInfo } from "@/axios/types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type AuthModalProps = {
   state: {
@@ -27,10 +28,14 @@ async function login(username: string, password: string) {
   const data: UserInfo = res.data.data;
   if (data.hasLogin) {
     reduxStore.dispatch(
-      userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
+      userAction.login({
+        id: data.id,
+        name: data.username,
+        avatar: data.avatar,
+      })
     );
   }
-  return res.data.success;
+  return [res.data.success, res.data.message];
 }
 
 async function register(username: string, password: string) {
@@ -38,10 +43,14 @@ async function register(username: string, password: string) {
   const data: UserInfo = res.data.data;
   if (data.hasLogin) {
     reduxStore.dispatch(
-      userAction.login({ id: data.id, name: data.username, avatar: data.avatar })
+      userAction.login({
+        id: data.id,
+        name: data.username,
+        avatar: data.avatar,
+      })
     );
   }
-  return res.data.success;
+  return [res.data.success, res.data.message];
 }
 
 function LoginForm() {
@@ -104,15 +113,15 @@ function RegisterForm() {
       >
         <Input.Password prefix={<IconSafe />} />
       </Form.Item>
-      <Form.Item
-        field="confirmPassword"
-        label="确认密码"
-        required
-        requiredSymbol={{ position: "end" }}
-        rules={[{}]}
-      >
-        <Input.Password prefix={<IconCheck />} />
-      </Form.Item>
+      {/*<Form.Item*/}
+      {/*  field="confirmPassword"*/}
+      {/*  label="确认密码"*/}
+      {/*  required*/}
+      {/*  requiredSymbol={{ position: "end" }}*/}
+      {/*  rules={[{}]}*/}
+      {/*>*/}
+      {/*  <Input.Password prefix={<IconCheck />} />*/}
+      {/*</Form.Item>*/}
     </>
   );
 }
@@ -131,7 +140,11 @@ const registerState: ModalInfo = {
 };
 
 function AuthModal(props: AuthModalProps) {
+  const nav = useNavigate();
+  const location = useLocation();
+  const [errorMessage, setErrorMessage] = useState("");
   const [submit, setSubmit] = useState<"login" | "register">(props.state.type);
+  const [loading, setLoading] = useState(false);
   const [modalInfo, setModalInfo] = useState<ModalInfo>(
     props.state.type === "login" ? loginState : registerState
   );
@@ -140,7 +153,13 @@ function AuthModal(props: AuthModalProps) {
   useEffect(() => {
     setSubmit(props.state.type);
     setModalInfo(props.state.type === "login" ? loginState : registerState);
+    form.clearFields();
   }, [props.state.visible]);
+
+  useEffect(() => {
+    form.clearFields();
+    setErrorMessage("");
+  }, [modalInfo]);
 
   return (
     <>
@@ -154,6 +173,7 @@ function AuthModal(props: AuthModalProps) {
         onCancel={() => {
           props.setState({ ...props.state, visible: false });
         }}
+        confirmLoading={loading}
       >
         <Form
           form={form}
@@ -167,26 +187,36 @@ function AuthModal(props: AuthModalProps) {
             },
           }}
           onSubmit={async () => {
+            setLoading(true);
+            let success, message;
             if (submit === "login") {
-              const success = await login(
+              [success, message] = await login(
                 form.getFieldsValue().username,
                 form.getFieldsValue().password
-              );
-              if (success) {
-                props.setState({ ...props.state, visible: false });
-              }
+              ).finally(() => setLoading(false));
             } else {
-              const success = await register(
+              [success, message] = await register(
                 form.getFieldsValue().username,
                 form.getFieldsValue().password
-              );
-              if (success) {
-                props.setState({ ...props.state, visible: false });
-              }
+              ).finally(() => setLoading(false));
             }
+            if (success) {
+              props.setState({ ...props.state, visible: false });
+              Message.info(props.state.type == "login" ? "登录成功" : "注册成功");
+            } else {
+              setErrorMessage(message);
+            }
+          }}
+          onSelect={() => {
+            setErrorMessage("");
           }}
         >
           {modalInfo.formItem}
+          {errorMessage ? (
+            <div style={{ color: "lightcoral", margin: "0 100px" }}>
+              {errorMessage}
+            </div>
+          ) : null}
         </Form>
         <Space
           style={{ display: "flex", justifyContent: "space-evenly" }}

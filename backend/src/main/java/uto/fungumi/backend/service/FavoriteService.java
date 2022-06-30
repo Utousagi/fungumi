@@ -20,12 +20,8 @@ public class FavoriteService {
     @Resource
     WorkDao workDao;
 
-    public void addFavorite(Integer workId, Integer type, BaseResult<String> result) {
+    public void addFavorite(Integer workId, Integer type, BaseResult<Void> result) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        if (user == null) {
-            result.construct(false, "请先登录");
-            return;
-        }
         Work work = workDao.findById(workId).get();
         if (work == null) {
             result.construct(false, "作品不存在");

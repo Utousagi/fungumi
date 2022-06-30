@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uto.fungumi.backend.dao.CommentDao;
-import uto.fungumi.backend.dao.ThumbUpDao;
-import uto.fungumi.backend.dao.WorkDao;
-import uto.fungumi.backend.dao.WorkExtendsDao;
+import uto.fungumi.backend.dao.*;
 import uto.fungumi.backend.entity.*;
 import uto.fungumi.backend.model.*;
 
@@ -35,10 +32,13 @@ public class WorkService {
     @Resource
     private FavoriteService favoriteService;
 
+    @Resource
+    private ActorDao actorDao;
+
     public void getWorkInfo(Integer work_id, BaseResult<WorkInfoResult> result) {
 
         Optional<Work> byId = workDao.findById(work_id);
-        Work work = new Work();
+        Work work;
         if (byId.isPresent()) {
             work = byId.get();     //差(Actor、CommentPage、scoreBeanList) √ 、拓展Map字段（info）、tagList √
         }
@@ -47,17 +47,10 @@ public class WorkService {
             return;
         }
 
-        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "time"));
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "time"));
         Page<Comment> commentPage = commentDao.findByWorkId(work_id, pageable);
         CommentBeanPage commentBeanPage = new CommentBeanPage();
-        commentBeanPage.setCommentBeanList(commentPage.getContent().stream().map(comment -> {
-            Boolean hasLike = false;
-            if (SecurityUtils.getSubject().getPrincipal() != null){
-                int userId = ((User) (SecurityUtils.getSubject().getPrincipal())).getId();
-                hasLike = thumbUpDao.existsByCommentIdAndUserId(comment.getId(), userId);
-            }
-            return new CommentBean(comment.getId(), comment.getUser().getId(), comment.getUser().getAvatar(), comment.getScore(), comment.getContent(), comment.getTime(), comment.getLikes(), hasLike);
-        }).collect(Collectors.toList()));
+        commentBeanPage.setComments(pageRelatedComments(work_id, pageable).getContent());
         commentBeanPage.setElement(commentPage.getNumberOfElements());
 
         List<CommentScoreBean> scoreBeans = commentDao.getCommentByWorkId(work_id);
@@ -67,7 +60,7 @@ public class WorkService {
         Map<String, String> params = new HashMap<>();
         if (byWorkId != null){
             log.info(byWorkId.toString());
-            params = byWorkId    .getParams();
+            params = byWorkId.getParams();
         }
         else log.info("获取作品param信息失败！");
 
@@ -104,7 +97,6 @@ public class WorkService {
         result.construct(true, "获取作品详情信息成功", workInfoResult);
     }
 
-
     @Transactional
     public MainPageResult displayMainPage() {
         var mainPageResult = new MainPageResult();
@@ -126,8 +118,15 @@ public class WorkService {
         return works.map(WorkSimpleResult::new);
     }
 
-    public Page<CommentBean> pageRelatedComments(Integer work_id, Pageable pageable) {
-        return null;
+    public Page<CommentResult> pageRelatedComments(Integer workId, Pageable pageable) {
+        var subject = SecurityUtils.getSubject();
+        var user = (User) subject.getPrincipal();
+        var userId = user == null ? null : user.getId();
+        return commentDao.pageByWorkId(workId, userId, pageable);
+    }
+
+    public List<ActorSimpleResult> listRelatedActors(Integer workId, Actor.ActorRole role) {
+        return actorDao.listByWorkId(workId, role);
     }
 
 }

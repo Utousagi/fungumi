@@ -1,7 +1,7 @@
-import { CommentData, FavouriteData, getUserInfoPage } from "@/axios/User";
+import { FavouriteData, getUserInfoPage } from "@/axios/User";
+import { CommentData } from "@/axios/types";
 import { CommentShow } from "@/components/CommentShow";
 import { RootState } from "@/redux/reduxStore";
-import upload from "@/service/OssUtil";
 import {
   Button,
   Divider,
@@ -12,7 +12,7 @@ import {
   Layout,
   Message,
   Modal,
-  Tag
+  Tag,
 } from "@arco-design/web-react";
 import FormItem from "@arco-design/web-react/es/Form/form-item";
 import Content from "@arco-design/web-react/es/Layout/content";
@@ -53,23 +53,34 @@ type ModalData = {
   confirmLoading: boolean;
   setConfirmLoading: Function;
   form: FormInstance<any, any, string | number | symbol>;
-}
+};
 
-function DescriptionModal({ description, setDescription, visible, setVisible, confirmLoading, setConfirmLoading, form }: ModalData) {
-
+function DescriptionModal({
+  description,
+  setDescription,
+  visible,
+  setVisible,
+  confirmLoading,
+  setConfirmLoading,
+  form,
+}: ModalData) {
   function onOK() {
     form.validate().then(async (values) => {
       setConfirmLoading(true);
-      await axios.post("/userInfo/description", {
-        description: values.description,
-      }).then(() => {
-        setDescription(values.description);
-      }).catch((err) => {
-        Message.info(err.message);
-      }).finally(() => {
-        setConfirmLoading(false);
-        setVisible(false);
-      });
+      await axios
+        .post("/userInfo/description", {
+          description: values.description,
+        })
+        .then(() => {
+          setDescription(values.description);
+        })
+        .catch((err) => {
+          Message.info(err.message);
+        })
+        .finally(() => {
+          setConfirmLoading(false);
+          setVisible(false);
+        });
     });
   }
 
@@ -82,12 +93,16 @@ function DescriptionModal({ description, setDescription, visible, setVisible, co
       onCancel={() => setVisible(false)}
     >
       <Form form={form} wrapperCol={{ span: 24 }}>
-        <FormItem field={"description"} rules={[{ required: false }]} initialValue={description}>
-          <Input.TextArea rows={3} />
+        <FormItem
+          field={"description"}
+          rules={[{ required: false }]}
+          initialValue={description}
+        >
+          <Input.TextArea autoSize={{ minRows: 13, maxRows: 13 }} />
         </FormItem>
       </Form>
     </Modal>
-  )
+  );
 }
 
 export default function Info() {
@@ -117,7 +132,15 @@ export default function Info() {
 
   return (
     <Layout>
-      <DescriptionModal description={description} setDescription={setDescription} visible={visible} setVisible={setVisible} confirmLoading={confirmLoading} setConfirmLoading={setConfirmLoading} form={form} />
+      <DescriptionModal
+        description={description}
+        setDescription={setDescription}
+        visible={visible}
+        setVisible={setVisible}
+        confirmLoading={confirmLoading}
+        setConfirmLoading={setConfirmLoading}
+        form={form}
+      />
       <Content style={{ display: "flex", textAlign: "left" }}>
         <div
           style={{
@@ -148,8 +171,12 @@ export default function Info() {
               </Button>
             ) : null}
           </div>
-          <div style={{
-            margin: "8px 15px", whiteSpace: "pre-wrap"}}>
+          <div
+            style={{
+              margin: "8px 15px",
+              whiteSpace: "pre-wrap",
+            }}
+          >
             {description == "" ? "这个用户什么都没有写哦" : description}
           </div>
         </div>
@@ -188,6 +215,7 @@ export default function Info() {
           textAlign: "left",
           border: "3px solid pink",
           borderRadius: "10px",
+          margin: "25px 5px"
         }}
       >
         <div

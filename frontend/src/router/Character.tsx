@@ -4,8 +4,10 @@ import Content from "@arco-design/web-react/es/Layout/content";
 import Header from "@arco-design/web-react/es/Layout/header";
 import Sider from "@arco-design/web-react/es/Layout/sider";
 import { useParams } from "react-router-dom";
-import reduxStore from "@/redux/reduxStore";
 import Detail from "@/components/Detail";
+import { useEffect, useState } from "react";
+import { ActorInfo, ActorWorkInfo, loadingActorInfo } from "@/axios/types";
+import { getCharacterDetail } from "@/axios/Search";
 
 type ActInData = {
   id: number;
@@ -55,22 +57,22 @@ let data: CharacterPageData = {
   ],
 };
 
-function ActIn(props: { data: ActInData }) {
+function ActIn(props: { data: ActorWorkInfo }) {
   return (
     <Grid.Col
       offset={4}
       span={16}
       style={{
         alignContent: "start",
-        margin: "3px 30px 8px 50px",
+        margin: "3px 30px 8px 0",
         border: "2px solid pink",
         WebkitBorderRadius: "5px",
       }}
     >
       <Grid.Row>
-        <Grid.Col span={6} style={{ display: "block", textAlign: "center" }}>
+        <Grid.Col span={5} style={{ display: "block", textAlign: "center" }}>
           <Image
-            src={props.data.image}
+            src={props.data.picture}
             width={80}
             height={80}
             style={{ margin: "5px", display: "flex" }}
@@ -86,7 +88,7 @@ function ActIn(props: { data: ActInData }) {
         >
           <Link href={"/subject/" + props.data.id}>
             <div style={{ fontSize: "18px", margin: "4px" }}>
-              {props.data.name}
+              {props.data.title}
             </div>
           </Link>
           <Divider style={{ marginTop: "2px" }} />
@@ -96,10 +98,16 @@ function ActIn(props: { data: ActInData }) {
   );
 }
 
-export default function CharacterPage() {
-  const id = useParams().id;
-  const characterUrl = "/character/" + id;
-  const username = reduxStore.getState().user.name;
+export default function Character() {
+  const id = useParams<"id">().id;
+  const [characterData, setCharacterData] =
+    useState<ActorInfo>(loadingActorInfo);
+  useEffect(() => {
+    getCharacterDetail(Number(id)).then((res) => {
+      console.log(res.data);
+      setCharacterData(res.data);
+    });
+  }, []);
 
   return (
     <div style={{ width: "995px" }}>
@@ -114,13 +122,17 @@ export default function CharacterPage() {
           }}
         >
           {/* <Link href={characterUrl}> */}
-          <h1 style={{ marginLeft: "30px" }}>{data.name}</h1>
+          <h1 style={{ marginLeft: "30px" }}>{characterData.name}</h1>
           {/* </Link> */}
         </Header>
         <Layout>
           <Sider style={{ margin: "20px 15px" }}>
-            <Image width={180} src={data.img} style={{ margin: "10px 10px" }} />
-            <Detail data={data.details} />
+            <Image
+              width={180}
+              src={characterData.avatar}
+              style={{ margin: "10px 10px", minHeight: 180 }}
+            />
+            <Detail data={characterData.params} />
           </Sider>
           <Content style={{ alignItems: "start", display: "block" }}>
             <div
@@ -130,7 +142,7 @@ export default function CharacterPage() {
                 margin: "12px",
               }}
             >
-              {data.description}
+              {characterData.description}
             </div>
             <Divider />
             <div
@@ -143,7 +155,7 @@ export default function CharacterPage() {
               参与作品
             </div>
             <Grid.Row>
-              {data.actIn.map((data: ActInData) => {
+              {characterData.works.map((data) => {
                 return <ActIn data={data} />;
               })}
             </Grid.Row>

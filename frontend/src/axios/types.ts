@@ -1,5 +1,3 @@
-import { CommentData } from "./User";
-
 export type BaseType<T> = {
   success: boolean;
   message: string;
@@ -57,49 +55,98 @@ export type IndexBlockData = {
   category: string;
 };
 
+export type CommentData = {
+  id: number;
+  userId: number;
+  username: string;
+  avatar: string;
+  score: number;
+  workId: number;
+  workName: string;
+  content: string;
+  time: string;
+  hasLike: boolean;
+  likes: number;
+};
+
 export type actorInfo = {
   id: number;
   name: string;
   avatar: string;
   occupation: string;
-}
+};
 
 export type workInfo = {
-	workId: number;
-	category: string;
-	workTitle: string;
-	workImage: string;
-	workParams: Object;
-	favoriteStatus: number;
-	workProfile: string;
-	tagResults: TagData[];
+  workId: number;
+  category: string;
+  workTitle: string;
+  workImage: string;
+  workParams: Object;
+  favoriteStatus: number;
+  workProfile: string;
+  tagResults: TagData[];
   actor: actorInfo[];
-  commentBeanPage: {element: number, commentBeanList: CommentData[]};
+  commentBeanPage: { element: number; comments: CommentData[] };
   avgScore: number;
-  scoreMap: {score: number, number: number}[];
-}
-  
+  scoreMap: { score: number; number: number }[];
+};
+
 export const loadingWorkInfo: workInfo = {
   workId: 0,
   category: "",
   workTitle: "",
   workImage: "",
-  workParams: new Object(),
+  workParams: {},
   favoriteStatus: 0,
   workProfile: "",
   tagResults: [],
   actor: [],
   commentBeanPage: {
     element: 0,
-    commentBeanList: []
+    comments: [],
   },
   avgScore: 0,
-  scoreMap: []
-}
+  scoreMap: [],
+};
+
+export type ActorListInfo = {
+  id: number;
+  name: string;
+  chineseName: string;
+  description: string;
+  avatar: string;
+};
+
+export type ActorWorkInfo = {
+  id: number;
+  picture: string;
+  title: string;
+  profile: string;
+};
+
+export type ActorInfo = {
+  id: number;
+  name: string;
+  avatar: string;
+  chineseName: string;
+  description: string;
+  works: ActorWorkInfo[];
+  params: Object;
+};
+
+export const loadingActorInfo: ActorInfo = {
+  id: 0,
+  name: "",
+  avatar: "",
+  chineseName: "",
+  description: "",
+  works: [],
+  params: {},
+};
 
 export const categoryList = new Map([
   ["anime", "动画"],
   ["novel", "小说"],
   ["game", "游戏"],
-  ["music", "音乐"]
+  ["music", "音乐"],
 ]);

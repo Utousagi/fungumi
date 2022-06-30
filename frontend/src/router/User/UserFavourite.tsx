@@ -8,7 +8,6 @@ import {
   Button,
   Dropdown,
   Image,
-  Menu,
   Pagination,
   Rate,
   Tag,
@@ -17,7 +16,6 @@ import Divider from "@arco-design/web-react/es/Divider";
 import Grid from "@arco-design/web-react/es/Grid";
 import Content from "@arco-design/web-react/es/Layout/content";
 import Link from "@arco-design/web-react/es/Link";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -83,7 +81,10 @@ function FavouriteShow(props: { data: FavouriteData; isSelf: boolean }) {
           </div>
         </Grid.Col>
         <Grid.Col span={2}>
-          <Dropdown position="bottom" droplist={DropList({id:id, status:type, setStatus:setType})}>
+          <Dropdown
+            position="bottom"
+            droplist={DropList({ id: id, status: type, setStatus: setType })}
+          >
             <Button
               shape="round"
               size="large"
@@ -149,5 +150,3 @@ export default function Favourite(props: { page?: number } = { page: 1 }) {
     </Content>
   );
 }
-
-

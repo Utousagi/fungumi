@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  ActorInfo,
   BaseType,
   IndexData,
   PageType,
@@ -78,5 +79,15 @@ export async function getSubjects(props: {
     },
   });
   const data: PageType<SubjectData> = res.data;
+  return data;
+}
+
+export async function getCharacterDetail(id: number) {
+  const res = await axios.get("actor/actorInfo", {
+    params: {
+      workId: id,
+    },
+  });
+  const data: BaseType<ActorInfo> = res.data;
   return data;
 }

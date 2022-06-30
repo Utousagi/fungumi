@@ -2,7 +2,8 @@ import { Grid, Pagination } from "@arco-design/web-react";
 import Content from "@arco-design/web-react/es/Layout/content";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CommentData, getUserLikeListByPage, loadingReviewPage, ReviewPageData, UserData } from "@/axios/User";
+import { getUserLikeListByPage, loadingReviewPage } from "@/axios/User";
+import { CommentData } from "@/axios/types";
 import { CommentShow } from "../../components/CommentShow";
 
 export default function Likes(props: { page?: number } = { page: 1 }) {
@@ -34,10 +35,17 @@ export default function Likes(props: { page?: number } = { page: 1 }) {
           }}
         >
           {reviewList.map((review: CommentData) => {
-            return <div style={{ textAlign: 'left' }}>
-              <div>FROM <Link to={"/subject/" + review.workId}>{review.workName}</Link></div>
-              <CommentShow data={review} />
-            </div>;
+            return (
+              <div style={{ textAlign: "left" }}>
+                <div>
+                  FROM{" "}
+                  <Link to={"/subject/" + review.workId}>
+                    {review.workName}
+                  </Link>
+                </div>
+                <CommentShow data={review} />
+              </div>
+            );
           })}
         </Grid.Col>
       </Grid.Row>

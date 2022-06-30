@@ -10,7 +10,7 @@ import java.util.Map;
  * @date 2022/6/29
  * @description
  */
-@Document
+@Document("Actor")
 @Data
 public class ActorExtends {
     private Integer actorId;

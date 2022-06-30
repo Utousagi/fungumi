@@ -31,7 +31,7 @@ public class UserController {
                     .build();
             return new BaseResult<>(true, "注册成功", userInfo);
         }
-        return new BaseResult<>(false, "用户名已存在");
+        return new BaseResult<>(false, "用户名已存在", new UserLoginResult(false, null, null, null));
     }
 
     @PostMapping("/login")
