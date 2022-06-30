@@ -12,15 +12,8 @@ import {
 import Detail from "@/components/Detail";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-type SubjectData = {
-  id: number;
-  type: string;
-  title: string;
-  status: number;
-  img: string;
-  details: Map<string, string>;
-};
+import { categoryList, loadingWorkInfo, workInfo } from "@/axios/types";
+import { getWorkInfo } from "@/axios/Work";
 
 export const favorDict: Record<number, string> = {
   0: "未收藏",
@@ -77,7 +70,18 @@ function Subject() {
     review: "评论",
   };
 
-  const [status, setStatus] = useState(data.status);
+  const [data, setData] = useState<workInfo>(loadingWorkInfo);
+
+  useEffect(() => {
+    getWorkInfo(id).then((res) => {
+      console.log(res);
+      setData(res as unknown as workInfo);
+      setStatus((res as unknown as workInfo).favoriteStatus);
+      console.log(data);
+    })
+  }, []);
+
+  const [status, setStatus] = useState(0);
   const nav = useNavigate();
 
   return (
@@ -85,8 +89,8 @@ function Subject() {
       <Layout.Header style={{ textAlign: "start", margin: "0 0 0 0" }}>
         <div style={{ display: "flex" }}>
           <h2 style={{ margin: "0 30px", width: "90%" }}>
-            {data.title}
-            <Tag style={{ margin: "2px 2px 2px 2px" }}>{data.type}</Tag>
+            {data.workTitle}
+            <Tag style={{ margin: "2px 2px 2px 2px" }}>{categoryList.get(data.category)}</Tag>
           </h2>
 
           <Dropdown position="bottom" droplist={DropList({id, status, setStatus})} trigger="click">
@@ -116,11 +120,11 @@ function Subject() {
         <Layout.Sider width={210} style={{ padding: "0 10px" }}>
           <Image
             width={190}
-            src={data.img}
+            src={data.workImage}
             style={{ margin: "10px 10px", minHeight: 190 }}
             preview={false}
           />
-          <Detail data={data.details} />
+          <Detail data={data.workParams} />
         </Layout.Sider>
         <Layout.Content
           style={{ margin: "0 0 0 10px", padding: 0, alignItems: "start" }}
@@ -134,15 +138,3 @@ function Subject() {
 
 export default Subject;
 
-const data: SubjectData = {
-  id: 1,
-  type: "动画",
-  title: "阿比可爱捏🥰🥰🥰",
-  img: "/src/assets/keep.jpg",
-  details: new Map([
-    ["语言", "C#,C++,Java,Python,Pascal,C,Go"],
-    ["类型", "游戏"],
-    ["状态", "进行中"],
-  ]),
-  status: 0,
-};

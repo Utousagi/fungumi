@@ -2,10 +2,8 @@ package uto.fungumi.backend.service;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
-import uto.fungumi.backend.dao.CommentDao;
 import uto.fungumi.backend.dao.FavoriteDao;
 import uto.fungumi.backend.dao.WorkDao;
-import uto.fungumi.backend.entity.Comment;
 import uto.fungumi.backend.entity.Favorite;
 import uto.fungumi.backend.entity.User;
 import uto.fungumi.backend.entity.Work;
@@ -14,7 +12,7 @@ import uto.fungumi.backend.model.BaseResult;
 import javax.annotation.Resource;
 
 @Service
-public class FavoriteServie {
+public class FavoriteService {
 
     @Resource
     FavoriteDao favoriteDao;

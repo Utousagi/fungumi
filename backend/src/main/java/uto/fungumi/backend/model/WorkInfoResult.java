@@ -20,10 +20,12 @@ public class WorkInfoResult {
     private String workTitle;
     private Map<String,String> workParams;
     private String workProfile;
+    private String workImage;   //new by zeesangpie
+    private String category;   //new by zeesangpie
+    private Integer favoriteStatus;   //new by zeesangpie
     private Set<TagResult> tagResults;
     private Set<ActorBean> actor;                    //演员
     private CommentBeanPage commentBeanPage;
     private Double avgScore;                   //平均分
     private List<CommentScoreBean> scoreMap;      //每个评分段=>人数  ？？？
-
 }

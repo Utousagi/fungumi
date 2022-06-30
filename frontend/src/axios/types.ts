@@ -1,3 +1,5 @@
+import { CommentData } from "./User";
+
 export type BaseType<T> = {
   success: boolean;
   message: string;
@@ -54,3 +56,50 @@ export type IndexBlockData = {
   favoritePerson: number;
   category: string;
 };
+
+export type actorInfo = {
+  id: number;
+  name: string;
+  avatar: string;
+  occupation: string;
+}
+
+export type workInfo = {
+	workId: number;
+	category: string;
+	workTitle: string;
+	workImage: string;
+	workParams: Object;
+	favoriteStatus: number;
+	workProfile: string;
+	tagResults: TagData[];
+  actor: actorInfo[];
+  commentBeanPage: {element: number, commentBeanList: CommentData[]};
+  avgScore: number;
+  scoreMap: {score: number, number: number}[];
+}
+  
+export const loadingWorkInfo: workInfo = {
+  workId: 0,
+  category: "",
+  workTitle: "",
+  workImage: "",
+  workParams: new Object(),
+  favoriteStatus: 0,
+  workProfile: "",
+  tagResults: [],
+  actor: [],
+  commentBeanPage: {
+    element: 0,
+    commentBeanList: []
+  },
+  avgScore: 0,
+  scoreMap: []
+}
+
+export const categoryList = new Map([
+  ["anime", "动画"],
+  ["novel", "小说"],
+  ["game", "游戏"],
+  ["music", "音乐"]
+]);

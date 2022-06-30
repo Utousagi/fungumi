@@ -32,6 +32,9 @@ public class WorkService {
     @Resource
     private WorkExtendsDao workExtendsDao;
 
+    @Resource
+    private FavoriteService favoriteService;
+
     public void getWorkInfo(Integer work_id, BaseResult<WorkInfoResult> result) {
 
         Optional<Work> byId = workDao.findById(work_id);
@@ -82,11 +85,16 @@ public class WorkService {
             tagResultSet.add(tagResult);
         }
 
+        int favoriteStatus = favoriteService.getFavoriteType(work_id);
+
         WorkInfoResult workInfoResult = WorkInfoResult.builder()
                 .actor(actorBeanSet)
                 .avgScore(work.getScore())
                 .workParams(params)
                 .workId(work_id)
+                .workImage(work.getPicture())
+                .category(work.getCategory())
+                .favoriteStatus(favoriteStatus)
                 .workTitle(work.getTitle())
                 .workProfile(work.getProfile())
                 .commentBeanPage(commentBeanPage)

@@ -43,7 +43,7 @@ export function CommentShow(props: { data: CommentData }) {
             defaultValue={score}
             allowHalf
             character={<IconStarFill style={{ fontSize: "13px" }} />}
-            style={{ marginLeft: "15px", width: "500px" }}
+            style={{ marginLeft: "15px", width: "380px" }}
           />
         </div>
       }
@@ -55,13 +55,13 @@ export function CommentShow(props: { data: CommentData }) {
           </Avatar>
         </Link>
       }
-      // datetime={<div style={{width:'', display:'block'}}>{props.data.time}</div>}
+      datetime={<div style={{width:'', display:'block'}}>{props.data.time.slice(0,10)}</div>}
       style={{
         margin: "5px 3px 5px 5px",
         display: "flex",
         alignSelf: "center",
         textAlign: "left",
-        width: "95%",
+        width: "670px",
         border: "2px solid pink",
         borderRadius: "5px",
         padding: "5px",
