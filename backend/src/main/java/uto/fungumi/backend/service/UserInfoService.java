@@ -33,7 +33,7 @@ public class UserInfoService {
     WorkDao workDao;
 
     @Resource
-    FavoriteServie favoriteServie;
+    FavoriteService favoriteService;
 
     public void getUserInfo(Integer id, BaseResult result) {
         UserInfoResult info = userDao.getUserInfoById(id);
@@ -92,7 +92,7 @@ public class UserInfoService {
         Page<Work> works = workDao.findWorkUserFavorites(id, pageable);
         FavouritePage favouritePage = new FavouritePage();
         favouritePage.setWorks(works.getContent().stream().map( w -> {
-            int type = favoriteServie.getFavoriteType(w.getId());
+            int type = favoriteService.getFavoriteType(w.getId());
             WorkAbstract workResult = new WorkAbstract( w.getId(), w.getTitle(), w.getProfile(), w.getPicture(), w.getCategory(), w.getScore(), w.getRatePerson(),  type);
             return workResult;
         }).collect(Collectors.toList()));

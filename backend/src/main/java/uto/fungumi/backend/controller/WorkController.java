@@ -58,7 +58,7 @@ public class WorkController {
         return baseResult;
     }
 
-    @PostMapping("/workInfo")
+    @GetMapping("/workInfo")
     public BaseResult<WorkInfoResult> getWorkInfo(@RequestParam Integer workId){
         BaseResult<WorkInfoResult> result = new BaseResult<WorkInfoResult>();
         workService.getWorkInfo(workId,result);
